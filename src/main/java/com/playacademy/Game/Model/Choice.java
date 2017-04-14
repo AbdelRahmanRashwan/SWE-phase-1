@@ -1,4 +1,4 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

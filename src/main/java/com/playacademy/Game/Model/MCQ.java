@@ -1,6 +1,7 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
 
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 public class MCQ extends Question {
 	
-//	private String[] choices;
 
 	public MCQ(){
 	}
@@ -28,17 +28,19 @@ public class MCQ extends Question {
 	}
 	
 	
-//	@Transient
 	private Set<Choice> choices;
 	
 	
 	// Setters
-//	public void setChoices(String[] choices) {
-//		this.choices = choices;
-//	}
 	
 	public void setChoices(Set<Choice> choices) {
 		this.choices = choices;
+		if(choices != null){
+			Iterator<Choice> it = this.choices.iterator();
+			while(it.hasNext()){
+				it.next().setQuestion(this);
+			}
+		}
 	}
 	
 	public void addChoice(Choice choice) {
@@ -46,16 +48,8 @@ public class MCQ extends Question {
 		choices.add(choice);
 	}
 	
-	// Getters
-//	public String[] getChoices() {
-//		return choices;
-//	}
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="question")
 	public Set<Choice> getChoices() {
 		return choices;
 	}
-	
-	
-	
-	
 }

@@ -1,4 +1,4 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,6 @@ public class Game {
 			
 	private long gameId;
 	  
-	// The game name
 	@Column(name="name")
 	private String name;
 	

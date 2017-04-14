@@ -1,4 +1,4 @@
-package com.playacademy.Game.controller;
+package com.playacademy.game.controller;
 
 
 import java.io.IOException;
@@ -13,11 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playacademy.Game.Model.Choice;
-import com.playacademy.Game.Model.Game;
-import com.playacademy.Game.Model.MCQ;
-import com.playacademy.Game.Model.Question;
-import com.playacademy.Game.Model.TrueAndFalse;
+import com.playacademy.game.model.*;
 import com.playacademy.helper.ObjectMapperConfiguration;
 
 
@@ -68,10 +64,11 @@ public class GameManger {
 			e.printStackTrace();
 		}
 		
-		
-		Iterator<Choice> it = ((MCQ)question).getChoices().iterator();
-		while(it.hasNext()){
-			it.next().setQuestion((MCQ)question);
+		if(question instanceof MCQ){
+			Iterator<Choice> it = ((MCQ)question).getChoices().iterator();
+			while(it.hasNext()){
+				it.next().setQuestion((MCQ)question);
+			}
 		}
 		
 		Game g = services.getGameByID(id);

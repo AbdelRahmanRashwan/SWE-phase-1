@@ -1,4 +1,4 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -53,10 +53,6 @@ public abstract class Question {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-//	public void addChoice(Choice choice) {
-//		choice.setQuestion(this);
-//		choices.add(choice);
-//	}
 	
 	// Getters
 	@Id
@@ -75,10 +71,5 @@ public abstract class Question {
 	}
 	public String getAnswer() {
 		return answer;
-	}
-	
-	
-//	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="question")
-	
-	
+	}	
 }
