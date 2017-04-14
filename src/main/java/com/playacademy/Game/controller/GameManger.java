@@ -1,13 +1,24 @@
 package com.playacademy.Game.controller;
 
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.playacademy.Game.Model.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playacademy.Game.Model.Choice;
+import com.playacademy.Game.Model.Game;
+import com.playacademy.Game.Model.MCQ;
+import com.playacademy.Game.Model.Question;
+import com.playacademy.Game.Model.TrueAndFalse;
+import com.playacademy.helper.ObjectMapperConfiguration;
 
 
 
@@ -46,8 +57,27 @@ public class GameManger {
 	}
 	
 	@RequestMapping(value = "/game/question/add", method = RequestMethod.POST)
-	public Question addQuuestion(@RequestParam("gameId") long id, @RequestBody Question question) {
+	public Question addQuuestion(@RequestParam("gameId") long id, @RequestBody String quest) {
 		
+		ObjectMapper objectMapper = new ObjectMapperConfiguration().objectMapper();
+		Question question = null;
+		try {
+			question = objectMapper.readValue(quest, Question.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		Iterator<Choice> it = ((MCQ)question).getChoices().iterator();
+		while(it.hasNext()){
+			it.next().setQuestion((MCQ)question);
+		}
+		
+		Game g = services.getGameByID(id);
+		g.addQuestion(question);
+		
+		services.addGame(g);
 		return question;
 	}
 	

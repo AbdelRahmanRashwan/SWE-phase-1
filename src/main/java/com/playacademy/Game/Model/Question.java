@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -19,6 +20,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "questions")
 public abstract class Question {
 	
+	
+	@JsonCreator
+	public Question(){	}
+	
+	public Question(Game game){
+		this.game = game;
+	}
 	
 	private long questionId;
 	@JsonIgnore
@@ -31,11 +39,6 @@ public abstract class Question {
 	private String answer;
 //	private Set<Choice> choices;
 	
-	public Question(){	}
-	
-	public Question(Game game){
-		this.game = game;
-	}
 	
 	//Setters	
 	public void setQuestion(String question) {
