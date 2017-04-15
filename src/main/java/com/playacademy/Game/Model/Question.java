@@ -1,15 +1,6 @@
 package com.playacademy.game.model;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,16 +51,17 @@ public abstract class Question {
 	public long getQuestionID() {
 		return questionId;
 	}
-	@ManyToOne
-    @JoinColumn(name="gameId", nullable=false)
-	public Game getGame() {
-		return game;
-	}
-	
 	public String getQuestion() {
 		return question;
 	}
 	public String getAnswer() {
 		return answer;
-	}	
+	}
+	
+	// Relations
+	@ManyToOne
+    @JoinColumn(name="gameId", nullable=false)
+	public Game getGame() {
+		return game;
+	}
 }

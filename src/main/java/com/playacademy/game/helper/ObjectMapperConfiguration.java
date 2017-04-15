@@ -1,4 +1,4 @@
-package com.playacademy.helper;
+package com.playacademy.game.helper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;

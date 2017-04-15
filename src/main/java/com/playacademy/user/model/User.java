@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 public abstract class User {
 	
-	protected long ID;
+	protected long userId;
 	
 	@Column(name = "firstName")
 	protected String firstName;
@@ -44,13 +44,14 @@ public abstract class User {
 	public void setType(String userType) {
 		this.type = userType;
 	}
+	
 	@Id
 	@GeneratedValue (strategy=GenerationType.AUTO)
-	public long getID() {
-		return ID;
+	public long getUserId() {
+		return userId;
 	}
-	public void setID(long iD) {
-		ID = iD;
+	public void setUserId(long id) {
+		userId = id;
 	}
 	public String getFirstName() {
 		return firstName;

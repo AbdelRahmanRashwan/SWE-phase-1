@@ -10,8 +10,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.user.model.ScoreSheet;
+import com.playacademy.user.model.Teacher;
+
+//import com.playacademy.user.model.ScoreSheet;
 
 
 @Entity
@@ -19,17 +27,22 @@ import javax.persistence.Table;
 public class Game {
 			
 	private long gameId;
-	  
+	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="courseId")
-    long courseId;
+    private long courseId;
+	
+	@JsonIgnore
+    private Teacher creator;
 	
     private Set<Question> questions;
+    private Set<ScoreSheet> scores;
     
-    
-    public Game(){
+   
+
+	public Game(){
     	questions = new HashSet<Question>();
     }
 	
@@ -40,14 +53,26 @@ public class Game {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	public void setCourseId(long courseId) {
 		this.courseId = courseId;
 	}
+	public void setCreator(Teacher creator) {
+		this.creator = creator;
+	}
+	
+	
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
+	public void setScores(Set<ScoreSheet> scores) {
+		this.scores = scores;
+	}
 	
+	
+	public void addScore(ScoreSheet score) {
+		score.setGame(this);
+		scores.add(score);
+	}
 	
 	public void addQuestion(Question question) {
 		question.setGame(this);
@@ -68,15 +93,19 @@ public class Game {
 		return courseId;
 	}
 	
-	
+	// Relations
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="game")
 	public Set<Question> getQuestions() {
 		return questions;
 	}
-	
-	
-	
-	
-	
-  
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="game")
+	public Set<ScoreSheet> getScores() {
+		return scores;
+	}
+	@ManyToOne
+    @JoinColumn(name="creatorId", nullable=false)
+	public Teacher getCreator() {
+		return creator;
+	}
+
 }

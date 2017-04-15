@@ -4,13 +4,9 @@ package com.playacademy.game.model;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 @Entity
 public class MCQ extends Question {
@@ -47,7 +43,7 @@ public class MCQ extends Question {
 		choice.setQuestion(this);
 		choices.add(choice);
 	}
-	
+	// Relations
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="question")
 	public Set<Choice> getChoices() {
 		return choices;

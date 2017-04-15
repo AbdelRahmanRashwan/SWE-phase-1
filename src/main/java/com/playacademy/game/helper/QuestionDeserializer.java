@@ -1,4 +1,4 @@
-package com.playacademy.helper;
+package com.playacademy.game.helper;
 
 import java.io.IOException;
 
