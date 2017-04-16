@@ -1,15 +1,6 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,7 +28,6 @@ public abstract class Question {
 	
 	@Column(name="answer")
 	private String answer;
-//	private Set<Choice> choices;
 	
 	
 	//Setters	
@@ -47,29 +37,19 @@ public abstract class Question {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public void setQuestionID(long questionID) {
+	public void setQuestionId(long questionID) {
 		this.questionId = questionID;
 	}
 	public void setGame(Game game) {
 		this.game = game;
 	}
-//	public void addChoice(Choice choice) {
-//		choice.setQuestion(this);
-//		choices.add(choice);
-//	}
 	
 	// Getters
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public long getQuestionID() {
+	public long getQuestionId() {
 		return questionId;
 	}
-	@ManyToOne
-    @JoinColumn(name="gameId", nullable=false)
-	public Game getGame() {
-		return game;
-	}
-	
 	public String getQuestion() {
 		return question;
 	}
@@ -77,8 +57,11 @@ public abstract class Question {
 		return answer;
 	}
 	
-	
-//	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="question")
-	
+	// Relations
+	@ManyToOne
+    @JoinColumn(name="gameId", nullable=false)
+	public Game getGame() {
+		return game;
+	}
 	
 }

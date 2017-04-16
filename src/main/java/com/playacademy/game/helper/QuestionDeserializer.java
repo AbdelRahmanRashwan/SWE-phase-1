@@ -1,4 +1,4 @@
-package com.playacademy.helper;
+package com.playacademy.game.helper;
 
 import java.io.IOException;
 
@@ -7,10 +7,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.playacademy.Game.Model.MCQ;
-import com.playacademy.Game.Model.Question;
-import com.playacademy.Game.Model.TrueAndFalse;
-
+import com.playacademy.game.model.*;
 public class QuestionDeserializer extends JsonDeserializer<Question> {
 
     @Override

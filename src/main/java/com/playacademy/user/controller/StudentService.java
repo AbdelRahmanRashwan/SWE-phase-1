@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.playacademy.user.model.*;
-@Component(value="SBean")
-public class StudentService extends UserServicesAPI{
-	
+
+@Component(value = "SBean")
+public class StudentService extends UserServicesAPI {
+
 	@Autowired
 	StudentRepo studentRepo;
-	
+
 	@Override
-	protected boolean verifyEmail(String email){
+	protected boolean verifyEmail(String email) {
 		if (email.contains("@"))
 			return true;
 		return false;
@@ -20,16 +21,13 @@ public class StudentService extends UserServicesAPI{
 	@Override
 	public boolean addUser(User user) {
 		System.out.println(user.getEmail());
-		long userID=getUserID(user.getEmail());
-		System.out.println("Why1");
-		if (!verifyEmail( user.getEmail())||userID!=-1){
-			System.out.println("Why2 "+userID);
+		long userID = getUserID(user.getEmail());
+		if (!verifyEmail(user.getEmail()) || userID != -1) {
 			return false;
 		}
-		
-		System.out.println("Why");
-		Student confirmation=studentRepo.save(((Student) user));
-		return confirmation.getEmail()==user.getEmail()? true:false;
+
+		Student confirmation = studentRepo.save(((Student) user));
+		return confirmation.getEmail() == user.getEmail() ? true : false;
 	}
-	
+
 }

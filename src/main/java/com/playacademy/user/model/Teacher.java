@@ -2,51 +2,58 @@ package com.playacademy.user.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Null;
+import javax.persistence.*;
 
-//import course.Course;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.course.model.Course;
 
 @Entity
-public class Teacher extends User{
-	
+public class Teacher extends User {
+
 	@Column(name = "educationalMail")
 	private String educationalMail;
 	
+	@JsonIgnore
+	private Set <Course> createdCourses;
+
 	
-//	private Set <Course> createCourses;
-//	
-//	public void addCourse(Course course){
-//		createCourses.add(course);
-//	}
-//	
-//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="Teacher")
-//	public Set<Course> getCreateCourses() {
-//		return createCourses;
-//	}
-//
-//	public void setCreateCourses(Set<Course> createCourses) {
-//		this.createCourses = createCourses;
-//	}
 
-	public Teacher(){
-		type="Teacher";
-	}
 	
-	public Teacher(long id){
-		this.setID(id);
+
+	public Teacher() {
+		type = "Teacher";
 	}
 
-	public String getEducationalMail() {
-		return educationalMail;
+	public Teacher(long id) {
+		this.setUserId(id);
 	}
 
+	// Setters
+	
 	public void setEducationalMail(String educationalMail) {
 		this.educationalMail = educationalMail;
 	}
+	public void setCreatedCourses(Set<Course> courses) {
+		this.createdCourses = courses;
+	}
 	
+	
+	// add
+	public void addCourse(Course course) {
+		course.setCreator(this);
+		createdCourses.add(course);
+	}
+	
+	// Getters
+	public String getEducationalMail() {
+		return educationalMail;
+	}
+	
+	// Relations
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creator")
+	public Set<Course> getCreatedCourses() {
+		return createdCourses;
+	}
+
 }

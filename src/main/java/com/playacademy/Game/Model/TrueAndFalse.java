@@ -1,4 +1,4 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
 import javax.persistence.Entity;
 
@@ -10,7 +10,7 @@ public class TrueAndFalse extends Question {
 	@JsonCreator
 	public TrueAndFalse(){}
 	public TrueAndFalse(long id){
-		this.setQuestionID(id);
+		this.setQuestionId(id);
 	}
 	
 	

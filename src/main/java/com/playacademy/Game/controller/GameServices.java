@@ -1,12 +1,12 @@
-package com.playacademy.Game.controller;
+package com.playacademy.game.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.playacademy.Game.Model.Game;
-import com.playacademy.Game.Model.GameRepository;
+import com.playacademy.course.model.Course;
+import com.playacademy.game.model.*;
 
 @Service
 public class GameServices implements IGameServices{
@@ -15,7 +15,8 @@ public class GameServices implements IGameServices{
 	GameRepository repository;
 
 	@Override
-	public boolean addGame(Game game) {
+	public boolean addGame(Game game, Course course) {
+		course.addGame(game);
 		if(repository.save(game) != null)
 			return true;
 		else return false;
@@ -28,8 +29,15 @@ public class GameServices implements IGameServices{
 	}
 
 	@Override
-	public List<Game> getAllGamesInCourse(long courseId) {
-		return repository.findByCourseId(courseId);
+	public List<Game> getAllGamesInCourse(Course course) {
+		return repository.findByCourse(course);
+	}
+
+	@Override
+	public boolean addEditedGame(Game game) {
+		if(repository.save(game) != null)
+			return true;
+		else return false;
 	}
 	
 	
