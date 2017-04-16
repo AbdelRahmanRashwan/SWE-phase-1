@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.playacademy.course.model.Course;
 import com.playacademy.game.model.Game;
 import com.playacademy.game.model.GameRepository;
 
@@ -28,8 +29,8 @@ public class GameServices implements IGameServices{
 	}
 
 	@Override
-	public List<Game> getAllGamesInCourse(long courseId) {
-		return repository.findByCourseId(courseId);
+	public List<Game> getAllGamesInCourse(Course course) {
+		return repository.findByCourse(course);
 	}
 	
 	

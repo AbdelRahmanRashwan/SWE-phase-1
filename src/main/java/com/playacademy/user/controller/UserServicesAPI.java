@@ -29,6 +29,15 @@ public class UserServicesAPI {
 	public boolean addUser(User user) {
 		return false;
 	}
+	
+	public boolean deleteUser(long userId) {
+		try{
+			userBaseRepo.delete(userId);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
 
 	// gets user by ID from the user base repository
 	public User getUserByID(long ID) {

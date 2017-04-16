@@ -29,4 +29,11 @@ public class CourseManagerAPI {
 		}
 		return true;
 	}
+
+	public long getCourseId(String courseName) {
+		Course course = courseRepo.findByCourseName(courseName);
+		if(course == null)
+			return -1;
+		return course.getCourseId();
+	}
 }

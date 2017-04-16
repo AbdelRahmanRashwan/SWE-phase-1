@@ -1,18 +1,14 @@
 package com.playacademy.game.controller;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playacademy.course.controller.CourseManagerAPI;
+import com.playacademy.course.model.Course;
 import com.playacademy.game.helper.ObjectMapperConfiguration;
 import com.playacademy.game.model.*;
 import com.playacademy.user.controller.UserServicesAPI;
@@ -27,43 +23,37 @@ public class GameManger {
 	@Autowired
 	@Qualifier(value = "TBean")
 	private UserServicesAPI userServices;
+	
+	@Autowired
+	private CourseManagerAPI courseAPI;
 
 	@RequestMapping(value = "/game/mcq/create", method = RequestMethod.POST)
 	public boolean createMCQGame(@RequestBody ItemCollector<MCQ> items) {
 		Game game = new Game();
 		game.setName(items.gameName);
-		game.setCourseId(items.courseId);
 		for (int i = 0; i < items.questions.size(); i++) {
 			game.addQuestion(items.questions.get(i));
 			Iterator<Choice> it = items.questions.get(i).getChoices().iterator();
 			while (it.hasNext()) {
 				it.next().setQuestion(items.questions.get(i));
-				;
 			}
 		}
-		Teacher creator = (Teacher) userServices.getUserByID(items.creatorId);
-		creator.addGame(game);
-
-		return services.addGame(game);
+		return addGame(game, items.courseId, items.creatorId);
+		
 	}
 
 	@RequestMapping(value = "/game/trueandfalse/create", method = RequestMethod.POST)
 	public boolean createTrueAndFalseGame(@RequestBody ItemCollector<TrueAndFalse> items) {
 		Game game = new Game();
 		game.setName(items.gameName);
-		game.setCourseId(items.courseId);
 		for (int i = 0; i < items.questions.size(); i++) {
 			game.addQuestion(items.questions.get(i));
 		}
-		
-		Teacher creator = (Teacher) userServices.getUserByID(items.creatorId);
-		creator.addGame(game);
-		
-		return services.addGame(game);
+		return addGame(game, items.courseId, items.creatorId);
 	}
 
 	@RequestMapping(value = "/game/question/add", method = RequestMethod.POST)
-	public Question addQuuestion(@RequestParam("gameId") long id, @RequestBody String quest) {
+	public boolean addQuuestion(@RequestParam("gameId") long id, @RequestBody String quest) {
 
 		ObjectMapper objectMapper = new ObjectMapperConfiguration().objectMapper();
 		Question question = null;
@@ -81,11 +71,10 @@ public class GameManger {
 			}
 		}
 
-		Game g = services.getGameByID(id);
-		g.addQuestion(question);
+		Game game = services.getGameByID(id);
+		game.addQuestion(question);
 
-		services.addGame(g);
-		return question;
+		return services.addGame(game);
 	}
 
 	@RequestMapping(value = "/game/get", method = RequestMethod.GET)
@@ -97,9 +86,20 @@ public class GameManger {
 
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public List<Game> getAllGamesInCourse(@RequestParam("courseId") long courseId) {
-		return services.getAllGamesInCourse(courseId);
+		Course course = courseAPI.getCourse(courseId);
+		return services.getAllGamesInCourse(course);
 	}
 
+	private boolean addGame(Game game, long courseId, long creatorId){
+		Course course = courseAPI.getCourse(courseId);
+		course.addGame(game);
+		
+		Teacher creator = (Teacher) userServices.getUserByID(creatorId);
+		game.setCreator(creator);
+
+		return services.addGame(game);
+	}
+	
 	static class ItemCollector<T> {
 
 		public ItemCollector() {

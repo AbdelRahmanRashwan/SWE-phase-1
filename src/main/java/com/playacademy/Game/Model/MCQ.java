@@ -20,7 +20,7 @@ public class MCQ extends Question {
 		this.choices = choices;
 	}
 	public MCQ(long id){
-		this.setQuestionID(id);
+		this.setQuestionId(id);
 	}
 	
 	

@@ -28,7 +28,6 @@ public abstract class Question {
 	
 	@Column(name="answer")
 	private String answer;
-//	private Set<Choice> choices;
 	
 	
 	//Setters	
@@ -38,7 +37,7 @@ public abstract class Question {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public void setQuestionID(long questionID) {
+	public void setQuestionId(long questionID) {
 		this.questionId = questionID;
 	}
 	public void setGame(Game game) {
@@ -48,7 +47,7 @@ public abstract class Question {
 	// Getters
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public long getQuestionID() {
+	public long getQuestionId() {
 		return questionId;
 	}
 	public String getQuestion() {
@@ -64,4 +63,5 @@ public abstract class Question {
 	public Game getGame() {
 		return game;
 	}
+	
 }

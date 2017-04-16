@@ -27,20 +27,25 @@ public class UserManager {
 	@Qualifier(value = "SBean")
 	UserServicesAPI userSServices;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public User login(@RequestParam("email") String email, @RequestParam("password") String password) {
 		User user = userServices.getUserByID(userServices.getUserID(email, password));
 		return user;
 	}
+	
+	@RequestMapping(value = "/user/delete", method = RequestMethod.GET)
+	public boolean login(@RequestParam("id") long id) {
+		return userServices.deleteUser(id);
+	}
 
-	@RequestMapping(value = "/registerStudent", method = RequestMethod.POST)
+	@RequestMapping(value = "/student/register", method = RequestMethod.POST)
 	public boolean registerStudent(@RequestBody Student student) {
 
 		boolean confirmation = userSServices.addUser(student);
 		return confirmation;
 	}
 
-	@RequestMapping(value = "/registerTeacher", method = RequestMethod.POST)
+	@RequestMapping(value = "/teacher/register", method = RequestMethod.POST)
 	public boolean registerTeacher(@RequestBody Teacher teacher) {
 		// userServices = new TeacherService();
 		System.out.println(teacher.getAge());

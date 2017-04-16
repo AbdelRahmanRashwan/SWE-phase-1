@@ -10,7 +10,7 @@ public class TrueAndFalse extends Question {
 	@JsonCreator
 	public TrueAndFalse(){}
 	public TrueAndFalse(long id){
-		this.setQuestionID(id);
+		this.setQuestionId(id);
 	}
 	
 	
