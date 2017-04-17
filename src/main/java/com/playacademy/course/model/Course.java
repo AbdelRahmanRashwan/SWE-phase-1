@@ -98,6 +98,7 @@ public class Course {
 		return games;
 	}
 	@ManyToMany(mappedBy="attendedCourses", cascade=CascadeType.ALL)
+
 	public Set<Student> getStudents() {
 		return students;
 	}

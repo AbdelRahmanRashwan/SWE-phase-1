@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.playacademy.course.model.*;
 import com.playacademy.user.model.Student;
 
+
 @Service
 public class CourseManagerAPI {
 	
@@ -13,6 +14,7 @@ public class CourseManagerAPI {
 	CourseRepo courseRepo;
 	
 	public boolean saveCourse(Course c){
+
 		if(courseRepo.save(c)==null)
 			return false;
 		return true;
@@ -37,7 +39,6 @@ public class CourseManagerAPI {
 			return -1;
 		return course.getCourseId();
 	}
-
 	public boolean attend(Student student, long courseId) {
 		Course course = getCourse(courseId);
 		student.addCourse(course);

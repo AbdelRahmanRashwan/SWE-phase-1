@@ -16,10 +16,6 @@ public class Teacher extends User {
 	@JsonIgnore
 	private Set <Course> createdCourses;
 
-	
-
-	
-
 	public Teacher() {
 		type = "Teacher";
 	}
@@ -33,6 +29,7 @@ public class Teacher extends User {
 	public void setEducationalMail(String educationalMail) {
 		this.educationalMail = educationalMail;
 	}
+
 	public void setCreatedCourses(Set<Course> courses) {
 		this.createdCourses = courses;
 	}

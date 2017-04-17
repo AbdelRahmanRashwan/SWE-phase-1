@@ -25,7 +25,6 @@ public class GameManger {
 	public String createMCQGame(@RequestBody ItemCollector<MCQ> items) {
 		Game game = new Game();
 		game.setName(items.gameName);
-
 		for (int i = 0; i < items.questions.size(); i++) {
 			game.addQuestion(items.questions.get(i));
 			Iterator<Choice> it = items.questions.get(i).getChoices().iterator();
@@ -34,7 +33,6 @@ public class GameManger {
 			}
 		}
 		return addGame(game, items.courseName);
-
 	}
 
 	@RequestMapping(value = "/game/trueandfalse/create", method = RequestMethod.POST)
@@ -45,7 +43,6 @@ public class GameManger {
 			game.addQuestion(items.questions.get(i));
 		}
 		return addGame(game, items.courseName);
-	}
 
 	@RequestMapping(value = "/game/question/add", method = RequestMethod.POST)
 	public boolean addQuuestion(@RequestParam("gameId") long id, @RequestBody String quest) {
@@ -107,7 +104,6 @@ public class GameManger {
 		public ItemCollector() {
 
 		}
-
 		public String gameName;
 		public String courseName;
 		public List<T> questions;

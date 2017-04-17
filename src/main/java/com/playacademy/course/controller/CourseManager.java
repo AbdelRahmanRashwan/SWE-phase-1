@@ -10,7 +10,6 @@ import com.playacademy.user.model.*;
 
 @RestController
 public class CourseManager {
-
 	@Autowired
 	CourseManagerAPI courseManagerAPI;
 	@Autowired
@@ -93,7 +92,6 @@ public class CourseManager {
 		Course course = courseManagerAPI.getCourse(courseId);
 		return course.getStudents();
 	}
-
 	@RequestMapping(value = "/course/get", method = RequestMethod.GET)
 	public Course getCourse(@RequestParam("courseID") long courseID) {
 		return courseManagerAPI.getCourse(courseID);
@@ -111,5 +109,4 @@ public class CourseManager {
 	public boolean deleteCourse(@RequestParam("courseID") long courseID) {
 		return courseManagerAPI.removeCourse(courseID);
 	}
-
 }

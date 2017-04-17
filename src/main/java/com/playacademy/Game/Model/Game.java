@@ -1,4 +1,4 @@
-package com.playacademy.Game.Model;
+package com.playacademy.game.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.course.model.Course;
-
 //import com.playacademy.user.model.ScoreSheet;
 
 @Entity
@@ -44,7 +43,6 @@ public class Game {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-
 
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;

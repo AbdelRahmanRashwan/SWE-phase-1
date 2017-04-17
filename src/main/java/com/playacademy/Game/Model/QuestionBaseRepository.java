@@ -8,4 +8,3 @@ public interface QuestionBaseRepository<T extends Question>
 extends CrudRepository<T, Long> {
   
 }
-

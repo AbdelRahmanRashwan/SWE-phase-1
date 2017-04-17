@@ -1,4 +1,4 @@
-package com.playacademy.Game.controller;
+package com.playacademy.game.controller;
 
 import java.util.List;
 
@@ -20,7 +20,6 @@ public class GameServices implements IGameServices{
 		if(repository.save(game) != null)
 			return true;
 		else return false;
-		
 	}
 
 	@Override
@@ -39,7 +38,4 @@ public class GameServices implements IGameServices{
 			return true;
 		else return false;
 	}
-	
-	
-
 }

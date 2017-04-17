@@ -1,4 +1,4 @@
-package com.playacademy.Game.controller;
+package com.playacademy.game.controller;
 
 import java.util.List;
 
@@ -11,4 +11,3 @@ public interface IGameServices {
 	public Game getGameByID(long id);
 	public List<Game> getAllGamesInCourse(Course course);
 	public boolean addEditedGame(Game game);
-}

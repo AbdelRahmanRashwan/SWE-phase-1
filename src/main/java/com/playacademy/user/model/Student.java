@@ -10,6 +10,7 @@ import com.playacademy.Game.Model.ScoreSheet;
 
 
 
+
 @Entity
 public class Student extends User{
 
@@ -18,8 +19,9 @@ public class Student extends User{
 	private Set<ScoreSheet> scores;
 	
 	
-    @JsonIgnore
+  @JsonIgnore
 	private Set<Course> attendedCourses;
+
 	
 	
 	public Student(){
@@ -36,6 +38,7 @@ public class Student extends User{
 	}
 	public void setAttendedCourses(Set<Course> courses) {
 		this.attendedCourses = courses;
+
 	}
 	
 	// add
@@ -58,6 +61,4 @@ public class Student extends User{
 	public void addCourse(Course course) {
 		attendedCourses.add(course);
 	}
-	
-	
 }
