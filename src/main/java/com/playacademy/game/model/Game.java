@@ -21,7 +21,8 @@ public class Game {
 
 	@Column(name = "rate")
 	private long rate;
-
+	
+	@JsonIgnore
 	private Course course;
 
 	private Set<Question> questions;
