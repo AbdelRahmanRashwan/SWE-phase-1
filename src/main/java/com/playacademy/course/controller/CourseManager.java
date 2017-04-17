@@ -133,9 +133,21 @@ public class CourseManager {
 	@RequestMapping("/course/achievement/update/")
 	public boolean updateAchievement(@RequestParam("newAchievement") long ach,
 								  @RequestParam("studentId") long studentId,
-								  @RequestParam("courseId") long courseId){
+								  @RequestParam("courseName") String courseName){
+		
+		long courseId = courseManagerAPI.getCourseId(courseName);
+		User user =  userServices.getUserByID(studentId);
+		if (courseId == -1 || user == null || user instanceof Teacher) {
+			return false;
+		}
 		Course course = courseManagerAPI.getCourse(courseId);
 		Student student = (Student) userServices.getUserByID(studentId);
+		if(courseManagerAPI.isRegistered(student, course) != false){
+			return false;
+		}
+		
 		return courseManagerAPI.updateAchievement(course, student, ach);
 	}
+	
+	
 }

@@ -42,14 +42,10 @@ public class CourseManagerAPI {
 			return -1;
 		return course.getCourseId();
 	}
-	
-	public CourseAttendance getCourseAttendance(Student student, Course course){
-		return courseAttendanceRepo.findByCourseAndStudent(course, student);
-	}
 
 	public boolean attend(Student student, long courseId) {
 		Course course = getCourse(courseId);
-		CourseAttendance courseAttendance = getCourseAttendance(student, course);
+		CourseAttendance courseAttendance = courseAttendanceRepo.findByCourseAndStudent(course, student);
 		if(courseAttendance != null)
 			return false;
 		courseAttendance = new CourseAttendance();
@@ -69,12 +65,18 @@ public class CourseManagerAPI {
 	}
 
 	public boolean updateAchievement(Course course, Student student, long ach) {
-		CourseAttendanceID pk = new CourseAttendanceID(student, course);  
-		CourseAttendance courseAttendance = courseAttendanceRepo.findOne(pk);
+		CourseAttendance courseAttendance = courseAttendanceRepo.findByCourseAndStudent(course, student);
 		courseAttendance.setAchievement(ach);
 		
 		if(courseAttendanceRepo.save(courseAttendance)!=null)
 			return true;
 		return false;
+	}
+
+	public boolean isRegistered(Student student, Course course) {
+		CourseAttendance courseAttendance = courseAttendanceRepo.findByCourseAndStudent(course, student);
+		if(courseAttendance != null)
+			return false;
+		return true;
 	}
 }

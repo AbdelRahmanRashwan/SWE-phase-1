@@ -16,7 +16,7 @@ import com.playacademy.game.model.*;
 public class GameManger {
 
 	@Autowired
-	private IGameServices services;
+	private IGameServices gameServices;
 
 	@Autowired
 	private CourseManagerAPI courseAPI;
@@ -66,26 +66,34 @@ public class GameManger {
 			}
 		}
 
-		Game game = services.getGameByID(id);
+		Game game = gameServices.getGameByID(id);
 		game.addQuestion(question);
 
-		return services.addEditedGame(game);
+		return gameServices.addEditedGame(game);
 	}
 
 	@RequestMapping(value = "/game/get", method = RequestMethod.GET)
 	public Game getGame(@RequestParam("id") long id) {
 
-		Game game = services.getGameByID(id);
+		Game game = gameServices.getGameByID(id);
 		return game;
 	}
 
+	@RequestMapping("/game/score/update")
+	public boolean updateScore(@RequestParam("gameId") long gameId, @RequestParam("stuedntId") long studentId){
+		return false;
+	}
+	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public List<Game> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
 		long courseId = courseAPI.getCourseId(courseName);
 		Course course = courseAPI.getCourse(courseId);
-		return services.getAllGamesInCourse(course);
+		return gameServices.getAllGamesInCourse(course);
 	}
 
+	
+	
+	
 	private String addGame(Game game, String courseName) {
 		long courseId = courseAPI.getCourseId(courseName);
 		String ack = "";
@@ -94,7 +102,7 @@ public class GameManger {
 		} else {
 			Course course = courseAPI.getCourse(courseId);
 
-			if (services.addGame(game, course) == true)
+			if (gameServices.addGame(game, course) == true)
 				ack = "Game created succssessfully";
 			else
 				ack = "something wrong happened";

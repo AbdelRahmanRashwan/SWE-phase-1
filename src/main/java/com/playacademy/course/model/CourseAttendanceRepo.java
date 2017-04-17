@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.playacademy.user.model.Student;
 
-public interface CourseAttendanceRepo extends CrudRepository<CourseAttendance, CourseAttendanceID>{
+public interface CourseAttendanceRepo extends CrudRepository<CourseAttendance, Long>{
 	public List<CourseAttendance> findByStudent(Student student);
 
 	public List<CourseAttendance> findByCourse(Course course);
