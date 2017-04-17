@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.course.model.Course;
-import com.playacademy.game.model.ScoreSheet;
+import com.playacademy.Game.Model.ScoreSheet;
+
 
 
 
@@ -18,8 +19,9 @@ public class Student extends User{
 	private Set<ScoreSheet> scores;
 	
 	
-    @JsonIgnore
-	private Set<Course> courses;
+  @JsonIgnore
+	private Set<Course> attendedCourses;
+
 	
 	
 	public Student(){
@@ -34,8 +36,9 @@ public class Student extends User{
 	public void setScores(Set<ScoreSheet> scores) {
 		this.scores = scores;
 	}
-	public void setCourses(Set<Course> courses) {
-		this.courses = courses;
+	public void setAttendedCourses(Set<Course> courses) {
+		this.attendedCourses = courses;
+
 	}
 	
 	// add
@@ -52,12 +55,10 @@ public class Student extends User{
 	
 	@ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="course_attendance")
-	public Set<Course> getCourses() {
-		return courses;
+	public Set<Course> getAttendedCourses() {
+		return attendedCourses;
 	}
 	public void addCourse(Course course) {
-		courses.add(course);
+		attendedCourses.add(course);
 	}
-	
-	
 }

@@ -1,4 +1,4 @@
-package com.playacademy.game.controller;
+package com.playacademy.Game.controller;
 
 import java.io.IOException;
 import java.util.*;
@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playacademy.course.controller.CourseManagerAPI;
 import com.playacademy.course.model.Course;
-import com.playacademy.game.helper.ObjectMapperConfiguration;
-import com.playacademy.game.model.*;
-import com.playacademy.user.controller.UserServicesAPI;
-import com.playacademy.user.model.Teacher;
+import com.playacademy.Game.helper.ObjectMapperConfiguration;
+import com.playacademy.Game.Model.*;
 
 @RestController
 public class GameManger {
@@ -21,14 +19,10 @@ public class GameManger {
 	private IGameServices services;
 
 	@Autowired
-	@Qualifier(value = "TBean")
-	private UserServicesAPI userServices;
-	
-	@Autowired
 	private CourseManagerAPI courseAPI;
 
 	@RequestMapping(value = "/game/mcq/create", method = RequestMethod.POST)
-	public boolean createMCQGame(@RequestBody ItemCollector<MCQ> items) {
+	public String createMCQGame(@RequestBody ItemCollector<MCQ> items) {
 		Game game = new Game();
 		game.setName(items.gameName);
 		for (int i = 0; i < items.questions.size(); i++) {
@@ -38,19 +32,17 @@ public class GameManger {
 				it.next().setQuestion(items.questions.get(i));
 			}
 		}
-		return addGame(game, items.courseId, items.creatorId);
-		
+		return addGame(game, items.courseName);
 	}
 
 	@RequestMapping(value = "/game/trueandfalse/create", method = RequestMethod.POST)
-	public boolean createTrueAndFalseGame(@RequestBody ItemCollector<TrueAndFalse> items) {
+	public String createTrueAndFalseGame(@RequestBody ItemCollector<TrueAndFalse> items) {
 		Game game = new Game();
 		game.setName(items.gameName);
 		for (int i = 0; i < items.questions.size(); i++) {
 			game.addQuestion(items.questions.get(i));
 		}
-		return addGame(game, items.courseId, items.creatorId);
-	}
+		return addGame(game, items.courseName);
 
 	@RequestMapping(value = "/game/question/add", method = RequestMethod.POST)
 	public boolean addQuuestion(@RequestParam("gameId") long id, @RequestBody String quest) {
@@ -74,7 +66,7 @@ public class GameManger {
 		Game game = services.getGameByID(id);
 		game.addQuestion(question);
 
-		return services.addGame(game);
+		return services.addEditedGame(game);
 	}
 
 	@RequestMapping(value = "/game/get", method = RequestMethod.GET)
@@ -85,30 +77,35 @@ public class GameManger {
 	}
 
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
-	public List<Game> getAllGamesInCourse(@RequestParam("courseId") long courseId) {
+	public List<Game> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
+		long courseId = courseAPI.getCourseId(courseName);
 		Course course = courseAPI.getCourse(courseId);
 		return services.getAllGamesInCourse(course);
 	}
 
-	private boolean addGame(Game game, long courseId, long creatorId){
-		Course course = courseAPI.getCourse(courseId);
-		course.addGame(game);
-		
-		Teacher creator = (Teacher) userServices.getUserByID(creatorId);
-		game.setCreator(creator);
+	private String addGame(Game game, String courseName) {
+		long courseId = courseAPI.getCourseId(courseName);
+		String ack = "";
+		if (courseId == -1) {
+			ack = "No course with that name.";
+		} else {
+			Course course = courseAPI.getCourse(courseId);
 
-		return services.addGame(game);
+			if (services.addGame(game, course) == true)
+				ack = "Game created succssessfully";
+			else
+				ack = "something wrong happened";
+		}
+		return ack;
 	}
-	
+
 	static class ItemCollector<T> {
 
 		public ItemCollector() {
 
 		}
-
 		public String gameName;
-		public long courseId;
-		public long creatorId;
+		public String courseName;
 		public List<T> questions;
 
 	}

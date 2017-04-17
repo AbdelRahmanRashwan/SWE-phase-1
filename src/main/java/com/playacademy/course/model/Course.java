@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.playacademy.game.model.Game;
+import com.playacademy.Game.Model.Game;
 import com.playacademy.user.model.*;
 
 @Entity
@@ -20,8 +20,7 @@ public class Course {
 	@Column(name = "courseDescription")
 	private String courseDescription;
 	
-	
-
+	@JsonIgnore
 	private Set<Game> games;
 	
 	private Teacher creator;
@@ -98,7 +97,8 @@ public class Course {
 	public Set<Game> getGames() {
 		return games;
 	}
-	@ManyToMany(mappedBy="courses", cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="attendedCourses", cascade=CascadeType.ALL)
+
 	public Set<Student> getStudents() {
 		return students;
 	}

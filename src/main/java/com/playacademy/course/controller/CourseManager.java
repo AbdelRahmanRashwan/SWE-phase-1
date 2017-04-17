@@ -10,84 +10,103 @@ import com.playacademy.user.model.*;
 
 @RestController
 public class CourseManager {
-	
 	@Autowired
 	CourseManagerAPI courseManagerAPI;
 	@Autowired
 	@Qualifier(value = "UBean")
 	private UserServicesAPI userServices;
-	
-	@RequestMapping( value = "/course/create" , method=RequestMethod.GET)
-	public boolean createCourse(@RequestParam("courseName") String courseName,
-								@RequestParam("courseDescription") String courseDescription,
-								@RequestParam("teacherId") long teacherId){
-		
-		if(courseManagerAPI.getCourseId(courseName) != -1 ){
-			System.out.println("why "+teacherId);
-			return false;
-		}
-		System.out.println("What "+teacherId);
-		Course course = new Course (courseName,courseDescription);
-		
-		Teacher creator = (Teacher) userServices.getUserByID(teacherId);
-		creator.addCourse(course);
-		return courseManagerAPI.addCourse(course);
-	}
-	
 
-	
-	@RequestMapping( value = "/course/attend" , method=RequestMethod.GET)
-	public boolean attendCourse(@RequestParam("courseName") String courseName,
-								@RequestParam("studentId") long studentId){
+	@RequestMapping(value = "/course/create", method = RequestMethod.GET)
+	public String createCourse(@RequestParam("courseName") String courseName,
+			@RequestParam("courseDescription") String courseDescription, @RequestParam("teacherId") long teacherId) {
+
 		long courseId = courseManagerAPI.getCourseId(courseName);
-		if(courseId == -1 ){
-			return false;
+		User user =  userServices.getUserByID(teacherId);
+		String ack = "";
+		
+		if (courseId != -1 || user == null || user instanceof Student) {
+			if(courseId != -1){
+				ack = "Another course exists with the same name.";
+			}else if(user == null){
+				ack = "No user exist with that ID.";
+			}else{
+				ack = "This ID represents a student, students can only enroll in courses";
+			}
+			return ack;
 		}
-		Course course = courseManagerAPI.getCourse(courseId);
-		Student student = (Student) userServices.getUserByID(studentId);
-		student.addCourse(course);
-		course.addStudent(student);
-		return courseManagerAPI.addCourse(course);
+		
+		Course course = new Course(courseName, courseDescription);
+		((Teacher)user).addCourse(course);
+		if(courseManagerAPI.saveCourse(course ) == true){
+			ack = "Course created successfully";
+		}else ack = "Sorry something went wrong.";
+		return ack;
 	}
-	
-	@RequestMapping( value = "/attendeted/courses/student/get" , method=RequestMethod.GET)
-	public Set<Course> getAttendedCourse(@RequestParam("studentId") long studentId){
-		Student student = (Student) userServices.getUserByID(studentId);
-		if(student == null ){
+
+	@RequestMapping(value = "/course/attend", method = RequestMethod.GET)
+	public String attendCourse(@RequestParam("courseName") String courseName,
+			@RequestParam("studentId") long studentId) {
+		long courseId = courseManagerAPI.getCourseId(courseName);
+		User user =  userServices.getUserByID(studentId);
+		String ack = "";
+		if (courseId == -1 || user == null || user instanceof Teacher) {
+			if(courseId == -1){
+				ack = "No course with that name.";
+			}else if(user == null){
+				ack = "No user exist with that ID.";
+			}else{
+				ack = "This ID represents a teacher, teacher can only creat courses";
+			}
+			return ack;
+		}
+		if(courseManagerAPI.attend((Student)user, courseId) == true)
+			ack = "Enrolled succssessfully.";
+		else ack = "Sorry something went wrong.";
+		return ack;
+	}
+
+	@RequestMapping(value = "/courses/attendeted/student/", method = RequestMethod.GET)
+	public Set<Course> getAttendedCourse(@RequestParam("studentId") long studentId) {
+		User user = userServices.getUserByID(studentId);
+		if (user == null || user instanceof Teacher) {
 			return null;
 		}
-		return student.getCourses();
+		return ((Student)user).getAttendedCourses();
 	}
 	
-	@RequestMapping( value = "/course/registered/students/get" , method=RequestMethod.GET)
-	public Set<Student> getRegisteredSrudents(@RequestParam("courseName") String courseName){
+	@RequestMapping(value = "/courses/created/teacher/", method = RequestMethod.GET)
+	public Set<Course> getCreatedCourse(@RequestParam("teacherId") long studentId) {
+		User user = userServices.getUserByID(studentId);
+		if (user == null || user instanceof Student) {
+			return null;
+		}
+		return ((Teacher)user).getCreatedCourses();
+	}
+
+	@RequestMapping(value = "/course/registered/students/get", method = RequestMethod.GET)
+	public Set<Student> getRegisteredSrudents(@RequestParam("courseName") String courseName) {
 		long courseId = courseManagerAPI.getCourseId(courseName);
-		if(courseId == -1 ){
+		if (courseId == -1) {
 			return null;
 		}
 		Course course = courseManagerAPI.getCourse(courseId);
 		return course.getStudents();
 	}
-	
-	@RequestMapping(value = "/course/get" , method=RequestMethod.GET)
-	public Course getCourse(@RequestParam("courseID") long courseID){
+	@RequestMapping(value = "/course/get", method = RequestMethod.GET)
+	public Course getCourse(@RequestParam("courseID") long courseID) {
 		return courseManagerAPI.getCourse(courseID);
 	}
-	
-	@RequestMapping(value = "/course/edit" , method=RequestMethod.GET)
-	public boolean editCourse(
-			@RequestParam("courseID") long courseID,
-			@RequestParam("courseName") String courseName,
-			@RequestParam("courseDescription") String courseDescription){
-		
-		Course c =new Course(courseID,courseName,courseDescription);
-		return courseManagerAPI.addCourse(c);	
+
+	@RequestMapping(value = "/course/edit", method = RequestMethod.GET)
+	public boolean editCourse(@RequestParam("courseID") long courseID, @RequestParam("courseName") String courseName,
+			@RequestParam("courseDescription") String courseDescription) {
+
+		Course c = new Course(courseID, courseName, courseDescription);
+		return courseManagerAPI.saveCourse(c);
 	}
-	
-	@RequestMapping(value = "/course/delete" , method=RequestMethod.GET)
-	public boolean deleteCourse(@RequestParam("courseID") long courseID){
+
+	@RequestMapping(value = "/course/delete", method = RequestMethod.GET)
+	public boolean deleteCourse(@RequestParam("courseID") long courseID) {
 		return courseManagerAPI.removeCourse(courseID);
 	}
-	
-	
 }
