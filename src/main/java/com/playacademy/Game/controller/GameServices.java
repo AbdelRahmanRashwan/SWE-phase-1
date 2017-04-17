@@ -1,4 +1,4 @@
-package com.playacademy.game.controller;
+package com.playacademy.Game.controller;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.Course;
-import com.playacademy.game.model.*;
+import com.playacademy.Game.Model.*;
 
 @Service
 public class GameServices implements IGameServices{

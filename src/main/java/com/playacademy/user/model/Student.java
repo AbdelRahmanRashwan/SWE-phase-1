@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.course.model.Course;
-import com.playacademy.game.model.ScoreSheet;
+import com.playacademy.Game.Model.ScoreSheet;
 
 
 

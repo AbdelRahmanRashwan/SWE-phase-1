@@ -1,9 +1,9 @@
-package com.playacademy.game.controller;
+package com.playacademy.Game.controller;
 
 import java.util.List;
 
 import com.playacademy.course.model.Course;
-import com.playacademy.game.model.Game;
+import com.playacademy.Game.Model.Game;
 
 public interface IGameServices {
 	

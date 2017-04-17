@@ -1,4 +1,4 @@
-package com.playacademy.game.model;
+package com.playacademy.Game.Model;
 
 
 import java.util.Iterator;

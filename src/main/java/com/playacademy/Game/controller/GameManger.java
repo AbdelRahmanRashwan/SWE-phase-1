@@ -1,4 +1,4 @@
-package com.playacademy.game.controller;
+package com.playacademy.Game.controller;
 
 import java.io.IOException;
 import java.util.*;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playacademy.course.controller.CourseManagerAPI;
 import com.playacademy.course.model.Course;
-import com.playacademy.game.helper.ObjectMapperConfiguration;
-import com.playacademy.game.model.*;
+import com.playacademy.Game.helper.ObjectMapperConfiguration;
+import com.playacademy.Game.Model.*;
 
 @RestController
 public class GameManger {
