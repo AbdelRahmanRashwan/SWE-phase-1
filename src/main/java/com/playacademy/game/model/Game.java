@@ -21,12 +21,13 @@ public class Game {
 
 	@Column(name = "rate")
 	private long rate;
-
+	
+	@JsonIgnore
 	private Course course;
 
 	private Set<Question> questions;
 	@JsonIgnore
-	private Set<ScoreSheet> scores;
+	private Set<GameSheet> scores;
 
 	public Game() {
 		questions = new HashSet<Question>();
@@ -50,7 +51,7 @@ public class Game {
 		this.questions = questions;
 	}
 
-	public void setScores(Set<ScoreSheet> scores) {
+	public void setScores(Set<GameSheet> scores) {
 		this.scores = scores;
 	}
 
@@ -59,7 +60,7 @@ public class Game {
 	}
 
 	// add
-	public void addScore(ScoreSheet score) {
+	public void addScore(GameSheet score) {
 		score.setGame(this);
 		scores.add(score);
 	}
@@ -92,7 +93,7 @@ public class Game {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
-	public Set<ScoreSheet> getScores() {
+	public Set<GameSheet> getScores() {
 		return scores;
 	}
 

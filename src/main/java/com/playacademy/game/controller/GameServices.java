@@ -7,12 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.Course;
 import com.playacademy.game.model.*;
+import com.playacademy.user.model.Student;
 
 @Service
 public class GameServices implements IGameServices{
 	
 	@Autowired
 	GameRepository repository;
+	@Autowired
+	GameSheetRepo gameSheetRepo;
 
 	@Override
 	public boolean addGame(Game game, Course course) {
@@ -39,7 +42,30 @@ public class GameServices implements IGameServices{
 			return true;
 		else return false;
 	}
+
+	@Override
+	public int judge(Question question, String answer) {
+		if(question!=null&&answer.equals(question.getAnswer())){
+			return 10;
+		}else if (question==null){
+			return -1;
+		}else {
+			return 0;
+		}
+	}
 	
-	
+	@Override
+	public boolean saveScore(Game game , Student student,int score , int rate){
+		GameSheet gameSheet = new GameSheet();
+		gameSheet.setGame(game);
+		gameSheet.setStudent(student);
+		gameSheet.setScore(score);
+		gameSheet.setScore(rate);
+		if(gameSheetRepo.save(gameSheet) != null)
+			return true;
+		else 
+			return false;
+		
+	}
 
 }

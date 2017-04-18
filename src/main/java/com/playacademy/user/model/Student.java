@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.course.model.CourseAttendance;
-import com.playacademy.game.model.ScoreSheet;
+import com.playacademy.game.model.GameSheet;
 
 
 
@@ -19,7 +19,7 @@ public class Student extends User{
 
 	
 	@JsonIgnore
-	private Set<ScoreSheet> scores;
+	private Set<GameSheet> scores;
 	
 	
 	@JsonIgnore
@@ -36,7 +36,7 @@ public class Student extends User{
 	
 	
 	// Setters
-	public void setScores(Set<ScoreSheet> scores) {
+	public void setScores(Set<GameSheet> scores) {
 		this.scores = scores;
 	}
 	public void setAttendance_sheets(Set<CourseAttendance> attendance_sheets) {
@@ -44,14 +44,14 @@ public class Student extends User{
 	}
 	
 	// add
-	public void addScore(ScoreSheet score) {
+	public void addScore(GameSheet score) {
 		score.setStudent(this);
 		scores.add(score);
 	}
 	
 	// Relations
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="student")
-	public Set<ScoreSheet> getScores() {
+	public Set<GameSheet> getScores() {
 		return scores;
 	}
 	

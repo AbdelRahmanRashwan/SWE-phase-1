@@ -11,6 +11,8 @@ import com.playacademy.course.controller.CourseManagerAPI;
 import com.playacademy.course.model.Course;
 import com.playacademy.game.helper.ObjectMapperConfiguration;
 import com.playacademy.game.model.*;
+import com.playacademy.user.controller.UserServicesAPI;
+import com.playacademy.user.model.Student;
 
 @RestController
 public class GameManger {
@@ -21,6 +23,10 @@ public class GameManger {
 	@Autowired
 	private CourseManagerAPI courseAPI;
 
+	@Autowired
+	@Qualifier(value = "UBean")
+	UserServicesAPI userServices;
+	
 	@RequestMapping(value = "/game/mcq/create", method = RequestMethod.POST)
 	public String createMCQGame(@RequestBody ItemCollector<MCQ> items) {
 		Game game = new Game();
@@ -79,9 +85,11 @@ public class GameManger {
 		return game;
 	}
 
-	@RequestMapping("/game/score/update")
-	public boolean updateScore(@RequestParam("gameId") long gameId, @RequestParam("stuedntId") long studentId){
-		return false;
+	@RequestMapping(value="/game/score/update", method = RequestMethod.POST)
+	public boolean updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
+		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
+		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
+		return gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate);
 	}
 	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
@@ -90,9 +98,20 @@ public class GameManger {
 		Course course = courseAPI.getCourse(courseId);
 		return gameServices.getAllGamesInCourse(course);
 	}
-
 	
-	
+	@RequestMapping(value = "/judgeGame",method = RequestMethod.GET)
+	public int judge(@RequestParam("gameId")long gameId,@RequestParam("questionId")long questionId,@RequestParam("answe")String answer){
+		Game g =gameServices.getGameByID(gameId);
+		Set<Question> gameQuestions =g.getQuestions();
+		Iterator<Question> i = gameQuestions.iterator();
+		Question question =null;
+		while(i.hasNext()){
+			question =(Question) i.next();
+			if(question.getQuestionId()==questionId)
+				break;
+		}
+		return gameServices.judge(question, answer);
+	}
 	
 	private String addGame(Game game, String courseName) {
 		long courseId = courseAPI.getCourseId(courseName);
@@ -120,5 +139,19 @@ public class GameManger {
 		public String courseName;
 		public List<T> questions;
 
+	}
+	
+	static class ParseJsonToGameSheet {
+		public long gameId;
+		public long studentId;
+		public int score;
+		public int rate;
+
+		public ParseJsonToGameSheet(long gameId, long studentId, int score,int rate) {
+			this.gameId = gameId;
+			this.studentId = studentId;
+			this.score = score;
+			this.rate= rate;
+		}
 	}
 }
