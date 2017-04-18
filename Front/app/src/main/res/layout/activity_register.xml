@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="18dp"
+    tools:context="com.example.rashwan.playacademy.Register"
+    android:background="@drawable/mainbackgound"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/mainicon"
+                android:layout_gravity="center" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:inputType="textPersonName"
+                android:id="@+id/firstName"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:inputType="textPersonName"
+                android:id="@+id/lastName"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:inputType="textEmailAddress"
+                android:id="@+id/email"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Age"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:inputType="number"
+                android:id="@+id/age"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Educational Mail"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                android:inputType="textEmailAddress"
+                android:id="@+id/educationalMail"
+                android:visibility="gone"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/teacherCheck"
+                    />
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teacher"
+                    android:textColor="#FFF"
+                    android:textSize="18dp"
+                    />
+
+            </LinearLayout>
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:layout_gravity="center"
+                android:background="#50ffffff"
+                android:textColor="#fff"
+                android:textSize="18dp"
+                android:id="@+id/register"
+                />
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

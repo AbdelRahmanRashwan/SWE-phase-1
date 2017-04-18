@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="18dp"
+    tools:context="com.example.rashwan.playacademy.Login"
+    android:weightSum="1"
+    android:background="@drawable/mainbackgound"
+    >
+
+    <ImageView
+        android:layout_margin="35dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/mainicon"
+        android:layout_gravity="center"
+ />
+
+    <EditText
+        android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+        android:drawableStart="@drawable/ic_mail_outline_black_24dp"
+        android:drawableTint="#FFF"
+        android:drawablePadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textSize="24dp"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:backgroundTint="#fff"
+        />
+
+    <EditText
+        android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+        android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+        android:drawableTint="#ffffff"
+        android:drawablePadding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textSize="24dp"
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:backgroundTint="#fff"
+        />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_gravity="center"
+        android:background="#50ffffff"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:id="@+id/login"
+
+        />
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:background="#50ffffff"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:id="@+id/register"
+
+        />
+
+</LinearLayout>
