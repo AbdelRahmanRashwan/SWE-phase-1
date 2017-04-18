@@ -20,7 +20,7 @@ import com.playacademy.user.model.Student;
 
 @Entity
 @Table(name="score_sheet")
-public class ScoreSheet {
+public class GameSheet {
 	
 	
 	private long scoreId;
@@ -33,7 +33,7 @@ public class ScoreSheet {
 	
 	@JsonIgnore
     private Student student;
-	
+	@JsonIgnore
     private Game game;
 	
 	
