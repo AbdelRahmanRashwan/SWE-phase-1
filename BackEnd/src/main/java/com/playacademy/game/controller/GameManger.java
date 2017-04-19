@@ -128,6 +128,14 @@ public class GameManger {
 		}
 		return ack;
 	}
+	
+	public ArrayList<GameSheet> scoreBoard(long studentId){
+		Student student =(Student) userServices.getUserByID(studentId);
+		if(student == null){
+			return null;	
+		}
+		return gameServices.scoreBoard(student);
+	}
 
 	static class ItemCollector<T> {
 
