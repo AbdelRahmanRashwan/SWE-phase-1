@@ -1,19 +1,20 @@
 package com.example.rashwan.playacademy.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Student extends User implements Serializable{
 
 	
-	private Set<GameSheet> scores;
-    private Set<CourseAttendance> attendance_sheets;
+	private ArrayList<GameSheet> scores;
+    private ArrayList<CourseAttendance> attendance_sheets;
 	
 	
 	public Student(){
 		type="Student";
-		attendance_sheets = new HashSet<CourseAttendance> ();
+		attendance_sheets = new ArrayList<> ();
 	}
 	public Student(long id){
 		this.setUserId(id);
@@ -21,10 +22,10 @@ public class Student extends User implements Serializable{
 	
 	
 	// Setters
-	public void setScores(Set<GameSheet> scores) {
+	public void setScores(ArrayList<GameSheet> scores) {
 		this.scores = scores;
 	}
-	public void setAttendance_sheets(Set<CourseAttendance> attendance_sheets) {
+	public void setAttendance_sheets(ArrayList<CourseAttendance> attendance_sheets) {
 		this.attendance_sheets = attendance_sheets;
 	}
 	
@@ -35,11 +36,11 @@ public class Student extends User implements Serializable{
 	}
 	
 	// Relations
-	public Set<GameSheet> getScores() {
+	public ArrayList<GameSheet> getScores() {
 		return scores;
 	}
 	
-	public Set<CourseAttendance> getAttendance_sheets() {
+	public ArrayList<CourseAttendance> getAttendance_sheets() {
 		return attendance_sheets;
 	}
 	public void addAttendance(CourseAttendance attendance) {

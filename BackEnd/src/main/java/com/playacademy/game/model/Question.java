@@ -11,14 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "questions")
 public abstract class Question {
 	
-	
-	@JsonCreator
-	public Question(){	}
-	
-	public Question(Game game){
-		this.game = game;
-	}
-	
 	private long questionId;
 	@JsonIgnore
     private Game game;
@@ -29,6 +21,13 @@ public abstract class Question {
 	@Column(name="answer")
 	private String answer;
 	
+	
+	@JsonCreator
+	public Question(){	}
+	
+	public Question(Game game){
+		this.game = game;
+	}
 	
 	//Setters	
 	public void setQuestion(String question) {

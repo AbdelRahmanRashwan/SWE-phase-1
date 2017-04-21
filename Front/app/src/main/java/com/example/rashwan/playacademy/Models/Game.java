@@ -1,5 +1,6 @@
 package com.example.rashwan.playacademy.Models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,11 +12,11 @@ public class Game {
 	private String name;
 	private long rate;
 	private Course course;
-	private Set<Question> questions;
+	private ArrayList<Question> questions;
 	private Set<GameSheet> scores;
 
 	public Game() {
-		questions = new HashSet<Question>();
+		questions = new ArrayList<>();
 	}
 
 	// Setters
@@ -32,7 +33,7 @@ public class Game {
 	}
 
 
-	public void setQuestions(Set<Question> questions) {
+	public void setQuestions(ArrayList<Question> questions) {
 		this.questions = questions;
 	}
 
@@ -70,7 +71,7 @@ public class Game {
 	}
 
 	// Relations
-	public Set<Question> getQuestions() {
+	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
 

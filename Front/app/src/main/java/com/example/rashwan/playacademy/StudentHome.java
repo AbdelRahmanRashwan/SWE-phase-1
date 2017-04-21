@@ -17,9 +17,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rashwan.playacademy.Models.Course;
 import com.example.rashwan.playacademy.Models.Teacher;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,8 +46,6 @@ public class StudentHome extends AppCompatActivity {
         setContentView(R.layout.activity_student_home);
 
         initialize();
-
-        Toast.makeText(this, Login.loggedUser.getUserId()+"", Toast.LENGTH_SHORT).show();
 
         String link=ServicesLinks.GET_STUDENT_COURSES_URL+"?studentId="+Login.loggedUser.getUserId();
         RequestQueue queue= Volley.newRequestQueue(getApplicationContext());
@@ -139,9 +139,10 @@ public class StudentHome extends AppCompatActivity {
     }
 
     public void startSingleActivity(int i){
-        Toast.makeText(this, data.get(i)+"", Toast.LENGTH_SHORT).show();
         Intent singleCoursePage=new Intent(StudentHome.this, SingleCourse.class);
-        singleCoursePage.putExtra("course",(Serializable)data.get(i));
+        Gson gson=new Gson();
+        String course=gson.toJson(data.get(i));
+        singleCoursePage.putExtra("course",course);
         startActivity(singleCoursePage);
     }
 }

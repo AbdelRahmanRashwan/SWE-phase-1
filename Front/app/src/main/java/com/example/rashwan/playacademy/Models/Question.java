@@ -1,6 +1,6 @@
 package com.example.rashwan.playacademy.Models;
 
-public abstract class Question {
+public class Question {
 	
 
 	public Question(){	}

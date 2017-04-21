@@ -93,10 +93,14 @@ public class GameManger {
 	}
 	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
-	public List<Game> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
+	public Map<String,List<Game>> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
+		System.out.println(courseName);
 		long courseId = courseAPI.getCourseId(courseName);
 		Course course = courseAPI.getCourse(courseId);
-		return gameServices.getAllGamesInCourse(course);
+		Map<String,List<Game>> data=new HashMap<>();
+		data.put("games", gameServices.getAllGamesInCourse(course));
+		System.out.println(data.get("games"));
+		return data;
 	}
 	
 	@RequestMapping(value = "/judgeGame",method = RequestMethod.GET)

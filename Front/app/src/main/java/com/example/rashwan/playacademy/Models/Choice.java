@@ -2,12 +2,12 @@ package com.example.rashwan.playacademy.Models;
 
 public class Choice {
 
-	private long choiceId;
+	private int choiceId;
 	private String choice;
 	private MCQ question;
 
 	// Setters
-	public void setChoiceId(long choiceId) {
+	public void setChoiceId(int choiceId) {
 		this.choiceId = choiceId;
 	}
 
@@ -20,7 +20,7 @@ public class Choice {
 	}
 
 	// Getters
-	public long getChoiceId() {
+	public int getChoiceId() {
 		return choiceId;
 	}
 

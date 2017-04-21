@@ -1,28 +1,25 @@
 package com.example.rashwan.playacademy.Models;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
 public class MCQ extends Question {
-	
 
+	private ArrayList<Choice> choices;
 	public MCQ(){
 	}
 	
-	public MCQ( Set<Choice> choices){
+	public MCQ( ArrayList<Choice> choices){
 		this.choices = choices;
 	}
 	public MCQ(long id){
 		this.setQuestionId(id);
 	}
-	
-	
-	private Set<Choice> choices;
-	
-	
+
 	// Setters
 	
-	public void setChoices(Set<Choice> choices) {
+	public void setChoices(ArrayList<Choice> choices) {
 		this.choices = choices;
 		if(choices != null){
 			Iterator<Choice> it = this.choices.iterator();
@@ -37,7 +34,7 @@ public class MCQ extends Question {
 		choices.add(choice);
 	}
 	// Relations
-	public Set<Choice> getChoices() {
+	public ArrayList<Choice> getChoices() {
 		return choices;
 	}
 }

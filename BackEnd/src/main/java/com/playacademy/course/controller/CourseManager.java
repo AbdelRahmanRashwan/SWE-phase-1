@@ -129,9 +129,7 @@ public class CourseManager {
 
 	@RequestMapping(value = "/courses/attendeted/student", method = RequestMethod.GET)
 	public Map<String,List<CourseAttendance>> getAttendedCourse(@RequestParam("studentId") long studentId) {
-		System.out.println("sayed "+studentId);
 		User user = userServices.getUserByID(studentId);
-		System.out.println("studentId= "+user.getEmail());
 		if (user == null || user instanceof Teacher) {
 			return null;
 		}

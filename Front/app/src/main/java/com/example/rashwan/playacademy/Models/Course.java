@@ -1,6 +1,7 @@
 package com.example.rashwan.playacademy.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -12,7 +13,7 @@ public class Course implements Serializable {
     private long courseId;
     private String courseName;
     private String courseDescription;
-    private Set<Game> games;
+    private ArrayList<Game> games;
     private Teacher creator;
 
     public Course(){}
@@ -41,11 +42,11 @@ public class Course implements Serializable {
         this.courseDescription = courseDescription;
     }
 
-    public Set<Game> getGames() {
+    public ArrayList<Game> getGames() {
         return games;
     }
 
-    public void setGames(Set<Game> games) {
+    public void setGames(ArrayList<Game> games) {
         this.games = games;
     }
 
@@ -57,7 +58,7 @@ public class Course implements Serializable {
         this.creator = creator;
     }
 
-    public Course(long courseId, String courseName, String courseDescription, Set<Game> games, Teacher creator) {
+    public Course(long courseId, String courseName, String courseDescription, ArrayList<Game> games, Teacher creator) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.courseDescription = courseDescription;

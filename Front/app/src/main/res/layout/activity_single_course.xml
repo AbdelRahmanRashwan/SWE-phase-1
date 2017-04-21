@@ -7,12 +7,45 @@
     tools:context="com.example.rashwan.playacademy.SingleCourse"
     android:background="@drawable/mainbackgound"
     android:padding="18dp"
+    android:orientation="vertical"
     >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:text="Course Name"
+        android:textSize="30dp"
+        android:textColor="#fff"
+        android:id="@+id/courseName"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="By "
+            android:textSize="24dp"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Creator name"
+            android:textSize="24dp"
+            android:textColor="#fff"
+            android:id="@+id/creatorName"
+            />
+    </LinearLayout>
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/gameList"
+        >
+    </ListView>
 </LinearLayout>
