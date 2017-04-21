@@ -1,6 +1,12 @@
 package com.playacademy.course.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +85,8 @@ public class CourseManager {
 	
 	// Course and teacher
 	@RequestMapping(value = "/courses/created/teacher/", method = RequestMethod.GET)
-	public Set<Course> getCreatedCourse(@RequestParam("teacherId") long studentId) {
-		User user = userServices.getUserByID(studentId);
+	public Set<Course> getCreatedCourse(@RequestParam("teacherId") long teacherId) {
+		User user = userServices.getUserByID(teacherId);
 		if (user == null || user instanceof Student) {
 			return null;
 		}
@@ -121,17 +127,21 @@ public class CourseManager {
 		return ack;
 	}
 
-	@RequestMapping(value = "/courses/attendeted/student/", method = RequestMethod.GET)
-	public List<CourseAttendance> getAttendedCourse(@RequestParam("studentId") long studentId) {
+	@RequestMapping(value = "/courses/attendeted/student", method = RequestMethod.GET)
+	public Map<String,List<CourseAttendance>> getAttendedCourse(@RequestParam("studentId") long studentId) {
+		System.out.println("sayed "+studentId);
 		User user = userServices.getUserByID(studentId);
+		System.out.println("studentId= "+user.getEmail());
 		if (user == null || user instanceof Teacher) {
 			return null;
 		}
-		return courseManagerAPI.getAttendedCourses(((Student)user));
+		Map<String,List<CourseAttendance>> courses=new HashMap<>();
+		courses.put("courses", courseManagerAPI.getAttendedCourses(((Student)user)));
+		return courses;
 	}
 
 	@RequestMapping("/course/achievement/update/")
-	public boolean updateAchievement(@RequestParam("newAchievement") long ach,
+	public Boolean updateAchievement(@RequestParam("newAchievement") long ach,
 								  @RequestParam("studentId") long studentId,
 								  @RequestParam("courseName") String courseName){
 		

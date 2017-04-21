@@ -21,16 +21,18 @@ public class UserManager {
 
 	@Autowired
 	@Qualifier(value = "TBean")
-	UserServicesAPI userTServices;
+	UserServicesAPI teacherServices;
 
 	@Autowired
 	@Qualifier(value = "SBean")
-	UserServicesAPI userSServices;
+	UserServicesAPI studentService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public User login(@RequestParam("email") String email, @RequestParam("password") String password) {
-		User user = userServices.getUserByID(userServices.getUserID(email, password));
-		return user;
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public User login(@RequestBody Student user) {
+		System.out.println(user.getEmail()+" "+user.getPassword());
+		User userRet = userServices.getUserByID(userServices.getUserID(user.getEmail(), user.getPassword()));
+		System.out.println(userRet);
+		return userRet;
 	}
 	
 	@RequestMapping(value = "/user/delete", method = RequestMethod.GET)
@@ -39,18 +41,19 @@ public class UserManager {
 	}
 
 	@RequestMapping(value = "/student/register", method = RequestMethod.POST)
-	public boolean registerStudent(@RequestBody Student student) {
-
-		boolean confirmation = userSServices.addUser(student);
-		return confirmation;
+	public String registerStudent(@RequestBody Student student) {
+		
+		int  id = (int) studentService.addUser(student);
+		String ret="{\"confirmation\":"+id+"}";
+		
+		return ret;
 	}
 
 	@RequestMapping(value = "/teacher/register", method = RequestMethod.POST)
-	public boolean registerTeacher(@RequestBody Teacher teacher) {
+	public int registerTeacher(@RequestBody Teacher teacher) {
 		// userServices = new TeacherService();
-		System.out.println(teacher.getAge());
-		boolean confirmation = userTServices.addUser(teacher);
-		return confirmation;
+		int  id =(int) teacherServices.addUser(teacher);
+		return id;
 	}
 
 }

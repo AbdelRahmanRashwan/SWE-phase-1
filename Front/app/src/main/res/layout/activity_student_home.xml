@@ -27,44 +27,55 @@
         android:textColorHint="#fff"
         android:layout_weight="1"
         android:backgroundTint="#fff"
+        android:focusableInTouchMode="true"
+        android:id="@+id/searchBar"
         />
-    <Button
+    <ImageButton
         android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
         android:text="Find"
-        android:background="#FFF"
-        android:layout_gravity="center"
+        android:textSize="18dp"
+        android:textColor="#FFF"
+        android:background="@null"
+        android:src="@drawable/ic_search_black_24dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/searchButton"
+        />
+
+    <ImageButton
+        android:layout_marginLeft="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:text="Find"
+        android:textSize="18dp"
+        android:textColor="#FFF"
+        android:background="@null"
+        android:src="@drawable/ic_close_black_24dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/cancelButton"
+        android:visibility="gone"
         />
 
     </LinearLayout>
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:id="@+id/profile"
-    >
-
-    <ImageView
-        android:layout_width="100dp"
-        android:scaleType="fitCenter"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_person_black_24dp"
-        android:background="@null"
-        android:tint="#ffffff"
-        android:layout_gravity="center"
-        />
+    
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textColor="#FFF"
-        android:layout_gravity="center"
+        android:text="No courses found"
+        android:textColor="#fff"
         android:textSize="24dp"
-        android:id="@+id/name"
+        android:layout_gravity="center"
+        android:padding="24dp"
+        android:visibility="gone"
+        android:id="@+id/noCourse"
         />
-
-</LinearLayout>
+    
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/coursesList"
+        ></ListView>
 </LinearLayout>

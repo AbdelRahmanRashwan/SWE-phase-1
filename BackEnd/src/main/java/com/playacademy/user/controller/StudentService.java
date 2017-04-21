@@ -13,21 +13,22 @@ public class StudentService extends UserServicesAPI {
 
 	@Override
 	protected boolean verifyEmail(String email) {
+		System.out.println("email "+email);
 		if (email.contains("@"))
 			return true;
 		return false;
 	}
 
 	@Override
-	public boolean addUser(User user) {
-		System.out.println(user.getEmail());
+	public long addUser(User user) {
 		long userID = getUserID(user.getEmail());
 		if (!verifyEmail(user.getEmail()) || userID != -1) {
-			return false;
+			return -1;
 		}
 
 		Student confirmation = studentRepo.save(((Student) user));
-		return confirmation.getEmail() == user.getEmail() ? true : false;
+		System.out.println(confirmation.getEmail() == user.getEmail());
+		return confirmation.getUserId();
 	}
 
 }

@@ -32,6 +32,8 @@
         android:textColor="#fff"
         android:textColorHint="#fff"
         android:backgroundTint="#fff"
+        android:inputType="textEmailAddress"
+        android:id="@+id/loginEmail"
         />
 
     <EditText
@@ -47,6 +49,8 @@
         android:textColor="#fff"
         android:textColorHint="#fff"
         android:backgroundTint="#fff"
+        android:inputType="textPassword"
+        android:id="@+id/loginPassword"
         />
 
     <Button

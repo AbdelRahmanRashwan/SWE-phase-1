@@ -1,47 +1,15 @@
-package com.playacademy.user.model;
-
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-@Inheritance
-@DiscriminatorColumn(name = "user_type")
-@Table(name = "users")
+package com.example.rashwan.playacademy.Models;
 
 public abstract class User {
 
 	protected long userId;
-
-	@Column(name = "firstName")
 	protected String firstName;
-
-	@Column(name = "lastName")
 	protected String lastName;
-
-	@Column(name = "email")
 	protected String email;
-
-	@Column(name = "age")
 	protected long age;
-
-	@Column(name = "password")
 	protected String password;
-
-	@Column(name = "type")
 	protected String type;
-	
-	@Column(name = "verification_code")
 	protected String verificationCode;
-	
-	@Column(name = "verified")
 	protected boolean verified;
 
 	
@@ -72,8 +40,6 @@ public abstract class User {
 		this.type = userType;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long getUserId() {
 		return userId;
 	}

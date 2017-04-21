@@ -14,22 +14,20 @@ public class TeacherService extends UserServicesAPI {
 
 	@Override
 	protected boolean verifyEmail(String email) {
-		if (email.contains("@stud.fci-cu.edu.eg"))
+		if (email.contains("@"))
 			return true;
 		return false;
 	}
 
-	public boolean addUser(User user) {
-		System.out.println(user.getEmail());
+	public long addUser(User user) {
 		long userID = getUserID(user.getEmail());
 		long userID2 = getTeacherIDbyEducationalMail(((Teacher) user).getEducationalMail());
 		if (!verifyEmail(((Teacher) user).getEducationalMail()) || userID != -1 || userID2 != -1) {
-			System.out.println(userID+" "+userID2 );
-			return false;
+			return -1;
 		}
 
 		Teacher confirmation = teacherRepo.save(((Teacher) user));
-		return confirmation.getEmail() == user.getEmail() ? true : false;
+		return confirmation.getUserId();
 	}
 
 	public boolean editUser(Teacher user) {

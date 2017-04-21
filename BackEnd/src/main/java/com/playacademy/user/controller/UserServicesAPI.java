@@ -26,8 +26,8 @@ public class UserServicesAPI {
 		return false;
 	}
 
-	public boolean addUser(User user) {
-		return false;
+	public long addUser(User user) {
+		return -1;
 	}
 	
 	public boolean deleteUser(long userId) {
@@ -42,6 +42,7 @@ public class UserServicesAPI {
 	// gets user by ID from the user base repository
 	public User getUserByID(long ID) {
 		User user = userBaseRepo.findOne(ID);
+//		System.out.println("user email "+user.getEmail());
 		return user;
 	}
 
@@ -53,6 +54,7 @@ public class UserServicesAPI {
 	// gets user ID from the user base repository by email and password
 	public long getUserID(String email, String password) {
 		User returns = userBaseRepo.findByEmailAndPassword(email, password);
+//		System.out.println("email "+returns.getEmail());
 		return (returns == null ? -1 : returns.getUserId());
 	}
 
