@@ -1,5 +1,6 @@
 package com.playacademy.game.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,11 @@ public class GameServices implements IGameServices{
 			return true;
 		else 
 			return false;
-		
 	}
 
+	@Override
+	public ArrayList<GameSheet> scoreBoard(Student student){
+		return gameSheetRepo.findByStudent(student);
+	}
+	
 }
