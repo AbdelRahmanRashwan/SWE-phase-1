@@ -21,16 +21,9 @@ public class MCQ extends Question {
 	
 	public void setChoices(ArrayList<Choice> choices) {
 		this.choices = choices;
-		if(choices != null){
-			Iterator<Choice> it = this.choices.iterator();
-			while(it.hasNext()){
-				it.next().setQuestion(this);
-			}
-		}
 	}
 	
 	public void addChoice(Choice choice) {
-		choice.setQuestion(this);
 		choices.add(choice);
 	}
 	// Relations

@@ -1,8 +1,12 @@
 package com.example.rashwan.playacademy;
 
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -38,14 +42,18 @@ public class StudentHome extends AppCompatActivity {
     ArrayList<Course>data;
     TextView noCourse;
     Button goSearch;
-
+    ActionBarDrawerToggle toggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_home);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toggle = new ActionBarDrawerToggle(this,drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
         initialize();
-
         if (((Student) Login.loggedUser).getAttendedCourses()==null){
             String link=ServicesLinks.GET_STUDENT_COURSES_URL+"?studentId="+Login.loggedUser.getUserId();
             RequestQueue queue= Volley.newRequestQueue(getApplicationContext());
@@ -59,6 +67,8 @@ public class StudentHome extends AppCompatActivity {
                                 noCourse.setVisibility(View.VISIBLE);
                                 goSearch.setVisibility(View.VISIBLE);
                             }
+                            final CourseAdapter courseAdapter=new CourseAdapter(getApplicationContext(),data);
+                            coursesList.setAdapter(courseAdapter);
                         }
                     },
                     new Response.ErrorListener() {
@@ -73,9 +83,6 @@ public class StudentHome extends AppCompatActivity {
         else{
             data=((Student)Login.loggedUser).getAttendedCourses();
         }
-
-        final CourseAdapter courseAdapter=new CourseAdapter(this,data);
-        coursesList.setAdapter(courseAdapter);
 
         coursesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,6 +101,17 @@ public class StudentHome extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
+    }
     public void initialize(){
         data=new ArrayList<>();
         coursesList=(ListView)findViewById(R.id.coursesList);
