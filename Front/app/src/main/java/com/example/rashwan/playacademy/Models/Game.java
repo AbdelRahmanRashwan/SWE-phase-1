@@ -13,7 +13,6 @@ public class Game {
 	private long rate;
 	private Course course;
 	private ArrayList<Question> questions;
-	private Set<GameSheet> scores;
 
 	public Game() {
 		questions = new ArrayList<>();
@@ -37,23 +36,8 @@ public class Game {
 		this.questions = questions;
 	}
 
-	public void setScores(Set<GameSheet> scores) {
-		this.scores = scores;
-	}
-
 	public void setRate(long rate) {
 		this.rate = rate;
-	}
-
-	// add
-	public void addScore(GameSheet score) {
-		score.setGame(this);
-		scores.add(score);
-	}
-
-	public void addQuestion(Question question) {
-		question.setGame(this);
-		questions.add(question);
 	}
 
 	// Getters
@@ -73,10 +57,6 @@ public class Game {
 	// Relations
 	public ArrayList<Question> getQuestions() {
 		return questions;
-	}
-
-	public Set<GameSheet> getScores() {
-		return scores;
 	}
 
 	public Course getCourse() {

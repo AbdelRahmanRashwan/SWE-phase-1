@@ -14,4 +14,5 @@ public final class ServicesLinks {
     public static final String REGISTER_TEACHER_URL=SERVER+"/teacher/register";
     public static final String GET_STUDENT_COURSES_URL=SERVER+"/courses/attendeted/student";
     public static final String GET_GAMES_IN_COURSE_URL=SERVER+"/gamescourse/get";
+    public static final String GET_COURSES_BY_TEACHER_URL=SERVER+"/courses/created/teacher/";
 }

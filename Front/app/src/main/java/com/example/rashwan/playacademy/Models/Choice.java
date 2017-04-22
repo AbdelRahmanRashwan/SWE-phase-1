@@ -4,7 +4,6 @@ public class Choice {
 
 	private int choiceId;
 	private String choice;
-	private MCQ question;
 
 	// Setters
 	public void setChoiceId(int choiceId) {
@@ -15,10 +14,6 @@ public class Choice {
 		this.choice = choice;
 	}
 
-	public void setQuestion(MCQ question) {
-		this.question = question;
-	}
-
 	// Getters
 	public int getChoiceId() {
 		return choiceId;
@@ -26,10 +21,6 @@ public class Choice {
 
 	public String getChoice() {
 		return choice;
-	}
-
-	public MCQ getQuestion() {
-		return question;
 	}
 
 }

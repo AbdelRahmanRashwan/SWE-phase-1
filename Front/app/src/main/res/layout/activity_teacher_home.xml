@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,4 +9,23 @@
     android:background="@drawable/mainbackgound"
     android:padding="18dp">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add course"
+        android:textColor="#fff"
+        android:background="#50ffffff"
+        android:textSize="18dp"
+        android:padding="10dp"
+        android:id="@+id/addCourse"
+        />
+
+    <ListView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/coursesList"
+        ></ListView>
+
+
+</LinearLayout>

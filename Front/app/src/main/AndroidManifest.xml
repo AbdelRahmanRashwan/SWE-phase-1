@@ -28,7 +28,9 @@
             android:name=".StudentHome"
             android:label="Home" />
         <activity android:name=".StudentProfile" />
-        <activity android:name=".SingleCourse"></activity>
+        <activity android:name=".SingleCourse" />
+        <activity android:name=".AllCourses" />
+        <activity android:name=".TeacherProfile"></activity>
     </application>
 
 </manifest>
