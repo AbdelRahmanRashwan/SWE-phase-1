@@ -1,5 +1,8 @@
 package com.example.rashwan.playacademy;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.rashwan.playacademy.Models.Choice;
 import com.example.rashwan.playacademy.Models.Course;
 import com.example.rashwan.playacademy.Models.Game;
@@ -86,8 +89,16 @@ public class Util {
         try {
             game.setName(gameData.getString("name"));
             game.setGameId(gameData.getInt("gameId"));
+            Log.i("boolean sayed","sayed");
             JSONArray questions=gameData.getJSONArray("questions");
-            if (questions.getJSONObject(0).getJSONArray("choices")!=null){
+            boolean b;
+            try {
+                b=questions.getJSONObject(0).getJSONArray("choices")!=null;
+            }catch(Exception e){
+                b=false;
+            }
+            Log.i("boolean sayed",b+"");
+            if (b){
                 ArrayList<Question> questionsData=new ArrayList<>();
                 for (int i=0;i<questions.length();i++){
                     MCQ question= parseMCQ(questions.getJSONObject(i));

@@ -61,7 +61,15 @@ public class StudentHome extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            data=Util.parseCourses(response);
+                            try {
+                                JSONArray courses=response.getJSONArray("courses");
+                                for (int i=0;i<courses.length();i++){
+                                    Course course = Util.parseCourse(courses.getJSONObject(i).getJSONObject("course"));
+                                    data.add(course);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             ((Student)Login.loggedUser).setAttendedCourses(data);
                             if (data.size()==0){
                                 noCourse.setVisibility(View.VISIBLE);
