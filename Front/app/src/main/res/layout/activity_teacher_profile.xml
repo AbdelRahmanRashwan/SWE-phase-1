@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rashwan.playacademy.StudentProfile"
+    tools:context="com.example.rashwan.playacademy.TeacherProfile"
     android:orientation="vertical"
     android:background="@drawable/mainbackgound"
     android:padding="18dp"
@@ -21,14 +21,18 @@
             android:padding="10dp"
             android:textColor="#fff"
             />
-        <TextView
+        <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:padding="10dp"
-            android:textColor="#fff"
-            android:id="@+id/name"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:id="@+id/name"
+                />
+        </HorizontalScrollView>
     </LinearLayout>
 
     <LinearLayout
@@ -42,14 +46,18 @@
             android:padding="10dp"
             android:textColor="#fff"
             />
-        <TextView
+        <HorizontalScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:padding="10dp"
-            android:textColor="#fff"
-            android:id="@+id/email"
-            />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:id="@+id/email"
+                />
+        </HorizontalScrollView>
     </LinearLayout>
 
     <LinearLayout
@@ -73,14 +81,29 @@
             />
     </LinearLayout>
 
-    <ListView
-        android:layout_marginTop="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/achievementList"
-        >
-
-
-    </ListView>
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edu-Mail:"
+            android:textSize="24dp"
+            android:padding="10dp"
+            android:textColor="#fff"
+            />
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:textColor="#fff"
+                android:id="@+id/educationalMail"
+                />
+        </HorizontalScrollView>
+    </LinearLayout>
 
 </LinearLayout>

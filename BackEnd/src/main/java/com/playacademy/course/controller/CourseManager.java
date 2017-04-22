@@ -85,12 +85,14 @@ public class CourseManager {
 	
 	// Course and teacher
 	@RequestMapping(value = "/courses/created/teacher/", method = RequestMethod.GET)
-	public Set<Course> getCreatedCourse(@RequestParam("teacherId") long teacherId) {
+	public Map<String,Set<Course> > getCreatedCourse(@RequestParam("teacherId") long teacherId) {
 		User user = userServices.getUserByID(teacherId);
 		if (user == null || user instanceof Student) {
 			return null;
 		}
-		return ((Teacher)user).getCreatedCourses();
+		Map <String,Set<Course>> courses=new HashMap<>();
+		courses.put("courses", ((Teacher)user).getCreatedCourses());
+		return courses;
 	}
 
 	

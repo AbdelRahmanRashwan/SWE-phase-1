@@ -13,7 +13,6 @@ public class Course implements Serializable {
     private long courseId;
     private String courseName;
     private String courseDescription;
-    private ArrayList<Game> games;
     private Teacher creator;
 
     public Course(){}
@@ -42,14 +41,6 @@ public class Course implements Serializable {
         this.courseDescription = courseDescription;
     }
 
-    public ArrayList<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(ArrayList<Game> games) {
-        this.games = games;
-    }
-
     public Teacher getCreator() {
         return creator;
     }
@@ -58,11 +49,10 @@ public class Course implements Serializable {
         this.creator = creator;
     }
 
-    public Course(long courseId, String courseName, String courseDescription, ArrayList<Game> games, Teacher creator) {
+    public Course(long courseId, String courseName, String courseDescriptio, Teacher creator) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
-        this.games = games;
         this.creator = creator;
     }
 }

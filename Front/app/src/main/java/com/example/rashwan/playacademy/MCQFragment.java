@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,8 +121,10 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
                 if(answerNumber == -1){
                     Toast.makeText(getActivity(), "You must choose an answer", Toast.LENGTH_SHORT);
                 }else{
+
                     RequestQueue queue = Volley.newRequestQueue(getActivity());
                     OnResponse requestResponse = new OnResponse();
+
                     String answer = choices[answerNumber].getText().toString();
                     String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "questionId="+questions.get(questionIndex).getQuestionId()
                                 + "&answer="+answer;
@@ -133,7 +136,6 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
                         }
                     });
 
-                    Toast.makeText(getActivity(), choices[answerNumber].getText().toString(), Toast.LENGTH_SHORT).show();
                     queue.add(jsonObjectRequest);
                 }
                 break;
@@ -157,15 +159,14 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
     }
 
     private void check(ImageView[] checkDrawables, int i) {
-        int colorBlack = Color.parseColor("#333");
-        int colorGray = Color.parseColor("#65b3bada");
-        checkDrawables[i].setBackgroundColor(colorBlack);
+
+        checkDrawables[i].setImageResource(R.drawable.checkchoice2);
         i = (i+1)%4;
-        checkDrawables[i].setBackgroundColor(colorGray);
+        checkDrawables[i].setImageResource(R.drawable.checkchoice1);
         i = (i+1)%4;
-        checkDrawables[i].setBackgroundColor(colorGray);
+        checkDrawables[i].setImageResource(R.drawable.checkchoice1);
         i = (i+1)%4;
-        checkDrawables[i].setBackgroundColor(colorGray);
+        checkDrawables[i].setImageResource(R.drawable.checkchoice1);
     }
 
     @Override
@@ -205,8 +206,39 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
     }
 
     private void finishGame(int score) {
+        if(Login.loggedUser.getType().equals("Student")){
+            RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+            JSONObject gameSheet = new JSONObject();
+            try {
+                gameSheet.put("gameId", game.getGameId());
+                gameSheet.put("studentId", Login.loggedUser.getUserId());
+                gameSheet.put("score",score);
+                gameSheet.put("rate",0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String requestLink = ServicesLinks.UPDATE_SCORE_LINK;
+            JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, requestLink, gameSheet, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }
+                    , new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            queue.add(jsonObjectRequest);
+
+        }
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         GameScore gameScore = new GameScore();
+        gameScore.setScore(score);
         gameScore.setCancelable(false);
         gameScore.setDialogTitle("Score");
         gameScore.show(fragmentManager,"score");

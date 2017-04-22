@@ -151,8 +151,40 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
     }
 
     private void finishGame(int score) {
+        if(Login.loggedUser.getType().equals("Student")){
+            RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+            JSONObject gameSheet = new JSONObject();
+            try {
+                gameSheet.put("gameId", game.getGameId());
+                gameSheet.put("studentId", Login.loggedUser.getUserId());
+                gameSheet.put("score",score);
+                gameSheet.put("rate",0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String requestLink = ServicesLinks.UPDATE_SCORE_LINK;
+            JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, requestLink, gameSheet, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }
+                    , new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            queue.add(jsonObjectRequest);
+
+        }
+
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         GameScore gameScore = new GameScore();
+        gameScore.setScore(score);
         gameScore.setCancelable(false);
         gameScore.setDialogTitle("Score");
         gameScore.show(fragmentManager,"score");

@@ -7,20 +7,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class GameScore extends DialogFragment {
     Button btnTryAgain,btnBack;
+    TextView scoreText;
     static String DialogBoxTitle;
+    int score;
+    public GameScore(){}
 
     public interface DialogListener {
         void onFinishYesNoDialog(int choice);
     }
 
-    //---empty constructor required
-    public GameScore(){
-
-    }
-    //---set the title of the dialog window---
     public void setDialogTitle(String title) {
         DialogBoxTitle= title;
     }
@@ -28,21 +27,23 @@ public class GameScore extends DialogFragment {
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState ) {
 
         View view= inflater.inflate(R.layout.fragment_game_score, container);
-        //---get the Button views---
         btnTryAgain = (Button) view.findViewById(R.id.btnTryAgain);
         btnBack = (Button) view.findViewById(R.id.btnBack);
+        scoreText = (TextView) view.findViewById(R.id.score);
+        scoreText.setText(score);
 
-        // Button listener
         btnTryAgain.setOnClickListener(btnListener);
         btnBack.setOnClickListener(btnListener);
 
-        //---set the title for the dialog
         getDialog().setTitle(DialogBoxTitle);
 
         return view;
     }
 
-    //---create an anonymous class to act as a button click listener
+    public void setScore(int score){
+        this.score = score;
+    }
+
     private OnClickListener btnListener = new OnClickListener()
     {
         public void onClick(View v)

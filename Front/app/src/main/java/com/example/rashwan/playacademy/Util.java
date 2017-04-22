@@ -8,6 +8,7 @@ import com.example.rashwan.playacademy.Models.Question;
 import com.example.rashwan.playacademy.Models.Student;
 import com.example.rashwan.playacademy.Models.Teacher;
 import com.example.rashwan.playacademy.Models.TrueAndFalse;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +51,23 @@ public class Util {
         return student;
     }
 
-    public static Course parsCourse(JSONObject courseData){
+    public static ArrayList<Course> parseCourses(JSONObject response){
+        JSONArray courses= null;
+        ArrayList<Course>data=new ArrayList<>();
+        try {
+            courses = response.getJSONArray("courses");
+            for (int i=0;i<courses.length();i++){
+                Course course = null;
+                course = parseCourse(courses.getJSONObject(i).getJSONObject("course"));
+                data.add(course);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public static Course parseCourse(JSONObject courseData){
         Course course=new Course();
         try {
             course.setCourseId(courseData.getInt("courseId"));
@@ -70,22 +87,22 @@ public class Util {
             game.setName(gameData.getString("name"));
             game.setGameId(gameData.getInt("gameId"));
             JSONArray questions=gameData.getJSONArray("questions");
-//            if (questions.getJSONObject(0).getJSONArray("choices")!=null){
-//                ArrayList<Question> questionsData=new ArrayList<>();
-//                for (int i=0;i<questions.length();i++){
-//                    MCQFragment question= parseMCQ(questions.getJSONObject(i));
-//                    questionsData.add(question);
-//                }
-//                game.setQuestions(questionsData);
-//            }
-//            else {
+            if (questions.getJSONObject(0).getJSONArray("choices")!=null){
+                ArrayList<Question> questionsData=new ArrayList<>();
+                for (int i=0;i<questions.length();i++){
+                    MCQ question= parseMCQ(questions.getJSONObject(i));
+                    questionsData.add(question);
+                }
+                game.setQuestions(questionsData);
+            }
+            else {
                 ArrayList<Question> questionsData=new ArrayList<>();
                 for (int i=0;i<questions.length();i++){
                     TrueAndFalse question= parseTAndF(questions.getJSONObject(i));
                     questionsData.add(question);
                 }
                 game.setQuestions(questionsData);
-//            }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -124,4 +141,5 @@ public class Util {
         }
         return question;
     }
+
 }

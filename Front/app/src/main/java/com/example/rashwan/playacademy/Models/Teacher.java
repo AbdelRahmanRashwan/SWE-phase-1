@@ -1,12 +1,13 @@
 package com.example.rashwan.playacademy.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Teacher extends User implements Serializable{
 
 	private String educationalMail;
-	private Set <Course> createdCourses;
+	private ArrayList<Course> createdCourses;
 
 	public Teacher() {
 		type = "Teacher";
@@ -21,7 +22,7 @@ public class Teacher extends User implements Serializable{
 	public void setEducationalMail(String educationalMail) {
 		this.educationalMail = educationalMail;
 	}
-	public void setCreatedCourses(Set<Course> courses) {
+	public void setCreatedCourses(ArrayList<Course> courses) {
 		this.createdCourses = courses;
 	}
 	
@@ -36,7 +37,7 @@ public class Teacher extends User implements Serializable{
 	
 	// Relations
 	
-	public Set<Course> getCreatedCourses() {
+	public ArrayList<Course> getCreatedCourses() {
 		return createdCourses;
 	}
 

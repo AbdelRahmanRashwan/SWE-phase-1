@@ -8,7 +8,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Login">
@@ -28,7 +27,11 @@
             android:name=".StudentHome"
             android:label="Home" />
         <activity android:name=".StudentProfile" />
+
         <activity android:name=".PlayGame" />
+        <activity android:name=".SingleCourse" />
+        <activity android:name=".AllCourses" />
+        <activity android:name=".TeacherProfile"></activity>
     </application>
 
 </manifest>
