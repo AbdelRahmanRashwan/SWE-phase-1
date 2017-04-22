@@ -73,7 +73,7 @@ public class Util {
 //            if (questions.getJSONObject(0).getJSONArray("choices")!=null){
 //                ArrayList<Question> questionsData=new ArrayList<>();
 //                for (int i=0;i<questions.length();i++){
-//                    MCQ question= parseMCQ(questions.getJSONObject(i));
+//                    MCQFragment question= parseMCQ(questions.getJSONObject(i));
 //                    questionsData.add(question);
 //                }
 //                game.setQuestions(questionsData);

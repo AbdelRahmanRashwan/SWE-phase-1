@@ -3,6 +3,8 @@ package com.example.rashwan.playacademy;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,6 +67,20 @@ public class SingleCourse extends AppCompatActivity {
         queue.add(jsonObjectRequest);
         GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
         gamesList.setAdapter(adapter);
+        gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startPlayGame(i);
+            }
+        });
+    }
+
+    private void startPlayGame(int i) {
+        Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
+        Gson gson=new Gson();
+        String game=gson.toJson(games.get(i));
+        playGame.putExtra("game",game);
+        startActivity(playGame);
     }
 
     public void setText(){
