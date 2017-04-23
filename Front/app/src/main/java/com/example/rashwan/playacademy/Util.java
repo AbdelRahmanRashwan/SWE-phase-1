@@ -34,6 +34,7 @@ public class Util {
             teacher.setEmail(teacherData.getString("email"));
             teacher.setAge(teacherData.getInt("age"));
             teacher.setEducationalMail(teacherData.getString("educationalMail"));
+            teacher.setUserId(teacherData.getInt("userId"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -56,13 +57,11 @@ public class Util {
     }
 
     public static ArrayList<Course> parseCourses(JSONObject response){
-        JSONArray courses= null;
         ArrayList<Course>data=new ArrayList<>();
         try {
-            courses = response.getJSONArray("courses");
+            JSONArray courses = response.getJSONArray("courses");
             for (int i=0;i<courses.length();i++){
-                Course course = null;
-                course = parseCourse(courses.getJSONObject(i).getJSONObject("course"));
+                Course course = parseCourse(courses.getJSONObject(i));
                 data.add(course);
             }
         } catch (JSONException e) {
@@ -90,7 +89,6 @@ public class Util {
         try {
             game.setName(gameData.getString("name"));
             game.setGameId(gameData.getInt("gameId"));
-            Log.i("boolean sayed","sayed");
             JSONArray questions=gameData.getJSONArray("questions");
             boolean b;
             try {
@@ -98,7 +96,6 @@ public class Util {
             }catch(Exception e){
                 b=false;
             }
-            Log.i("boolean sayed",b+"");
             if (b){
                 ArrayList<Question> questionsData=new ArrayList<>();
                 for (int i=0;i<questions.length();i++){

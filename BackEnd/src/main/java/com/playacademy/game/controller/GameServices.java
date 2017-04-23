@@ -49,7 +49,7 @@ public class GameServices implements IGameServices{
 	public boolean judge(Question question, String answer) {
 		if(question!=null&&answer.equals(question.getAnswer())){
 			return true;
-		}else{
+		}else {
 			return false;
 		}
 	}

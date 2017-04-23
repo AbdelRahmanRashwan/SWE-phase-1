@@ -89,20 +89,19 @@ public class GameManger {
 	public Map<String,Boolean> updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
 		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
 		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
-		Map<String,Boolean> ret = new HashMap<String,Boolean>();
-		System.out.println(parseJsonToGameSheet.score+" "+parseJsonToGameSheet.gameId);
-		ret.put("judge",gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate));
-		return ret;
+
+		Map <String,Boolean> map=new HashMap<>();
+		map.put("updated",gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate));
+		return map;
+
 	}
 	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public Map<String,List<Game>> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
-		System.out.println(courseName);
 		long courseId = courseAPI.getCourseId(courseName);
 		Course course = courseAPI.getCourse(courseId);
 		Map<String,List<Game>> data=new HashMap<>();
 		data.put("games", gameServices.getAllGamesInCourse(course));
-		System.out.println(data.get("games"));
 		return data;
 	}
 	
@@ -117,9 +116,11 @@ public class GameManger {
 			if(question.getQuestionId()==questionId)
 				break;
 		}
-		Map<String,Boolean> ret = new HashMap<String,Boolean>();
-		ret.put("judge",gameServices.judge(question, answer));
-		return ret;
+
+		Map <String,Boolean> map=new HashMap<>();
+		map.put("judge",gameServices.judge(question, answer));
+		return map;
+
 	}
 	
 	private String addGame(Game game, String courseName) {

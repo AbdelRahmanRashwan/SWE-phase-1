@@ -49,7 +49,7 @@ public class Course implements Serializable {
         this.creator = creator;
     }
 
-    public Course(long courseId, String courseName, String courseDescriptio, Teacher creator) {
+    public Course(long courseId, String courseName, String courseDescription, Teacher creator) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
