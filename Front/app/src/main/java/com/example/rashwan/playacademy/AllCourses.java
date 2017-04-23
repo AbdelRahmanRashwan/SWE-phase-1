@@ -1,12 +1,16 @@
 package com.example.rashwan.playacademy;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,9 +20,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rashwan.playacademy.Models.Course;
 import com.example.rashwan.playacademy.Models.Teacher;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 public class AllCourses extends AppCompatActivity {
@@ -36,22 +42,22 @@ public class AllCourses extends AppCompatActivity {
         setContentView(R.layout.activity_all_courses);
         initialize();
 
-        if (((Teacher)Login.loggedUser).getCreatedCourses()==null){
-            String link=ServicesLinks.GET_COURSES_BY_TEACHER_URL+"?teacherId="+Login.loggedUser.getUserId();
-            RequestQueue queue= Volley.newRequestQueue(getApplicationContext());
-            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, link, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
+        String link = ServicesLinks.GET_ALL_COURSES_URL;
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, link, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                courses = Util.parseCourses(response);
+                CourseAdapter adapter = new CourseAdapter(getApplicationContext(), courses);
+                coursesList.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
-        }
-
+            }
+        });
+        queue.add(jsonObjectRequest);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,11 +91,16 @@ public class AllCourses extends AppCompatActivity {
             }
         });
 
+        coursesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startSingleActivity(i);
+            }
+        });
     }
 
     public void initialize(){
         coursesList=(ListView) findViewById(R.id.coursesList);
-        courses=new ArrayList<>();
         searchBar=(EditText)findViewById(R.id.searchBar);
         searchButton=(ImageButton) findViewById(R.id.searchButton);
         cancel=(ImageButton) findViewById(R.id.cancelButton);
@@ -106,4 +117,11 @@ public class AllCourses extends AppCompatActivity {
         return indexes;
     }
 
+    public void startSingleActivity(int i){
+        Intent singleCoursePage=new Intent(AllCourses.this, SingleCourse.class);
+        Gson gson=new Gson();
+        String course=gson.toJson(courses.get(i));
+        singleCoursePage.putExtra("course",course);
+        startActivity(singleCoursePage);
+    }
 }

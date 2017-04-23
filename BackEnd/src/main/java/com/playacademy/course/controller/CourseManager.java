@@ -36,12 +36,13 @@ public class CourseManager {
 	// Course manipulation
 	
 	@RequestMapping(value = "/course/create", method = RequestMethod.GET)
-	public String createCourse(@RequestParam("courseName") String courseName,
+	public Map<String,String>createCourse(@RequestParam("courseName") String courseName,
 			@RequestParam("courseDescription") String courseDescription, @RequestParam("teacherId") long teacherId) {
 
 		long courseId = courseManagerAPI.getCourseId(courseName);
 		User user =  userServices.getUserByID(teacherId);
 		String ack = "";
+		Map <String,String> ac=new HashMap<>();
 		
 		if (courseId != -1 || user == null || user instanceof Student) {
 			if(courseId != -1){
@@ -51,7 +52,8 @@ public class CourseManager {
 			}else{
 				ack = "This ID represents a student, students can only enroll in courses";
 			}
-			return ack;
+			ac.put("ack", ack);
+			return ac;
 		}
 		
 		Course course = new Course(courseName, courseDescription);
@@ -59,12 +61,21 @@ public class CourseManager {
 		if(courseManagerAPI.saveCourse(course ) == true){
 			ack = "Course created successfully";
 		}else ack = "Sorry something went wrong.";
-		return ack;
+		ac.put("ack", ack);
+		return ac;
+
 	}
 	
 	@RequestMapping(value = "/course/get", method = RequestMethod.GET)
 	public Course getCourse(@RequestParam("courseID") long courseID) {
 		return courseManagerAPI.getCourse(courseID);
+	}
+	
+	@RequestMapping(value = "/course/getId", method = RequestMethod.GET)
+	public Map<String,Integer> getCourse(@RequestParam("courseName") String courseName) {
+		Map <String ,Integer> map=new HashMap<>();
+		map.put("id", (int) courseManagerAPI.getCourseId(courseName));
+		return map;
 	}
 
 	@RequestMapping(value = "/course/edit", method = RequestMethod.GET)
@@ -82,6 +93,12 @@ public class CourseManager {
 		return courseManagerAPI.removeCourse(courseID);
 	}
 	
+	@RequestMapping(value = "/course/getAll", method = RequestMethod.GET)
+	public Map<String,List<Course> > getAllCourses(){
+		Map<String, List<Course>> courses=new HashMap<>();
+		courses.put("courses", courseManagerAPI.getAllCourses());
+		return courses;
+	}
 	
 	// Course and teacher
 	@RequestMapping(value = "/courses/created/teacher/", method = RequestMethod.GET)
@@ -108,11 +125,12 @@ public class CourseManager {
 	}
 	
 	@RequestMapping(value = "/course/attend", method = RequestMethod.GET)
-	public String attendCourse(@RequestParam("courseName") String courseName,
+	public Map<String,String> attendCourse(@RequestParam("courseName") String courseName,
 			@RequestParam("studentId") long studentId) {
 		long courseId = courseManagerAPI.getCourseId(courseName);
 		User user =  userServices.getUserByID(studentId);
 		String ack = "";
+		Map <String,String> ac=new HashMap<>();
 		if (courseId == -1 || user == null || user instanceof Teacher) {
 			if(courseId == -1){
 				ack = "No course with that name.";
@@ -121,12 +139,14 @@ public class CourseManager {
 			}else{
 				ack = "This ID represents a teacher, teacher can only creat courses";
 			}
-			return ack;
+			ac.put("ack", ack);
+			return ac;
 		}
 		if(courseManagerAPI.attend((Student)user, courseId) == true)
 			ack = "Enrolled succssessfully.";
 		else ack = "You are already enrolled in this course";
-		return ack;
+		ac.put("ack", ack);
+		return ac;
 	}
 
 	@RequestMapping(value = "/courses/attendeted/student", method = RequestMethod.GET)
@@ -139,7 +159,15 @@ public class CourseManager {
 		courses.put("courses", courseManagerAPI.getAttendedCourses(((Student)user)));
 		return courses;
 	}
-
+	
+	@RequestMapping(value = "/courses/enrollment", method = RequestMethod.GET)
+	public Map<String,Boolean> getEnrollment(@RequestParam("studentId") long studentId,@RequestParam("courseName")String courseName ) {
+		Map <String, Boolean> map=new HashMap<>();
+		Student student=(Student) userServices.getUserByID(studentId);
+		Course course=courseManagerAPI.getCourse(courseManagerAPI.getCourseId(courseName));
+		map.put("ack", courseManagerAPI.isRegistered(student, course));
+		return map;
+	}
 	@RequestMapping("/course/achievement/update/")
 	public Boolean updateAchievement(@RequestParam("newAchievement") long ach,
 								  @RequestParam("studentId") long studentId,

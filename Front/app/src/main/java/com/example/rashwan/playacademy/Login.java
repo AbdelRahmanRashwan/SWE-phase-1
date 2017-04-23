@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Login.this, "Wrong E-Mail or password", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "System error", Toast.LENGTH_SHORT).show();
                     }
                 });
                 queue.add(jsonObjectRequest);
