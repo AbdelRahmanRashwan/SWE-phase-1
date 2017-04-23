@@ -30,7 +30,8 @@
         <activity android:name=".StudentProfile" />
         <activity android:name=".SingleCourse" />
         <activity android:name=".AllCourses" />
-        <activity android:name=".TeacherProfile"></activity>
+        <activity android:name=".TeacherProfile" />
+        <activity android:name=".AddCourse"></activity>
     </application>
 
 </manifest>

@@ -41,6 +41,29 @@
             />
     </LinearLayout>
 
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add game"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:background="#50ffffff"
+        android:id="@+id/addGame"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enroll"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:background="#50ffffff"
+        android:id="@+id/enroll"
+        android:visibility="gone" />
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,4 +71,6 @@
         android:id="@+id/gameList"
         >
     </ListView>
+
+
 </LinearLayout>

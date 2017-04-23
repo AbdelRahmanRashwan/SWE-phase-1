@@ -45,13 +45,11 @@ public class GameServices implements IGameServices{
 	}
 
 	@Override
-	public int judge(Question question, String answer) {
+	public boolean judge(Question question, String answer) {
 		if(question!=null&&answer.equals(question.getAnswer())){
-			return 10;
-		}else if (question==null){
-			return -1;
+			return true;
 		}else {
-			return 0;
+			return false;
 		}
 	}
 	

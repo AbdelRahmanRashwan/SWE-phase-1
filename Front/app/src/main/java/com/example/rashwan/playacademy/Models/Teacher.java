@@ -41,4 +41,7 @@ public class Teacher extends User implements Serializable{
 		return createdCourses;
 	}
 
+	public void addCourse(Course course){
+		createdCourses.add(course);
+	}
 }

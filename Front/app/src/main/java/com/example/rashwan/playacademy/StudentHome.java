@@ -54,43 +54,40 @@ public class StudentHome extends AppCompatActivity {
         toggle.syncState();
 
         initialize();
-        if (((Student) Login.loggedUser).getAttendedCourses()==null){
-            String link=ServicesLinks.GET_STUDENT_COURSES_URL+"?studentId="+Login.loggedUser.getUserId();
-            RequestQueue queue= Volley.newRequestQueue(getApplicationContext());
-            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,link,null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray courses=response.getJSONArray("courses");
-                                for (int i=0;i<courses.length();i++){
-                                    Course course = Util.parseCourse(courses.getJSONObject(i).getJSONObject("course"));
-                                    data.add(course);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            ((Student)Login.loggedUser).setAttendedCourses(data);
-                            if (data.size()==0){
-                                noCourse.setVisibility(View.VISIBLE);
-                                goSearch.setVisibility(View.VISIBLE);
+        String link=ServicesLinks.GET_STUDENT_COURSES_URL+"?studentId="+Login.loggedUser.getUserId();
+        RequestQueue queue= Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,link,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray courses=response.getJSONArray("courses");
+                            for (int i=0;i<courses.length();i++){
+                                Log.i("index",i+"");
+                                Course course = Util.parseCourse(courses.getJSONObject(i).getJSONObject("course"));
+                                Toast.makeText(StudentHome.this, course.toString(), Toast.LENGTH_SHORT).show();
+                                data.add(course);
                             }
                             final CourseAdapter courseAdapter=new CourseAdapter(getApplicationContext(),data);
                             coursesList.setAdapter(courseAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(StudentHome.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        if (data.size()==0){
+                            noCourse.setVisibility(View.VISIBLE);
+                            goSearch.setVisibility(View.VISIBLE);
                         }
+
                     }
-            );
-            queue.add(jsonObjectRequest);
-        }
-        else{
-            data=((Student)Login.loggedUser).getAttendedCourses();
-        }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(StudentHome.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        queue.add(jsonObjectRequest);
 
         coursesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

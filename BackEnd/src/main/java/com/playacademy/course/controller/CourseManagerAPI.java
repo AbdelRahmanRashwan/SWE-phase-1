@@ -23,6 +23,10 @@ public class CourseManagerAPI {
 		return true;
 	}
 	
+	public List<Course> getAllCourses(){
+		return (List<Course>) courseRepo.findAll();
+	}
+	
 	public Course getCourse(long courseID){
 		return courseRepo.findOne(courseID);
 	}
@@ -75,7 +79,7 @@ public class CourseManagerAPI {
 
 	public boolean isRegistered(Student student, Course course) {
 		CourseAttendance courseAttendance = courseAttendanceRepo.findByCourseAndStudent(course, student);
-		if(courseAttendance != null)
+		if(courseAttendance == null)
 			return false;
 		return true;
 	}
