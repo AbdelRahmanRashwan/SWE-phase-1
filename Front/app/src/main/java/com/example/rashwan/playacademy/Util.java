@@ -11,6 +11,7 @@ import com.example.rashwan.playacademy.Models.Question;
 import com.example.rashwan.playacademy.Models.Student;
 import com.example.rashwan.playacademy.Models.Teacher;
 import com.example.rashwan.playacademy.Models.TrueAndFalse;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -138,7 +139,7 @@ public class Util {
             question.setQuestion(questionData.getString("question"));
             question.setAnswer(questionData.getString("answer"));
             question.setQuestionId(questionData.getInt("questionId"));
-            JSONArray choices=new JSONArray();
+            JSONArray choices= questionData.getJSONArray("choices");
             ArrayList<Choice> choicesData=new ArrayList<>();
             for (int i=0;i<choices.length();i++){
                 Choice choice=new Choice();
@@ -151,6 +152,49 @@ public class Util {
             e.printStackTrace();
         }
         return question;
+    }
+
+    public static Game parseGame(JsonObject gameInfo){
+        Game game = new Game();
+        game.setGameId(gameInfo.get("gameId").getAsLong());
+        game.setName(gameInfo.get("name").getAsString());
+        game.setRate(gameInfo.get("rate").getAsInt());
+        JsonArray questions = gameInfo.get("questions").getAsJsonArray();
+        JsonObject questionData = questions.get(0).getAsJsonObject();
+        boolean type;
+        try {
+            type=questionData.get("choices").getAsJsonArray()!=null;
+            type = true;
+        }catch(Exception e){
+            type=false;
+
+        }
+        Log.i("type", String.valueOf(type));
+        for(int i=0;i<questions.size();i++){
+            questionData = questions.get(i).getAsJsonObject();
+
+            if(type == true) {
+                MCQ question = parseMCQ(questionData.get("choices").getAsJsonArray());
+                question.setQuestion(questionData.get("question").getAsString());
+                question.setQuestionId(questionData.get("questionId").getAsInt());
+                game.addQuestion(question);
+            }else {
+                TrueAndFalse question = new TrueAndFalse();
+                question.setQuestion(questionData.get("question").getAsString());
+                question.setQuestionId(questionData.get("questionId").getAsInt());
+                game.addQuestion(question);
+            }
+        }
+        return game;
+    }
+
+    private static MCQ parseMCQ( JsonArray questionChoices) {
+        MCQ question = new MCQ();
+        for(int i=0;i<questionChoices.size();i++){
+            JsonObject choice = questionChoices.get(i).getAsJsonObject();
+            question.addChoice(new Choice(choice.get("choice").getAsString()));
+        }
+        return  question;
     }
 
 }

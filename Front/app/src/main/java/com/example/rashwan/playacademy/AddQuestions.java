@@ -21,10 +21,9 @@ public class AddQuestions extends AppCompatActivity {
 
         initialize();
         if(game.getQuestions().get(0) instanceof MCQ){
-            question = new MCQFragment();
+            question = new AddMCQ();
         }else{
-            question = new TrueAndFalseFragment();
-            Toast.makeText(this,"hi", Toast.LENGTH_LONG).show();
+            question = new AddTrueAndFalse();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

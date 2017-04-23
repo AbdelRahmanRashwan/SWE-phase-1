@@ -5,21 +5,26 @@
     android:orientation="vertical"
     android:padding="10sp"
     android:background="@drawable/mainbackgound"
-    tools:context="com.example.rashwan.playacademy.MCQFragment">
+    tools:context="com.example.rashwan.playacademy.MCQFragment"
+    android:weightSum="5"
+    >
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:weightSum="3"
+        >
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="2"
             android:id="@+id/quesTrack"
             android:textColor="#fff"
             android:text="Question x of y"
             android:paddingLeft="10sp"
-            android:textSize="30sp"
+            android:textSize="15sp"
             />
         <TextView
             android:layout_width="0dp"
@@ -34,26 +39,25 @@
     </LinearLayout>
 
     <TextView
+        android:layout_weight="0.8"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:id="@+id/question"
         android:text="Question"
         android:layout_marginTop="15sp"
         android:textColor="#fff"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
         android:fontFamily="serif-monospace"
-        android:paddingLeft="15sp"
+        android:padding="15sp"
         android:background="#65b3bada"
 
         />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="15sp"
-        android:layout_marginBottom="20sp"
-        android:layout_weight="1"
+        android:layout_weight="3.9"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,10 +72,10 @@
                 android:textColor="#fff"
                 android:text="choice1"
                 android:background="@drawable/border"
-                android:textSize="20sp"
-                android:paddingLeft="15sp"
-                android:paddingBottom="10sp"
-                android:paddingTop="10sp"
+                android:textSize="17sp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:layout_marginBottom="20dp"
                 />
             <ImageView
@@ -92,11 +96,11 @@
                 android:textColor="#fff"
                 android:text="choice2"
                 android:background="@drawable/border"
-                android:textSize="20sp"
                 android:layout_marginBottom="20dp"
-                android:paddingLeft="15sp"
-                android:paddingBottom="10sp"
-                android:paddingTop="10sp"
+                android:textSize="17sp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:layout_below="@id/choice1"
                 />
             <ImageView
@@ -117,11 +121,11 @@
                 android:textColor="#fff"
                 android:text="choice3"
                 android:background="@drawable/border"
-                android:textSize="20sp"
                 android:layout_marginBottom="20dp"
-                android:paddingLeft="15sp"
-                android:paddingBottom="10sp"
-                android:paddingTop="10sp"
+                android:textSize="17sp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:layout_below="@id/choice2"
                 />
             <ImageView
@@ -142,10 +146,10 @@
                 android:textColor="#fff"
                 android:text="choice4"
                 android:background="@drawable/border"
-                android:textSize="20sp"
-                android:paddingLeft="15sp"
-                android:paddingBottom="10sp"
-                android:paddingTop="10sp"
+                android:textSize="17sp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:layout_below="@id/choice3"
                 />
             <ImageView
@@ -163,16 +167,16 @@
     </ScrollView>
     <Button
         android:id="@+id/next"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Next"
         android:fontFamily="monospace"
         android:textColor="#fff"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:background="#50b9aeae"
         android:drawableEnd="@drawable/ic_forward_black_24dp"
         android:drawablePadding="2dp"
-        android:padding="5dp"
+        android:padding="10dp"
         />
 </LinearLayout>

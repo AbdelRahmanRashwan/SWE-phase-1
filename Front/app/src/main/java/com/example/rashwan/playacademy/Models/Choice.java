@@ -1,9 +1,16 @@
 package com.example.rashwan.playacademy.Models;
 
-public class Choice {
+import java.io.Serializable;
+
+public class Choice implements Serializable{
 
 	private int choiceId;
 	private String choice;
+
+    public Choice(){}
+	public Choice(String choice) {
+		this.choice = choice;
+	}
 
 	// Setters
 	public void setChoiceId(int choiceId) {

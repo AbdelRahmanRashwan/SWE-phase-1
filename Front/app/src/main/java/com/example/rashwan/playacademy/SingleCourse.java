@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SingleCourse extends AppCompatActivity {
 
@@ -52,6 +50,16 @@ public class SingleCourse extends AppCompatActivity {
                             JSONArray gamesJson=response.getJSONArray("games");
                             for (int i=0;i<gamesJson.length();i++){
                                 games.add(Util.parseGame(gamesJson.getJSONObject(i)));
+                                GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
+                                gamesList.setAdapter(adapter);
+
+                                gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                            startPlayGame(i);
+                                    }
+                                });
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -65,22 +73,7 @@ public class SingleCourse extends AppCompatActivity {
                     }
                 });
         queue.add(jsonObjectRequest);
-        GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
-        gamesList.setAdapter(adapter);
-        gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startPlayGame(i);
-            }
-        });
-    }
 
-    private void startPlayGame(int i) {
-        Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
-        Gson gson=new Gson();
-        String game=gson.toJson(games.get(i));
-        playGame.putExtra("game",game);
-        startActivity(playGame);
     }
 
     public void setText(){
@@ -96,5 +89,13 @@ public class SingleCourse extends AppCompatActivity {
         courseCreator=(TextView)findViewById(R.id.creatorName);
         gamesList=(ListView)findViewById(R.id.gameList);
         games=new ArrayList<>();
+    }
+    private void startPlayGame(int i) {
+        Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
+        Gson gson=new Gson();
+        String game=gson.toJson(games.get(i));
+
+        playGame.putExtra("game",game);
+        startActivity(playGame);
     }
 }

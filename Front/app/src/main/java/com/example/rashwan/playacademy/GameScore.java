@@ -13,7 +13,7 @@ public class GameScore extends DialogFragment {
     Button btnTryAgain,btnBack;
     TextView scoreText;
     static String DialogBoxTitle;
-    int score;
+    int score=0;
     public GameScore(){}
 
     public interface DialogListener {
@@ -30,7 +30,8 @@ public class GameScore extends DialogFragment {
         btnTryAgain = (Button) view.findViewById(R.id.btnTryAgain);
         btnBack = (Button) view.findViewById(R.id.btnBack);
         scoreText = (TextView) view.findViewById(R.id.score);
-        scoreText.setText(score);
+
+        scoreText.setText(Integer.toString(score));
 
         btnTryAgain.setOnClickListener(btnListener);
         btnBack.setOnClickListener(btnListener);
@@ -44,11 +45,16 @@ public class GameScore extends DialogFragment {
         this.score = score;
     }
 
+    @Override
+    public void setArguments(Bundle args) {
+        score = args.getInt("score");
+    }
+
     private OnClickListener btnListener = new OnClickListener()
     {
         public void onClick(View v)
         {
-            int choice;
+            int choice = 1;
             switch (v.getId()){
                 case R.id.btnTryAgain:
                     choice = 2;
@@ -58,7 +64,9 @@ public class GameScore extends DialogFragment {
                     break;
             }
             DialogListener dialogListener = (DialogListener)getActivity();
+            dialogListener.onFinishYesNoDialog(choice);
             dismiss();
         }
     };
+
 }

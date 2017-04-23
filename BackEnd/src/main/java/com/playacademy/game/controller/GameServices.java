@@ -2,6 +2,7 @@ package com.playacademy.game.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,26 +46,30 @@ public class GameServices implements IGameServices{
 	}
 
 	@Override
-	public int judge(Question question, String answer) {
+	public boolean judge(Question question, String answer) {
 		if(question!=null&&answer.equals(question.getAnswer())){
-			return 10;
-		}else if (question==null){
-			return -1;
-		}else {
-			return 0;
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
 	@Override
 	public boolean saveScore(Game game , Student student,int score , int rate){
-		GameSheet gameSheet = new GameSheet();
-		gameSheet.setGame(game);
-		gameSheet.setStudent(student);
-		gameSheet.setScore(score);
-		gameSheet.setScore(rate);
+		GameSheet gameSheet = gameSheetRepo.findByStudentAndGame(student, game);
+		if(gameSheet!=null){
+			gameSheet.setScore(Math.max(gameSheet.getScore(), score));
+			gameSheet.setRate(rate);
+		}else{
+			gameSheet = new GameSheet();
+			game.addScore(gameSheet);
+			student.addScore(gameSheet);
+			gameSheet.setScore(score);
+			gameSheet.setRate(rate);
+		}
 		if(gameSheetRepo.save(gameSheet) != null)
 			return true;
-		else 
+		else
 			return false;
 	}
 

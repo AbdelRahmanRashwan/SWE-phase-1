@@ -24,7 +24,7 @@
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:background="#50b9aeae"
+            android:background="#b9aeae"
             android:textColor="#fff"
             android:textStyle="bold"
             android:layout_margin="5dp"/>
@@ -34,7 +34,7 @@
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:text="try again"
-            android:background="#50b9aeae"
+            android:background="#b9aeae"
             android:textColor="#fff"
             android:textStyle="bold"
             android:layout_margin="5dp" />
