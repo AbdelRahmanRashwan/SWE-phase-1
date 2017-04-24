@@ -1,12 +1,13 @@
 package com.example.rashwan.playacademy.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 
 
-public class Game {
+public class Game implements Serializable{
 
 	private long gameId;
 	private String name;
@@ -35,6 +36,10 @@ public class Game {
 	public void setQuestions(ArrayList<Question> questions) {
 		this.questions = questions;
 	}
+
+	public void addQuestion(Question question){
+        questions.add(question);
+    }
 
 	public void setRate(long rate) {
 		this.rate = rate;

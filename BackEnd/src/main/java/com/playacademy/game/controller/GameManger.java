@@ -89,9 +89,11 @@ public class GameManger {
 	public Map<String,Boolean> updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
 		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
 		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
+
 		Map <String,Boolean> map=new HashMap<>();
 		map.put("updated",gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate));
 		return map;
+
 	}
 	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
@@ -114,9 +116,11 @@ public class GameManger {
 			if(question.getQuestionId()==questionId)
 				break;
 		}
+
 		Map <String,Boolean> map=new HashMap<>();
 		map.put("judge",gameServices.judge(question, answer));
 		return map;
+
 	}
 	
 	private String addGame(Game game, String courseName) {
@@ -161,11 +165,7 @@ public class GameManger {
 		public int score;
 		public int rate;
 
-		public ParseJsonToGameSheet(long gameId, long studentId, int score,int rate) {
-			this.gameId = gameId;
-			this.studentId = studentId;
-			this.score = score;
-			this.rate= rate;
+		public ParseJsonToGameSheet(){
 		}
 	}
 }
