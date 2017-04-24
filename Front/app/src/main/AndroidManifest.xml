@@ -32,6 +32,7 @@
         <activity android:name=".AllCourses" />
         <activity android:name=".TeacherProfile" />
         <activity android:name=".PlayGame"></activity>
+        <activity android:name=".AddCourse"></activity>
     </application>
 
 </manifest>

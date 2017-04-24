@@ -15,7 +15,7 @@ public interface IGameServices {
 	public Game getGameByID(long id);
 	public List<Game> getAllGamesInCourse(Course course);
 	public boolean addEditedGame(Game game);
-	public int judge(Question question,String answer);
+	public boolean judge(Question question,String answer);
 	boolean saveScore(Game game, Student student, int score, int rate);
 	ArrayList<GameSheet> scoreBoard(Student student);
 }

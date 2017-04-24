@@ -29,9 +29,7 @@ public class UserManager {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public User login(@RequestBody Student user) {
-		System.out.println(user.getEmail()+" "+user.getPassword());
 		User userRet = userServices.getUserByID(userServices.getUserID(user.getEmail(), user.getPassword()));
-		System.out.println(userRet);
 		return userRet;
 	}
 	
@@ -42,7 +40,6 @@ public class UserManager {
 
 	@RequestMapping(value = "/student/register", method = RequestMethod.POST)
 	public String registerStudent(@RequestBody Student student) {
-		
 		int  id = (int) studentService.addUser(student);
 		String ret="{\"confirmation\":"+id+"}";
 		

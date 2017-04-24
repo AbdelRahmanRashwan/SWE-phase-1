@@ -13,7 +13,6 @@ public class StudentService extends UserServicesAPI {
 
 	@Override
 	protected boolean verifyEmail(String email) {
-		System.out.println("email "+email);
 		if (email.contains("@"))
 			return true;
 		return false;
@@ -27,7 +26,6 @@ public class StudentService extends UserServicesAPI {
 		}
 
 		Student confirmation = studentRepo.save(((Student) user));
-		System.out.println(confirmation.getEmail() == user.getEmail());
 		return confirmation.getUserId();
 	}
 

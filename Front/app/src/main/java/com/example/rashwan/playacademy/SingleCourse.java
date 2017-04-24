@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rashwan.playacademy.Models.Course;
 import com.example.rashwan.playacademy.Models.Game;
+import com.example.rashwan.playacademy.Models.Student;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -34,6 +37,10 @@ public class SingleCourse extends AppCompatActivity {
     Course course;
     ArrayList<Game>games;
     ListView gamesList;
+    Button addGame;
+    Button enroll;
+    String courseJson;
+    boolean isEnrolled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +74,45 @@ public class SingleCourse extends AppCompatActivity {
         queue.add(jsonObjectRequest);
         GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
         gamesList.setAdapter(adapter);
-        gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        addGame.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startPlayGame(i);
+            public void onClick(View view) {
+                Intent addGameIntent=new Intent();
+//                startActivity(Intent);
+            }
+        });
+
+        enroll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String link=ServicesLinks.ENROLL_URL+"?courseName="+course.getCourseName()+"&studentId="+Login.loggedUser.getUserId();
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, link, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String ack=response.getString("ack");
+                            if (!ack.equals("Enrolled succssessfully.")){
+                                Toast.makeText(SingleCourse.this, ack, Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(SingleCourse.this, "Enrolled Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(getApplicationContext(),SingleCourse.class);
+                                intent.putExtra("course",courseJson);
+                                startActivity(intent);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(SingleCourse.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                queue.add(jsonObjectRequest);
             }
         });
     }
@@ -82,12 +124,21 @@ public class SingleCourse extends AppCompatActivity {
 
     public void initialize(){
         Gson gson=new Gson();
-        String courseJson=getIntent().getStringExtra("course");
+        courseJson=getIntent().getStringExtra("course");
         course = gson.fromJson(courseJson, Course.class);
         courseName=(TextView)findViewById(R.id.courseName);
         courseCreator=(TextView)findViewById(R.id.creatorName);
         gamesList=(ListView)findViewById(R.id.gameList);
+        addGame=(Button)findViewById(R.id.addGame);
+        enroll=(Button)findViewById(R.id.enroll);
         games=new ArrayList<>();
+        if (Login.loggedUser instanceof Student)
+           studentButtonVisibility();
+
+        if (course.getCreator().getUserId()== Login.loggedUser.getUserId()){
+            addGame.setVisibility(View.VISIBLE);
+        }
+
     }
     private void startPlayGame(int i) {
         Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
@@ -95,5 +146,29 @@ public class SingleCourse extends AppCompatActivity {
         String game=gson.toJson(games.get(i));
         playGame.putExtra("game",game);
         startActivity(playGame);
+    }
+    public void studentButtonVisibility(){
+        String link=ServicesLinks.IS_ENROLLED_URL+"?courseName="+course.getCourseName()+"&studentId="+Login.loggedUser.getUserId();
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, link, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    isEnrolled=response.getBoolean("ack");
+                    if (Login.loggedUser instanceof Student&&!isEnrolled){
+                        enroll.setVisibility(View.VISIBLE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SingleCourse.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        );
+        queue.add(jsonObjectRequest);
     }
 }

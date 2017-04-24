@@ -86,25 +86,25 @@ public class GameManger {
 	}
 
 	@RequestMapping(value="/game/score/update", method = RequestMethod.POST)
-	public boolean updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
+	public Map<String,Boolean> updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
 		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
 		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
-		return gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate);
+		Map <String,Boolean> map=new HashMap<>();
+		map.put("updated",gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate));
+		return map;
 	}
 	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public Map<String,List<Game>> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
-		System.out.println(courseName);
 		long courseId = courseAPI.getCourseId(courseName);
 		Course course = courseAPI.getCourse(courseId);
 		Map<String,List<Game>> data=new HashMap<>();
 		data.put("games", gameServices.getAllGamesInCourse(course));
-		System.out.println(data.get("games"));
 		return data;
 	}
 	
 	@RequestMapping(value = "/judgeGame",method = RequestMethod.GET)
-	public int judge(@RequestParam("gameId")long gameId,@RequestParam("questionId")long questionId,@RequestParam("answe")String answer){
+	public Map<String,Boolean> judge(@RequestParam("gameId")long gameId,@RequestParam("questionId")long questionId,@RequestParam("answer")String answer){
 		Game g =gameServices.getGameByID(gameId);
 		Set<Question> gameQuestions =g.getQuestions();
 		Iterator<Question> i = gameQuestions.iterator();
@@ -114,7 +114,9 @@ public class GameManger {
 			if(question.getQuestionId()==questionId)
 				break;
 		}
-		return gameServices.judge(question, answer);
+		Map <String,Boolean> map=new HashMap<>();
+		map.put("judge",gameServices.judge(question, answer));
+		return map;
 	}
 	
 	private String addGame(Game game, String courseName) {
