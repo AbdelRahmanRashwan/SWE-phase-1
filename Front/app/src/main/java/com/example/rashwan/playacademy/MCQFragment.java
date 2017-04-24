@@ -1,19 +1,10 @@
 package com.example.rashwan.playacademy;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,18 +23,14 @@ import com.example.rashwan.playacademy.Models.Choice;
 import com.example.rashwan.playacademy.Models.Game;
 import com.example.rashwan.playacademy.Models.MCQ;
 import com.example.rashwan.playacademy.Models.Question;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class MCQFragment extends Fragment implements View.OnClickListener , GameScore.DialogListener{
+public class MCQFragment extends Fragment implements View.OnClickListener{
 
     private TextView questionName;
     private TextView questionTrack;
@@ -62,13 +49,21 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        view = inflater.inflate(R.layout.fragment_mcq, null);
         initializeViews();
         initializeObjects();
-        view = inflater.inflate(R.layout.fragment_mcq, null);
 
-        showQuestion();
+
+        showQuestions();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        questionIndex = 0;
     }
 
     private void initializeObjects() {
@@ -78,7 +73,8 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
         questionIndex = 0;
     }
 
-    private void showQuestion() {
+
+    private void showQuestions() {
         questionTrack.setText("Question "+ (questionIndex+1) + " of " + questions.size());
         answerNumber = -1;
         MCQ question;
@@ -123,44 +119,13 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
                 }else{
 
                     RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-                    String answer = choices[answerNumber].getText().toString();
+                    String answer = choices[answerNumber - 1].getText().toString();
                     String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
                             + "&answer="+answer;
-                    JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, requestLink, null, new Response.Listener<JSONObject>() {
-                        boolean correct;
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                score += 10;
-                                correct = response.getBoolean("judge");
-                                if(correct == true) {
-                                    choices[answerNumber].setBackgroundColor(Color.GREEN);
 
-                                }else {
-                                    choices[answerNumber].setBackgroundColor(Color.RED);
-                                }
-                                Handler myHandler = new Handler();
-                                myHandler.postDelayed(mMyRunnable, 4000);
-                                questionIndex++;
-                                if(questionIndex >= questions.size() - 1){
-                                    finishGame(score);
-                                }else {
-                                    showQuestion();
-                                }
-                            } catch (JSONException e) {
-                                Toast.makeText(getActivity(), "Judge Error", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                            , new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getActivity(), "Volley Error", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    judgeRequest(requestLink);
 
-                    queue.add(jsonObjectRequest);
+                    delay();
                 }
                 break;
             case R.id.choice1:
@@ -182,6 +147,34 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
         }
     }
 
+    private void judgeRequest(String requestLink){
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, requestLink, null,
+                new Response.Listener<JSONObject>() {
+                    boolean correct;
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            correct = response.getBoolean("judge");
+                            score += (correct == true?10:0);
+                            choices[answerNumber - 1].setBackgroundResource(correct == true ?R.drawable.bordergreen:R.drawable.borderred);
+                            for(int i=0;i<4;i++)
+                                choices[i].setClickable(false);
+                        } catch (JSONException e) {
+                            Toast.makeText(getActivity(), "Judge error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),"Volley Error" , Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        queue.add(jsonObjectRequest);
+    }
+
     private void check(ImageView[] checkDrawables, int i) {
 
         checkDrawables[i].setImageResource(R.drawable.checkchoice2);
@@ -191,15 +184,6 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
         checkDrawables[i].setImageResource(R.drawable.checkchoice1);
         i = (i+1)%4;
         checkDrawables[i].setImageResource(R.drawable.checkchoice1);
-    }
-
-    @Override
-    public void onFinishYesNoDialog(int choice) {
-        if(choice == 1){
-            getActivity().finish();
-        }else{
-            questionIndex = 0;
-        }
     }
 
     private void finishGame(int score) {
@@ -244,12 +228,23 @@ public class MCQFragment extends Fragment implements View.OnClickListener , Game
     }
 
 
-    private Runnable mMyRunnable = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            //Change state here
-        }
-    };
+
+    private void delay(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                questionIndex++;
+                if(questionIndex >= questions.size()){
+                    finishGame(score);
+                }else {
+                    for(int i=0;i<4;i++) {
+                        choices[i].setClickable(true);
+                    }
+                    choices[answerNumber - 1].setBackgroundResource(R.drawable.border);
+                    checkDrawables[answerNumber - 1].setImageResource(R.drawable.checkchoice1);
+                    showQuestions();
+                }
+            }
+        }, 2000);
+    }
 }

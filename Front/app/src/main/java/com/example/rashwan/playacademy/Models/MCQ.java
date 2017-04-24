@@ -8,6 +8,7 @@ public class MCQ extends Question {
 
 	private ArrayList<Choice> choices;
 	public MCQ(){
+		choices = new ArrayList<Choice>();
 	}
 	
 	public MCQ( ArrayList<Choice> choices){

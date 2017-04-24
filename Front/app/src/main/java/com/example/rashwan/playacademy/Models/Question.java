@@ -1,6 +1,8 @@
 package com.example.rashwan.playacademy.Models;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
 	
 
 	public Question(){	}

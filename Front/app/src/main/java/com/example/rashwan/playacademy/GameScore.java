@@ -54,7 +54,8 @@ public class GameScore extends DialogFragment {
     {
         public void onClick(View v)
         {
-            int choice;
+
+            int choice = 1;
             switch (v.getId()){
                 case R.id.btnTryAgain:
                     choice = 2;
@@ -64,7 +65,9 @@ public class GameScore extends DialogFragment {
                     break;
             }
             DialogListener dialogListener = (DialogListener)getActivity();
+            dialogListener.onFinishYesNoDialog(choice);
             dismiss();
         }
     };
+
 }
