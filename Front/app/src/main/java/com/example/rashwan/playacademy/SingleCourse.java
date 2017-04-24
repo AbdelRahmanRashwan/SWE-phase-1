@@ -86,8 +86,10 @@ public class SingleCourse extends AppCompatActivity {
         addGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addGameIntent=new Intent();
-//                startActivity(Intent);
+                Intent addGameIntent=new Intent(SingleCourse.this, AddGame.class);
+                Bundle courseInfo = new Bundle();
+                courseInfo.putString("courseName", courseName.getText().toString());
+                startActivity(addGameIntent);
             }
         });
 

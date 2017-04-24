@@ -56,6 +56,7 @@ public class GameServices implements IGameServices{
 	
 	@Override
 	public boolean saveScore(Game game , Student student,int score , int rate){
+		System.out.println(game.getGameId()+" "+student.getUserId());
 		GameSheet gameSheet = gameSheetRepo.findByStudentAndGame(student, game);
 		if(gameSheet!=null){
 			gameSheet.setScore(Math.max(gameSheet.getScore(), score));
