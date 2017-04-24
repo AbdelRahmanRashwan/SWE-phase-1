@@ -24,7 +24,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rashwan.playacademy.Models.Game;
 import com.example.rashwan.playacademy.Models.Question;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +49,7 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
         view = inflater.inflate(R.layout.fragment_true_and_false, null);
         initializeObjects();
         initializeViews();
+
         showQuestions();
 
         return view;
@@ -90,7 +90,6 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
                 answer = "false";
                 break;
         }
-
         String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
                 + "&answer="+answer;
         judgeRequest(requestLink);
@@ -154,6 +153,7 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
                     Toast.makeText(getActivity(),  "Some Thing went wrong couldn't save your score", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -171,6 +171,7 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
         gameScore.setDialogTitle("Score");
         gameScore.show(fragmentManager,"score");
     }
+
 
 
 

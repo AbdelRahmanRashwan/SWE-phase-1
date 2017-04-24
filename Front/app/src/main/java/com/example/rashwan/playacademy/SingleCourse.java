@@ -154,7 +154,6 @@ public class SingleCourse extends AppCompatActivity {
         Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
         Gson gson=new Gson();
         String game=gson.toJson(games.get(i));
-
         playGame.putExtra("game",game);
         startActivity(playGame);
     }
@@ -182,5 +181,4 @@ public class SingleCourse extends AppCompatActivity {
         );
         queue.add(jsonObjectRequest);
     }
-
 }

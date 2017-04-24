@@ -24,6 +24,7 @@
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:text="Back"
+
             android:background="#b9aeae"
             android:textColor="#fff"
             android:textStyle="bold"
