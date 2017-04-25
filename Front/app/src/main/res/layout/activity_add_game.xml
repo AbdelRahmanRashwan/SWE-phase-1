@@ -8,20 +8,93 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="@drawable/mainbackgound"
     tools:context="com.example.rashwan.playacademy.AddGame">
-
-
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/crsName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="add mcq"
-        android:id="@+id/addmcq"
+        android:text="Course Name"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:gravity="center_horizontal"
+        />
+    <EditText
+        android:id="@+id/gameName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Game Name"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:backgroundTint="#fff"
+        android:textSize="24dp"
+        android:padding="10dp"
+        android:layout_marginTop="40dp"
+        />
+    <TextView
+        android:id="@+id/chooseTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose type of the game"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
         />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/typeChooser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="add TF"
-        android:id="@+id/addTF"
-        />
+        android:weightSum="2">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <ImageButton
+                android:id="@+id/TAF"
+                android:layout_width="match_parent"
+                android:layout_height="144dp"
+                android:scaleType="fitStart"
+                android:background="@null"
+                android:src="@drawable/tf"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:text="True And False"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginLeft="50dp"
+            >
+            <ImageButton
+                android:id="@+id/MCQ"
+                android:layout_width="match_parent"
+                android:layout_height="144dp"
+                android:scaleType="fitStart"
+                android:background="@null"
+                android:src="@drawable/mcq"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="#fff"
+                android:textSize="20dp"
+                android:text="Multible Choices"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -56,17 +56,17 @@ public class SingleCourse extends AppCompatActivity {
                             JSONArray gamesJson=response.getJSONArray("games");
                             for (int i=0;i<gamesJson.length();i++){
                                 games.add(Util.parseGame(gamesJson.getJSONObject(i)));
-                                GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
-                                gamesList.setAdapter(adapter);
-
-                                gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            startPlayGame(i);
-                                    }
-                                });
                             }
+                            GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
+                            gamesList.setAdapter(adapter);
+
+                            gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    startPlayGame(i);
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -89,6 +89,7 @@ public class SingleCourse extends AppCompatActivity {
                 Intent addGameIntent=new Intent(SingleCourse.this, AddGame.class);
                 Bundle courseInfo = new Bundle();
                 courseInfo.putString("courseName", courseName.getText().toString());
+                addGameIntent.putExtras(courseInfo);
                 startActivity(addGameIntent);
             }
         });

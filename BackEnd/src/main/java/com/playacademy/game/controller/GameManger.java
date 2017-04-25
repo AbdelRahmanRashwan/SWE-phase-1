@@ -28,7 +28,8 @@ public class GameManger {
 	UserServicesAPI userServices;
 	
 	@RequestMapping(value = "/game/mcq/create", method = RequestMethod.POST)
-	public String createMCQGame(@RequestBody ItemCollector<MCQ> items) {
+	public Map<String,String> createMCQGame(@RequestBody ItemCollector<MCQ> items) {
+		Map<String,String> confirmation = new HashMap<String,String>();
 		Game game = new Game();
 		game.setName(items.gameName);
 
@@ -39,18 +40,21 @@ public class GameManger {
 				it.next().setQuestion(items.questions.get(i));
 			}
 		}
-		return addGame(game, items.courseName);
+		confirmation.put("confirmation", addGame(game, items.courseName));
+		return confirmation;
 
 	}
 
 	@RequestMapping(value = "/game/trueandfalse/create", method = RequestMethod.POST)
-	public String createTrueAndFalseGame(@RequestBody ItemCollector<TrueAndFalse> items) {
+	public Map<String,String> createTrueAndFalseGame(@RequestBody ItemCollector<TrueAndFalse> items) {
+		Map<String,String> confirmation = new HashMap<String,String>();
 		Game game = new Game();
 		game.setName(items.gameName);
 		for (int i = 0; i < items.questions.size(); i++) {
 			game.addQuestion(items.questions.get(i));
 		}
-		return addGame(game, items.courseName);
+		confirmation.put("confirmation", addGame(game, items.courseName));
+		return confirmation;
 	}
 
 	@RequestMapping(value = "/game/question/add", method = RequestMethod.POST)
