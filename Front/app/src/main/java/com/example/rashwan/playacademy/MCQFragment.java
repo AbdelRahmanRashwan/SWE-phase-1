@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         view = inflater.inflate(R.layout.fragment_mcq, null);
         initializeViews();
         initializeObjects();
@@ -70,6 +72,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
         questions = game.getQuestions();
         questionIndex = 0;
     }
+
 
     private void showQuestions() {
         questionTrack.setText("Question "+ (questionIndex+1) + " of " + questions.size());
@@ -116,7 +119,6 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
                 }else{
 
                     RequestQueue queue = Volley.newRequestQueue(getActivity());
-
                     String answer = choices[answerNumber - 1].getText().toString();
                     String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
                             + "&answer="+answer;
@@ -223,6 +225,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
         gameScore.setDialogTitle("Score");
         gameScore.show(fragmentManager,"score");
     }
+
 
 
     private void delay(){

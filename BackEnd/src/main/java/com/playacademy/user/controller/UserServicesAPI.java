@@ -23,6 +23,9 @@ public class UserServicesAPI {
 	// takes the user and adds the user data in the user base repository
 
 	protected boolean verifyEmail(String email) {
+		User user=userBaseRepo.findByEmail(email);
+		if (user==null)
+			return true;
 		return false;
 	}
 
@@ -42,7 +45,6 @@ public class UserServicesAPI {
 	// gets user by ID from the user base repository
 	public User getUserByID(long ID) {
 		User user = userBaseRepo.findOne(ID);
-//		System.out.println("user email "+user.getEmail());
 		return user;
 	}
 
@@ -54,13 +56,11 @@ public class UserServicesAPI {
 	// gets user ID from the user base repository by email and password
 	public long getUserID(String email, String password) {
 		User returns = userBaseRepo.findByEmailAndPassword(email, password);
-//		System.out.println("email "+returns.getEmail());
 		return (returns == null ? -1 : returns.getUserId());
 	}
 
 	// gets user ID from the user base repository by email
 	public long getUserID(String email) {
-		System.out.println("hi " + userBaseRepo);
 		User returns = userBaseRepo.findByEmail(email);
 		return (returns == null ? -1 : returns.getUserId());
 	}

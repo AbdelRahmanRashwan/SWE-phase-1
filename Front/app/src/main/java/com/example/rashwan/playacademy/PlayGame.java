@@ -5,11 +5,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.rashwan.playacademy.Models.Game;
 import com.example.rashwan.playacademy.Models.MCQ;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -39,7 +41,6 @@ public class PlayGame extends AppCompatActivity implements GameScore.DialogListe
     }
 
     public void initialize(){
-
         Gson gson = new Gson();
         String gameJson = getIntent().getStringExtra("game");
         JsonObject gameJsonObject = new JsonParser().parse(gameJson).getAsJsonObject();

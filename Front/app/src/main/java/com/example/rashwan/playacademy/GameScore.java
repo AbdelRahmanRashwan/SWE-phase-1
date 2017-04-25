@@ -54,6 +54,7 @@ public class GameScore extends DialogFragment {
     {
         public void onClick(View v)
         {
+
             int choice = 1;
             switch (v.getId()){
                 case R.id.btnTryAgain:
