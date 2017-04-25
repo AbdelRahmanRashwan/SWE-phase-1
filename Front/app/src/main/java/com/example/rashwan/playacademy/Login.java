@@ -49,10 +49,16 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final JSONObject loginData=new JSONObject();
+                JSONObject loginData=new JSONObject();
+                String emailValue=email.getText().toString();
+                String passwordValue=password.getText().toString();
+                if (emailValue.contains(" ")){
+                    Toast.makeText(Login.this, "Email can't contain spaces", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 try {
-                    loginData.put("email",email.getText().toString());
-                    loginData.put("password",password.getText().toString());
+                    loginData.put("email",emailValue);
+                    loginData.put("password",passwordValue);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

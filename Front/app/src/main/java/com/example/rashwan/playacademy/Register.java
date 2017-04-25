@@ -49,7 +49,21 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
 
                 //getting data from the edit texts
+                if (isEmpty()){
+                    Toast.makeText(Register.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 getText();
+
+                if (checkSpaces()){
+                    Toast.makeText(Register.this, "Email can't contain spaces", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (containsAt()){
+                    Toast.makeText(Register.this, "Invalid email Address", Toast.LENGTH_SHORT).show();
+                }
 
                 JSONObject userData=new JSONObject();
                 //adding data to the JSON object
@@ -156,5 +170,21 @@ public class Register extends AppCompatActivity {
         ageValue=Integer.parseInt(age.getText().toString());
         passwordString=password.getText().toString();
         educationalMailString=educationalMail.getText().toString();
+    }
+
+    private boolean checkSpaces(){
+        return emailString.contains(" ")||(teacherCheck.isChecked()&&educationalMailString.contains(" "));
+    }
+
+    private boolean isEmpty() {
+        return email.getText().toString().trim().equals("") ||
+                firstName.getText().toString().trim().equals("") ||
+                lastName.getText().toString().trim().equals("") ||
+                password.getText().toString().trim().equals("") ||
+                age.getText().toString().trim().equals("");
+    }
+
+    private boolean containsAt(){
+        return !emailString.contains("@")||(teacherCheck.isChecked()&&educationalMailString.contains("@"));
     }
 }
