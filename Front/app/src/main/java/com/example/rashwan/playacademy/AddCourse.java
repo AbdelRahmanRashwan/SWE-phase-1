@@ -39,8 +39,17 @@ public class AddCourse extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 nameValue = name.getText().toString();
                 descriptionValue = description.getText().toString();
+
+                nameValue=nameValue.replaceAll(" ","%20");
+                descriptionValue=descriptionValue.replaceAll(" ","%20");
+
+                if (nameValue.trim().equals("")||descriptionValue.trim().equals("")){
+                    Toast.makeText(AddCourse.this, "Please Enter all the fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String link = ServicesLinks.ADD_COURSE_URL + "?courseName=" + nameValue + "&courseDescription=" + descriptionValue +
                         "&teacherId=" + Login.loggedUser.getUserId();
                 Log.i("link",link);

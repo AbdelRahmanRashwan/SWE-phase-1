@@ -25,6 +25,7 @@ import java.util.ArrayList;
  */
 
 public class Util {
+
     public static Teacher parseTeacher(JSONObject teacherData){
         Teacher teacher=new Teacher();
         try {
@@ -73,9 +74,13 @@ public class Util {
     public static Course parseCourse(JSONObject courseData){
         Course course=new Course();
         try {
+            String courseName=courseData.getString("courseName"),courseDescription=courseData.getString("courseDescription");
+            courseName.replaceAll("_"," ");
+            courseDescription.replaceAll("_"," ");
+
             course.setCourseId(courseData.getInt("courseId"));
-            course.setCourseName(courseData.getString("courseName"));
-            course.setCourseDescription(courseData.getString("courseDescription"));
+            course.setCourseName(courseName);
+            course.setCourseDescription(courseDescription);
             Teacher teacher=parseTeacher(courseData.getJSONObject("creator"));
             course.setCreator(teacher);
         } catch (JSONException e) {
