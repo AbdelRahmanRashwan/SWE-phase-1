@@ -12,21 +12,12 @@ public class StudentService extends UserServicesAPI {
 	StudentRepo studentRepo;
 
 	@Override
-	protected boolean verifyEmail(String email) {
-		if (email.contains("@"))
-			return true;
-		return false;
-	}
-
-	@Override
-	public long addUser(User user) {
-		long userID = getUserID(user.getEmail());
-		if (!verifyEmail(user.getEmail()) || userID != -1) {
+	public long addUser(User user){
+		long userID=getUserID(user.getEmail());
+		if (!verifyEmail(user.getEmail())||userID!=-1){
 			return -1;
 		}
-
-		Student confirmation = studentRepo.save(((Student) user));
+		Student confirmation=studentRepo.save((Student)user);
 		return confirmation.getUserId();
 	}
-
 }

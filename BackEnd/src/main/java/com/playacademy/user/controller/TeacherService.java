@@ -12,17 +12,10 @@ public class TeacherService extends UserServicesAPI {
 	@Autowired
 	TeacherRepo teacherRepo;
 
-	@Override
-	protected boolean verifyEmail(String email) {
-		if (email.contains("@"))
-			return true;
-		return false;
-	}
-
 	public long addUser(User user) {
 		long userID = getUserID(user.getEmail());
 		long userID2 = getTeacherIDbyEducationalMail(((Teacher) user).getEducationalMail());
-		if (!verifyEmail(((Teacher) user).getEducationalMail()) || userID != -1 || userID2 != -1) {
+		if (userID != -1 || userID2 != -1) {
 			return -1;
 		}
 

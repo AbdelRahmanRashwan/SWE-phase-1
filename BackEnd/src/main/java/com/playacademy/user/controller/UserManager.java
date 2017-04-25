@@ -1,5 +1,8 @@
 package com.playacademy.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,10 +50,12 @@ public class UserManager {
 	}
 
 	@RequestMapping(value = "/teacher/register", method = RequestMethod.POST)
-	public int registerTeacher(@RequestBody Teacher teacher) {
+	public Map<String, Integer> registerTeacher(@RequestBody Teacher teacher) {
 		// userServices = new TeacherService();
 		int  id =(int) teacherServices.addUser(teacher);
-		return id;
+		Map<String,Integer> map=new HashMap<>();
+		map.put("id",id);
+		return map;
 	}
 
 }
