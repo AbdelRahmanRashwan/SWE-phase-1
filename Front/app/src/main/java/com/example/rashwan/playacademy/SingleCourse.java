@@ -31,6 +31,7 @@ public class SingleCourse extends AppCompatActivity {
 
     TextView courseName;
     TextView courseCreator;
+    TextView emptyGames;
     Course course;
     ArrayList<Game>games;
     ListView gamesList;
@@ -56,17 +57,22 @@ public class SingleCourse extends AppCompatActivity {
                             JSONArray gamesJson=response.getJSONArray("games");
                             for (int i=0;i<gamesJson.length();i++){
                                 games.add(Util.parseGame(gamesJson.getJSONObject(i)));
-                                GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
-                                gamesList.setAdapter(adapter);
-
-                                gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            startPlayGame(i);
-                                    }
-                                });
                             }
+
+                            if (gamesJson.length()==0){
+                                emptyGames.setVisibility(View.VISIBLE);
+                            }
+
+                            GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
+                            gamesList.setAdapter(adapter);
+
+                            gamesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    startPlayGame(i);
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -89,6 +95,7 @@ public class SingleCourse extends AppCompatActivity {
                 Intent addGameIntent=new Intent(SingleCourse.this, AddGame.class);
                 Bundle courseInfo = new Bundle();
                 courseInfo.putString("courseName", courseName.getText().toString());
+                addGameIntent.putExtras(courseInfo);
                 startActivity(addGameIntent);
             }
         });
@@ -138,6 +145,7 @@ public class SingleCourse extends AppCompatActivity {
         course = gson.fromJson(courseJson, Course.class);
         courseName=(TextView)findViewById(R.id.courseName);
         courseCreator=(TextView)findViewById(R.id.creatorName);
+        emptyGames=(TextView) findViewById(R.id.noGames);
         gamesList=(ListView)findViewById(R.id.gameList);
         addGame=(Button)findViewById(R.id.addGame);
         enroll=(Button)findViewById(R.id.enroll);

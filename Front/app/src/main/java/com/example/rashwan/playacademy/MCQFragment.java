@@ -122,10 +122,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
                     String answer = choices[answerNumber - 1].getText().toString();
                     String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
                             + "&answer="+answer;
-
-                    judgeRequest(requestLink);
-
-                    delay();
+                    requestJudge(requestLink);
                 }
                 break;
             case R.id.choice1:
@@ -147,7 +144,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void judgeRequest(String requestLink){
+    private void requestJudge(String requestLink){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, requestLink, null,
                 new Response.Listener<JSONObject>() {
@@ -158,8 +155,10 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
                             correct = response.getBoolean("judge");
                             score += (correct == true?10:0);
                             choices[answerNumber - 1].setBackgroundResource(correct == true ?R.drawable.bordergreen:R.drawable.borderred);
-                            for(int i=0;i<4;i++)
+                            for(int i=0;i<4;i++) {
                                 choices[i].setClickable(false);
+                            }
+                            delay();
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(), "Judge error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }

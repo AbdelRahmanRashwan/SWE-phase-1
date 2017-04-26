@@ -9,16 +9,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="3">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="2"
             android:id="@+id/quesTrackTAF"
             android:textColor="#fff"
             android:text="Question x of y"
             android:paddingLeft="10sp"
-            android:textSize="30sp"
+            android:textSize="15sp"
             />
         <TextView
             android:layout_width="0dp"
@@ -38,11 +39,11 @@
         android:text="Question"
         android:layout_marginTop="15sp"
         android:textColor="#fff"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
         android:fontFamily="serif-monospace"
-        android:paddingLeft="15sp"
+        android:padding="15sp"
         android:background="#65b3bada"
         />
     <LinearLayout

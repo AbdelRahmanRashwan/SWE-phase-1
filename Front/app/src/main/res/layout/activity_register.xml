@@ -20,7 +20,7 @@
             >
             <ImageView
 
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="120dp"
                 android:src="@drawable/mainicon"
                 android:layout_gravity="center" />
@@ -33,6 +33,7 @@
                 android:padding="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
+                android:backgroundTint="#fff"
                 android:inputType="textPersonName"
                 android:id="@+id/firstName"
                 />
@@ -45,6 +46,7 @@
                 android:padding="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
+                android:backgroundTint="#fff"
                 android:inputType="textPersonName"
                 android:id="@+id/lastName"
                 />
@@ -57,6 +59,7 @@
                 android:padding="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
+                android:backgroundTint="#fff"
                 android:inputType="textEmailAddress"
                 android:id="@+id/email"
                 />
@@ -69,6 +72,7 @@
                 android:padding="10dp"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
+                android:backgroundTint="#fff"
                 android:inputType="textPassword"
                 android:id="@+id/password"
                 />
@@ -82,6 +86,7 @@
                 android:textColor="#fff"
                 android:textColorHint="#fff"
                 android:inputType="number"
+                android:backgroundTint="#fff"
                 android:id="@+id/age"
                 />
 
@@ -106,6 +111,9 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#fff"
+                    android:buttonTint="#fff"
+
                     android:id="@+id/teacherCheck"
                     />
 

@@ -1,13 +1,112 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10sp"
+    android:orientation="vertical"
+    android:weightSum="5"
+    android:background="@drawable/mainbackgound"
     tools:context="com.example.rashwan.playacademy.AddTrueAndFalse">
 
-    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/questionStatmentTAF"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Enter Question"
+        android:inputType="text"
+        android:layout_marginTop="15sp"
+        android:textColorHint="#fff"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:fontFamily="serif-monospace"
+        android:padding="15sp"
+        android:background="#65b3bada"
+        />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:text="Select the right answer"
+        android:textSize="15sp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textColor="#fff"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:weightSum="2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center_vertical"
+        >
+        <ImageButton
+            android:id="@+id/trueImgBtn"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/trueimg"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:background="@drawable/circlegreen"
+            />
+        <ImageButton
+            android:id="@+id/falseImgBtn"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/falseimg"
+            android:layout_weight="1"
+            android:background="@drawable/circlered"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:weightSum="3"
+        android:gravity="center_vertical"
+        >
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#50b9aeae"
+            android:text="Back"
+            android:fontFamily="monospace"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            />
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#50b9aeae"
+            android:layout_weight="1"
+            android:text="Submit"
+            android:fontFamily="monospace"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            />
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#50b9aeae"
+            android:text="Add"
+            android:fontFamily="monospace"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            />
+    </LinearLayout>
+</LinearLayout>

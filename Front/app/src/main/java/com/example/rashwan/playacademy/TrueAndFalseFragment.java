@@ -1,9 +1,5 @@
 package com.example.rashwan.playacademy;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -92,12 +88,11 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
         }
         String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
                 + "&answer="+answer;
-        judgeRequest(requestLink);
+        requestJudge(requestLink);
 
-        delay();
     }
 
-    private void judgeRequest(String requestLink){
+    private void requestJudge(String requestLink){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.GET, requestLink, null,
                 new Response.Listener<JSONObject>() {
@@ -114,8 +109,9 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
                             }
                             trueBtn.setClickable(false);
                             falseBtn.setClickable(false);
+                            delay();
                         } catch (JSONException e) {
-                            Toast.makeText(getActivity(), "Judge error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Connection error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
