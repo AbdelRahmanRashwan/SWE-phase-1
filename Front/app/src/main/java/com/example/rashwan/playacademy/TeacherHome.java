@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -66,6 +67,18 @@ public class TeacherHome extends AppCompatActivity {
                 startSingleActivity(i);
             }
         });
+
+        ArrayList<String> navigationItems = new ArrayList<>();
+        navigationItems.add("Home");
+        navigationItems.add("Courses");
+        navigationItems.add("Profile");
+        navigationItems.add("Logout");
+
+
+        ListView listView = (ListView) findViewById(R.id.navList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,navigationItems);
+        listView.setAdapter(adapter);
+        listView.setSelection(0);
     }
 
     public void initialize(){

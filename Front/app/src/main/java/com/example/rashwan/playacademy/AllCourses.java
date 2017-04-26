@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -98,6 +99,19 @@ public class AllCourses extends AppCompatActivity {
                 startSingleActivity(course);
             }
         });
+
+        ArrayList<String> navigationItems = new ArrayList<>();
+        navigationItems.add("Home");
+        navigationItems.add("Courses");
+        navigationItems.add("Profile");
+        navigationItems.add("Logout");
+
+
+        ListView listView = (ListView) findViewById(R.id.navList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,navigationItems);
+        listView.setAdapter(adapter);
+        listView.setSelection(1);
+
     }
 
     public void initialize(){

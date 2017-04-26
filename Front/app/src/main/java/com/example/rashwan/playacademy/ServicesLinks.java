@@ -8,7 +8,6 @@ import com.android.volley.toolbox.StringRequest;
 
 public final class ServicesLinks {
 
-
     public static final String SERVER="http://10.1.23.69:8080";
     public static final String LOGIN_URL=SERVER+"/login";
     public static final String REGISTER_STUDENT_URL=SERVER+"/student/register";
