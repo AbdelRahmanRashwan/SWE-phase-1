@@ -9,42 +9,10 @@
     tools:context="com.example.rashwan.playacademy.AddMCQ">
     <!-- TODO: Update blank fragment layout -->
 
-    <EditText
-        android:id="@+id/answer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:hint="Enter answer number"
-        android:inputType="number"
-        android:textColorHint="#fff"
-        android:textColor="#fff"
-        android:layout_gravity="center_horizontal"
-        android:paddingLeft="15dp"
-        />
 
-    <EditText
-        android:id="@+id/questionStatment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:inputType="text"
-        android:hint="Question"
-        android:textColorHint="#fff"
-        android:textColor = "#fff"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="serif-monospace"
-        android:background="#65b3bada"
-        android:gravity="center_vertical"
-        android:layout_marginTop="15sp"
-        android:paddingLeft="15sp"
-        />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
-        android:layout_weight="3.5"
+        android:layout_height="match_parent"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,6 +20,37 @@
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
             >
+
+            <EditText
+                android:id="@+id/answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter answer number"
+                android:inputType="number"
+                android:textColorHint="#fff"
+                android:textColor="#fff"
+                android:backgroundTint="#fff"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="15dp"
+                />
+
+            <EditText
+                android:id="@+id/questionStatment"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:inputType="text"
+                android:hint="Question"
+                android:textColorHint="#fff"
+                android:textColor = "#fff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="serif-monospace"
+                android:background="#65b3bada"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="50sp"
+                android:paddingLeft="15sp"
+                />
 
             <EditText
                 android:id="@+id/choiceAdd1"
@@ -112,49 +111,50 @@
                 android:paddingBottom="7sp"
                 android:paddingTop="7sp"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                >
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#50b9aeae"
+                    android:text="Back"
+                    android:fontFamily="monospace"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    />
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#50b9aeae"
+                    android:layout_weight="1"
+                    android:text="Submit"
+                    android:fontFamily="monospace"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
+                    />
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#50b9aeae"
+                    android:text="Add"
+                    android:fontFamily="monospace"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
+                    />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:weightSum="3"
-        >
-        <Button
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#50b9aeae"
-            android:text="Back"
-            android:fontFamily="monospace"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            />
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#50b9aeae"
-            android:layout_weight="1"
-            android:text="Submit"
-            android:fontFamily="monospace"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:layout_marginLeft="20dp"
-            />
-        <Button
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#50b9aeae"
-            android:text="Add"
-            android:fontFamily="monospace"
-            android:textColor="#fff"
-            android:textSize="20sp"
-            android:layout_marginLeft="20dp"
-            />
-    </LinearLayout>
+
 </LinearLayout>

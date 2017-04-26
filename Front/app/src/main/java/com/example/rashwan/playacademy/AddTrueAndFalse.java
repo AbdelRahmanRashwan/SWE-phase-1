@@ -64,7 +64,12 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
                 }
                 break;
             case R.id.submit:
+                if (questionsJsonArray.length()==0){
+                    Toast.makeText(getContext(), "Enter at least on question", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 addGame();
+
                 break;
             case R.id.trueImgBtn:
                 answerString = "true";
@@ -140,7 +145,6 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
 
     private void addGameRequest(JSONObject gameInfo) {
         String link=ServicesLinks.CREATE_TAF_GAME;
-        Toast.makeText(getActivity(), gameInfo.toString(), Toast.LENGTH_SHORT).show();
         Log.i("why u ",gameInfo.toString()+ " "+link);
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, link, gameInfo, new Response.Listener<JSONObject>() {
