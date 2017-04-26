@@ -94,7 +94,8 @@ public class AllCourses extends AppCompatActivity {
         coursesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startSingleActivity(i);
+                Course course= (Course) coursesList.getAdapter().getItem(i);
+                startSingleActivity(course);
             }
         });
     }
@@ -117,10 +118,10 @@ public class AllCourses extends AppCompatActivity {
         return indexes;
     }
 
-    public void startSingleActivity(int i){
+    public void startSingleActivity(Course  courseData){
         Intent singleCoursePage=new Intent(AllCourses.this, SingleCourse.class);
         Gson gson=new Gson();
-        String course=gson.toJson(courses.get(i));
+        String course=gson.toJson(courseData);
         singleCoursePage.putExtra("course",course);
         startActivity(singleCoursePage);
     }

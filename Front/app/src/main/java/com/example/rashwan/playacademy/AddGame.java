@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddGame extends AppCompatActivity implements View.OnClickListener{
 
@@ -63,7 +64,7 @@ public class AddGame extends AppCompatActivity implements View.OnClickListener{
     private boolean validateInput() {
         String gameNameString = gameName.getText().toString();
         if(gameNameString.trim().isEmpty()){
-            gameName.setError("This field is required");
+            Toast.makeText(this, "Please enter game name", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
