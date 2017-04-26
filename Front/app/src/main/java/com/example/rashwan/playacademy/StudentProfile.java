@@ -2,7 +2,11 @@ package com.example.rashwan.playacademy;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class StudentProfile extends AppCompatActivity {
 
@@ -16,6 +20,18 @@ public class StudentProfile extends AppCompatActivity {
         setContentView(R.layout.activity_student_profile);
         initialize();
         setText();
+
+        ArrayList<String> navigationItems = new ArrayList<>();
+        navigationItems.add("Home");
+        navigationItems.add("Courses");
+        navigationItems.add("Profile");
+        navigationItems.add("Logout");
+
+
+        ListView listView = (ListView) findViewById(R.id.navList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,navigationItems);
+        listView.setAdapter(adapter);
+        listView.setSelection(2);
 
     }
 
