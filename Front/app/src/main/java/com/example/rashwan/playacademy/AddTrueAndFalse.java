@@ -65,7 +65,7 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
                 break;
             case R.id.submit:
                 if (questionsJsonArray.length()==0){
-                    Toast.makeText(getContext(), "Enter at least on question", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Add at least on question", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 addGame();
