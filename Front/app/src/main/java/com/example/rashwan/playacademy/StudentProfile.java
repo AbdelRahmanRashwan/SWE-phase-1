@@ -6,6 +6,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 
 public class StudentProfile extends AppCompatActivity {
@@ -33,6 +38,10 @@ public class StudentProfile extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setSelection(2);
 
+//        String link=;
+//
+//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, link, null,
     }
 
     public void setText(){
