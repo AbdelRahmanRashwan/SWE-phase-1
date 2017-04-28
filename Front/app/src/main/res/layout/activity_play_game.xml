@@ -3,12 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:padding="10dp"
     android:id="@+id/activity_play_game"
+    android:background="@drawable/mainbackgound"
     tools:context="com.example.rashwan.playacademy.PlayGame">
+    <LinearLayout
+        android:id="@+id/quesProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/questionTrack"
+            android:textColor="#fff"
+            android:text="Question x of y"
+            android:paddingLeft="10sp"
+            android:textSize="15sp"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <ProgressBar
+                android:id="@+id/progressBarCircle"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/drawable_circle_dark_blue"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/drawable_circle_yellow"
+                android:rotation="-90" />
+            <TextView
+                android:id="@+id/countDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="#fff"
+                android:text="5"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                android:textAlignment="center"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/FragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/quesProgress"
         />
 
 </RelativeLayout>
