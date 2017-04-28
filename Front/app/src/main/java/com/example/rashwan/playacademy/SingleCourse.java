@@ -31,6 +31,7 @@ public class SingleCourse extends AppCompatActivity {
 
     TextView courseName;
     TextView courseCreator;
+    TextView emptyGames;
     Course course;
     ArrayList<Game>games;
     ListView gamesList;
@@ -57,6 +58,11 @@ public class SingleCourse extends AppCompatActivity {
                             for (int i=0;i<gamesJson.length();i++){
                                 games.add(Util.parseGame(gamesJson.getJSONObject(i)));
                             }
+
+                            if (gamesJson.length()==0){
+                                emptyGames.setVisibility(View.VISIBLE);
+                            }
+
                             GameAdapter adapter=new GameAdapter(getApplicationContext(),games);
                             gamesList.setAdapter(adapter);
 
@@ -139,6 +145,7 @@ public class SingleCourse extends AppCompatActivity {
         course = gson.fromJson(courseJson, Course.class);
         courseName=(TextView)findViewById(R.id.courseName);
         courseCreator=(TextView)findViewById(R.id.creatorName);
+        emptyGames=(TextView) findViewById(R.id.noGames);
         gamesList=(ListView)findViewById(R.id.gameList);
         addGame=(Button)findViewById(R.id.addGame);
         enroll=(Button)findViewById(R.id.enroll);

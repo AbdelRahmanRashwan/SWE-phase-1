@@ -185,6 +185,6 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean containsAt(){
-        return !emailString.contains("@")||(teacherCheck.isChecked()&&educationalMailString.contains("@"));
+        return !emailString.contains("@")||(teacherCheck.isChecked()&&!educationalMailString.contains("@"));
     }
 }

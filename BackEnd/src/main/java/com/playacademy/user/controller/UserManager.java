@@ -54,7 +54,7 @@ public class UserManager {
 		// userServices = new TeacherService();
 		int  id =(int) teacherServices.addUser(teacher);
 		Map<String,Integer> map=new HashMap<>();
-		map.put("id",id);
+		map.put("confirmation",id);
 		return map;
 	}
 

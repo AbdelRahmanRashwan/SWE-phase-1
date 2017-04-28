@@ -6,9 +6,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,10 +50,15 @@ public class StudentHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         toggle = new ActionBarDrawerToggle(this,drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        TextView userName = (TextView) findViewById(R.id.userName);
+        TextView userEmail = (TextView) findViewById(R.id.userEmail);
+        userName.setText(Login.loggedUser.getFirstName());
+        userEmail.setText(Login.loggedUser.getEmail());
 
         initialize();
         String link=ServicesLinks.GET_STUDENT_COURSES_URL+"?studentId="+Login.loggedUser.getUserId();
@@ -101,6 +108,32 @@ public class StudentHome extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goSearchIntent=new Intent(getApplicationContext(),AllCourses.class);
                 startActivity(goSearchIntent);
+            }
+        });
+
+        ArrayList<String> navigationItems = new ArrayList<>();
+        navigationItems.add("Home");
+        navigationItems.add("Courses");
+        navigationItems.add("Profile");
+        navigationItems.add("Logout");
+
+
+        ListView listView = (ListView) findViewById(R.id.navList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,navigationItems);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String itemPressed = ((TextView)view.findViewById(android.R.id.text1)).getText().toString();
+                if (itemPressed.equals("Courses")){
+                    startActivity(new Intent(StudentHome.this,AllCourses.class));
+                }else if(itemPressed.equals("Profile")){
+                    startActivity(new Intent(StudentHome.this,TeacherProfile.class));
+                }else if(itemPressed.equals("Logout")){
+                    Login.loggedUser.setUserId(0);
+                    startActivity(new Intent(StudentHome.this,Login.class));
+                }
+                drawer.closeDrawer(Gravity.START);
             }
         });
 

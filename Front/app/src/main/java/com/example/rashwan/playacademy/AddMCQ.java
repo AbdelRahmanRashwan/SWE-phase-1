@@ -83,6 +83,10 @@ public class AddMCQ extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.submit:
+                if (questionsJsonArray.length()==0){
+                    Toast.makeText(getContext(), "Add at least one question", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 addGame();
                 break;
         }

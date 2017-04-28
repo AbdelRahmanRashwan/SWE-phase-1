@@ -37,7 +37,7 @@
                 android:indeterminate="false"
                 android:max="100"
                 android:progress="100"
-                android:progressDrawable="@drawable/drawable_circle_yellow"
+                android:progressDrawable="@drawable/drawable_circle_white"
                 android:rotation="-90" />
             <TextView
                 android:id="@+id/countDown"
