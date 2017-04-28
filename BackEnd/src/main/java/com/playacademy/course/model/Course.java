@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.courseattendance.model.CourseAttendance;
 import com.playacademy.game.model.Game;
 import com.playacademy.user.model.*;
 

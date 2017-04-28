@@ -16,46 +16,71 @@ import com.playacademy.user.model.Teacher;
 import com.playacademy.user.model.User;
 
 @RestController
-public class UserManager {
+public class UserAPI {
 
 	@Autowired
 	@Qualifier(value = "UBean")
-	UserServicesAPI userServices;
+	UserServicesController userServices;
 
 	@Autowired
 	@Qualifier(value = "TBean")
-	UserServicesAPI teacherServices;
+	UserServicesController teacherServices;
 
 	@Autowired
 	@Qualifier(value = "SBean")
-	UserServicesAPI studentService;
+	UserServicesController studentService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public User login(@RequestBody Student user) {
-		User userRet = userServices.getUserByID(userServices.getUserID(user.getEmail(), user.getPassword()));
-		return userRet;
+	public Map<String,Object> login(@RequestBody Student user) {
+		Map<String,Object> returnUser = new HashMap<String,Object>();
+		String error = "";
+		long userId = userServices.getUserID(user.getEmail());
+		User userData= userServices.getUserByID(userId);
+		if(userId == -1){
+			error = "This Email does not exist";
+		}else if(!userData.getPassword().equals(user.getPassword())){
+			error = "Incorrect password";
+		}else if(!userData.isVerified()){
+			error = "Not verified";
+		}
+		if(error.length()>1){
+			returnUser.put("Error", error);
+		}else{
+			returnUser.put("userData", userData);
+		}
+		
+		return returnUser;
 	}
 	
 	@RequestMapping(value = "/user/delete", method = RequestMethod.GET)
-	public boolean login(@RequestParam("id") long id) {
+	public boolean delete(@RequestParam("id") long id) {
 		return userServices.deleteUser(id);
 	}
 
 	@RequestMapping(value = "/student/register", method = RequestMethod.POST)
-	public String registerStudent(@RequestBody Student student) {
-		int  id = (int) studentService.addUser(student);
-		String ret="{\"confirmation\":"+id+"}";
-		
-		return ret;
+	public Map<String,Object> registerStudent(@RequestBody Student student) {
+		Map<String,Object> returnData=new HashMap<>();
+		long userId = userServices.getUserID(student.getEmail());
+		if(userId != -1){
+			returnData.put("Error", "This Email already exists"); 
+		}else{
+			userId = teacherServices.addUser(student);
+			returnData.put("userId", userId);
+		}
+		return returnData;
 	}
 
 	@RequestMapping(value = "/teacher/register", method = RequestMethod.POST)
-	public Map<String, Integer> registerTeacher(@RequestBody Teacher teacher) {
-		// userServices = new TeacherService();
-		int  id =(int) teacherServices.addUser(teacher);
-		Map<String,Integer> map=new HashMap<>();
-		map.put("confirmation",id);
-		return map;
+	public Map<String, Object> registerTeacher(@RequestBody Teacher teacher) {
+		Map<String,Object> returnData=new HashMap<>();
+		long userId = userServices.getUserID(teacher.getEmail());
+		if(userId != -1){
+			returnData.put("Error", "This Email already exists"); 
+		}else{
+			userId = teacherServices.addUser(teacher);
+			returnData.put("userId", userId);
+		}
+		return returnData;
 	}
 
 }

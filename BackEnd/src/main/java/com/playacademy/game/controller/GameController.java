@@ -1,23 +1,19 @@
 package com.playacademy.game.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.Course;
 import com.playacademy.game.model.*;
-import com.playacademy.user.model.Student;
 
 @Service
-public class GameServices implements IGameServices{
+public class GameController implements IGameController{
 	
 	@Autowired
 	GameRepository repository;
-	@Autowired
-	GameSheetRepo gameSheetRepo;
+	
 
 	@Override
 	public boolean addGame(Game game, Course course) {
@@ -54,29 +50,8 @@ public class GameServices implements IGameServices{
 		}
 	}
 	
-	@Override
-	public boolean saveScore(Game game , Student student,int score , int rate){
-		System.out.println(game.getGameId()+" "+student.getUserId());
-		GameSheet gameSheet = gameSheetRepo.findByStudentAndGame(student, game);
-		if(gameSheet!=null){
-			gameSheet.setScore(Math.max(gameSheet.getScore(), score));
-			gameSheet.setRate(rate);
-		}else{
-			gameSheet = new GameSheet();
-			game.addScore(gameSheet);
-			student.addScore(gameSheet);
-			gameSheet.setScore(score);
-			gameSheet.setRate(rate);
-		}
-		if(gameSheetRepo.save(gameSheet) != null)
-			return true;
-		else
-			return false;
-	}
+	
 
-	@Override
-	public ArrayList<GameSheet> scoreBoard(Student student){
-		return gameSheetRepo.findByStudent(student);
-	}
+	
 	
 }

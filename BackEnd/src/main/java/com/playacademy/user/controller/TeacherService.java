@@ -8,7 +8,7 @@ import com.playacademy.user.model.TeacherRepo;
 import com.playacademy.user.model.User;
 
 @Component(value = "TBean")
-public class TeacherService extends UserServicesAPI {
+public class TeacherService extends UserServicesController {
 	@Autowired
 	TeacherRepo teacherRepo;
 

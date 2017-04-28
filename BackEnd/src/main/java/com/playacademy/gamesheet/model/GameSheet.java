@@ -1,4 +1,4 @@
-package com.playacademy.game.model;
+package com.playacademy.gamesheet.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.game.model.Game;
 import com.playacademy.user.model.Student;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
