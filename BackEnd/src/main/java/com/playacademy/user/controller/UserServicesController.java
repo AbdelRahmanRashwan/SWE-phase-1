@@ -10,7 +10,7 @@ import com.playacademy.user.model.UserRepository;
 
 @Service
 @Component(value = "UBean")
-public class UserServicesAPI {
+public class UserServicesController {
 
 	@Autowired
 	UserRepository userBaseRepo;

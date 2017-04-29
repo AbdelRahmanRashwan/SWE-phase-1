@@ -9,8 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.playacademy.course.model.CourseAttendance;
-import com.playacademy.game.model.GameSheet;
+import com.playacademy.courseattendance.model.CourseAttendance;
+import com.playacademy.gamesheet.model.GameSheet;
 
 
 

@@ -1,6 +1,7 @@
 package com.example.rashwan.playacademy;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +35,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
 
     private TextView questionName;
     private TextView questionTrack;
+    private TextView countDown;
     private TextView choices[];
     private Button next;
     private PlayGame activity ;
@@ -54,8 +56,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
         initializeViews();
         initializeObjects();
 
-
-        showQuestions();
+        showNextQuestion();
 
         return view;
     }
@@ -74,8 +75,8 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    private void showQuestions() {
-        questionTrack.setText("Question "+ (questionIndex+1) + " of " + questions.size());
+    private void showNextQuestion() {
+        activity.questionProgress.setText("Question "+ (questionIndex+1) + " of " + questions.size());
         answerNumber = -1;
         MCQ question;
         question = (MCQ)game.getQuestions().get(questionIndex);
@@ -85,11 +86,11 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
         for(int j=0;j<choicesArray.size();j++){
             choices[j].setText(choicesArray.get(j).getChoice());
         }
+       activity.startTimer();
     }
 
     private void initializeViews() {
         questionName = (TextView)view.findViewById(R.id.question);
-        questionTrack = (TextView)view.findViewById(R.id.quesTrack);
         next = (Button)view.findViewById(R.id.next);
 
         choices = new TextView[4];
@@ -112,12 +113,13 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()){
             case R.id.next:
                 if(answerNumber == -1){
                     Toast.makeText(getActivity(), "You must choose an answer", Toast.LENGTH_SHORT);
                 }else{
-
+                    activity.countDownTimer.cancel();
                     RequestQueue queue = Volley.newRequestQueue(getActivity());
                     String answer = choices[answerNumber - 1].getText().toString();
                     String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
@@ -228,7 +230,7 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
 
 
 
-    private void delay(){
+    protected void delay(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -241,9 +243,9 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
                     }
                     choices[answerNumber - 1].setBackgroundResource(R.drawable.border);
                     checkDrawables[answerNumber - 1].setImageResource(R.drawable.checkchoice1);
-                    showQuestions();
+                    showNextQuestion();
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 }

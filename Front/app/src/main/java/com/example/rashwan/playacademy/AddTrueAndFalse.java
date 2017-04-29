@@ -60,7 +60,7 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
             case R.id.add:
                 if(validateInput()){
                     addQuestion();
-                    trimTextViews();
+                    trimViews();
                 }
                 break;
             case R.id.submit:
@@ -109,7 +109,9 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
         answerString = "";
     }
 
-    private void trimTextViews() {
+    private void trimViews() {
+        falseImgBtn.setBackgroundResource(R.drawable.circlered);
+        trueImgBtn.setBackgroundResource(R.drawable.circlegreen);
         questionStatement.setText("");
     }
 

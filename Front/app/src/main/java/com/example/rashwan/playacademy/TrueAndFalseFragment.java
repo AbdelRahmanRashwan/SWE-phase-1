@@ -1,6 +1,7 @@
 package com.example.rashwan.playacademy;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +29,7 @@ import java.util.ArrayList;
 
 
 public class TrueAndFalseFragment extends Fragment implements View.OnClickListener  {
-    private TextView questionName;
-    private TextView questionTrack;
+    private TextView questionStatement;
     private ImageButton trueBtn;
     private ImageButton falseBtn;
     private PlayGame activity ;
@@ -46,7 +47,7 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
         initializeObjects();
         initializeViews();
 
-        showQuestions();
+        showNextQuestion();
 
         return view;
     }
@@ -59,25 +60,31 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
     }
 
     private void initializeViews() {
-        questionName = (TextView)view.findViewById(R.id.questionTAF);
-        questionTrack = (TextView)view.findViewById(R.id.quesTrackTAF);
+        questionStatement = (TextView)view.findViewById(R.id.questionTAF);
+
+
         trueBtn = (ImageButton)view.findViewById(R.id.trueBtn);
         falseBtn = (ImageButton)view.findViewById(R.id.falseBtn);
+
         trueBtn.setOnClickListener(this);
         falseBtn.setOnClickListener(this);
     }
 
-    private void showQuestions() {
+
+    private void showNextQuestion() {
         trueBtn.setBackgroundResource(R.drawable.circlegreen);
         falseBtn.setBackgroundResource(R.drawable.circlered);
-        questionTrack.setText("Question "+ (questionIndex+1) + " of " + questions.size());
+        activity.questionProgress.setText("Question "+ (questionIndex+1) + " of " + questions.size());
         Log.i("Questions", String.valueOf(questions));
         Question question = questions.get(questionIndex);
-        questionName.setText(question.getQuestion());
+        questionStatement.setText(question.getQuestion());
+        activity.startTimer();
     }
+
 
     @Override
     public void onClick(View view) {
+        activity.countDownTimer.cancel();
         switch (view.getId()){
             case R.id.trueBtn:
                 answer = "true";
@@ -128,7 +135,6 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
 
     private void finishGame(int score) {
         if(Login.loggedUser.getType().equals("Student")){
-            RequestQueue queue = Volley.newRequestQueue(getActivity());
 
             JSONObject gameSheet = new JSONObject();
             try {
@@ -139,7 +145,7 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            RequestQueue queue = Volley.newRequestQueue(activity);
             String requestLink = ServicesLinks.UPDATE_SCORE_LINK;
             JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, requestLink, gameSheet, new Response.Listener<JSONObject>() {
                 @Override
@@ -171,7 +177,7 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
 
 
 
-    private void delay(){
+    protected void delay(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -181,9 +187,9 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
                 }else {
                     trueBtn.setClickable(true);
                     falseBtn.setClickable(true);
-                    showQuestions();
+                    showNextQuestion();
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 }
