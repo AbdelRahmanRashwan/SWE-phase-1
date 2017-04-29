@@ -40,9 +40,10 @@ public class UserAPI {
 			error = "This Email does not exist";
 		}else if(!userData.getPassword().equals(user.getPassword())){
 			error = "Incorrect password";
-		}else if(!userData.isVerified()){
-			error = "Not verified";
 		}
+		//else if(!userData.isVerified()){
+		//	error = "Not verified";
+		//}
 		if(error.length()>1){
 			returnUser.put("Error", error);
 		}else{

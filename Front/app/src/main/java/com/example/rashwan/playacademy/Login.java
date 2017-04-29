@@ -67,11 +67,14 @@ public class Login extends AppCompatActivity {
                 JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST,ServicesLinks.LOGIN_URL , loginData,new Response.Listener<JSONObject>()
                 {
                     @Override
-                    public void onResponse(JSONObject userData) {
+                    public void onResponse(JSONObject returnData) {
 
 
                         String type= null; // the type will be generated from the JSON
+                        String error ="";
+                        JSONObject userData;
                         try {
+                            userData = returnData.getJSONObject("userData");
                             type = userData.getString("type");
                             if (type.equals("Teacher")){
                                 loggedUser =new Teacher();
@@ -87,7 +90,12 @@ public class Login extends AppCompatActivity {
                                 startActivity(studentHome);
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            try {
+                                error = returnData.getString("Error");
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                            Toast.makeText(Login.this, error, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {

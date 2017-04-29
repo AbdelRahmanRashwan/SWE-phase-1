@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10sp"
-    android:background="@drawable/mainbackgound"
     tools:context="com.example.rashwan.playacademy.AddMCQ">
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
@@ -15,13 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="6"
+            android:weightSum="7"
             >
             <EditText
                 android:id="@+id/answer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="0.8"
                 android:hint="Enter answer number"
                 android:inputType="number"
                 android:textColorHint="#fff"
@@ -34,7 +32,7 @@
                 android:id="@+id/questionStatment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:inputType="text"
                 android:hint="Question"
                 android:textColorHint="#fff"
@@ -53,7 +51,7 @@
                 android:orientation="vertical"
                 android:layout_marginTop="5sp"
                 android:layout_marginBottom="5sp"
-                android:layout_weight="3.5"
+                android:layout_weight="4"
                 android:gravity="center_vertical"
                 >
 
@@ -119,7 +117,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:weightSum="3"

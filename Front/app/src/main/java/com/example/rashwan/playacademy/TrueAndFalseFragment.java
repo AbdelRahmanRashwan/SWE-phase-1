@@ -190,6 +190,6 @@ public class TrueAndFalseFragment extends Fragment implements View.OnClickListen
                     showNextQuestion();
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 }

@@ -113,13 +113,13 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        activity.countDownTimer.cancel();
+
         switch (view.getId()){
             case R.id.next:
                 if(answerNumber == -1){
                     Toast.makeText(getActivity(), "You must choose an answer", Toast.LENGTH_SHORT);
                 }else{
-
+                    activity.countDownTimer.cancel();
                     RequestQueue queue = Volley.newRequestQueue(getActivity());
                     String answer = choices[answerNumber - 1].getText().toString();
                     String requestLink = ServicesLinks.JUDGE_ANSWER +"?gameId="+game.getGameId() + "&questionId="+questions.get(questionIndex).getQuestionId()
@@ -246,6 +246,6 @@ public class MCQFragment extends Fragment implements View.OnClickListener{
                     showNextQuestion();
                 }
             }
-        }, 2000);
+        }, 1000);
     }
 }
