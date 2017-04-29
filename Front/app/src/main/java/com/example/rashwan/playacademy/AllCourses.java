@@ -189,4 +189,17 @@ public class AllCourses extends AppCompatActivity {
         singleCoursePage.putExtra("course",course);
         startActivity(singleCoursePage);
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        if(drawerLayout.isDrawerOpen(Gravity.START))
+            drawerLayout.closeDrawer(Gravity.START);
+        else {
+            if(Login.loggedUser.getType().equals("Student"))
+                startActivity(new Intent(AllCourses.this,StudentHome.class));
+            else
+                startActivity(new Intent(AllCourses.this,TeacherHome.class));
+            finish();
+        }
+    }
 }
