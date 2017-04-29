@@ -109,6 +109,22 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        if(loggedUser != null && loggedUser.getUserId() != 0){
+            String type = loggedUser.getType();
+            if (type.equals("Teacher")){
+                Intent teacherHome=new Intent(Login.this,TeacherHome.class);
+                startActivity(teacherHome);
+            }
+            else if (type.equals("Student")){
+                Intent studentHome=new Intent(Login.this,StudentHome.class);
+                startActivity(studentHome);
+            }
+        }
+        super.onResume();
+    }
+
     public void initialize(){
         register=(Button)findViewById(R.id.register);
         login=(Button) findViewById(R.id.login);
