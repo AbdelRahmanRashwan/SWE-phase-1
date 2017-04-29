@@ -81,6 +81,9 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
                 falseImgBtn.setBackgroundResource(R.drawable.filledcirclegreen);
                 trueImgBtn.setBackgroundResource(R.drawable.circlegreen);
                 break;
+            case R.id.back:
+                getActivity().finish();
+                break;
         }
     }
 
