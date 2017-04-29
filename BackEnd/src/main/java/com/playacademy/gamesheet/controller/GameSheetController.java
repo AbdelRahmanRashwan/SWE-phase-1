@@ -3,12 +3,14 @@ package com.playacademy.gamesheet.controller;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.playacademy.game.model.Game;
 import com.playacademy.gamesheet.model.GameSheet;
 import com.playacademy.gamesheet.model.GameSheetRepo;
 import com.playacademy.user.model.Student;
 
+@Service
 public class GameSheetController {
 
 	@Autowired

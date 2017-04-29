@@ -9,13 +9,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.playacademy.game.controller.IGameController;
 import com.playacademy.game.model.Game;
 import com.playacademy.gamesheet.model.GameSheet;
 import com.playacademy.user.controller.UserServicesController;
 import com.playacademy.user.model.Student;
-
+@RestController
 public class GameSheetAPI {
 
 	

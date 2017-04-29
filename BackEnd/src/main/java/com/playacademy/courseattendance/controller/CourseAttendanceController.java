@@ -3,6 +3,7 @@ package com.playacademy.courseattendance.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.Course;
 import com.playacademy.course.model.CourseRepo;
@@ -10,6 +11,7 @@ import com.playacademy.courseattendance.model.CourseAttendance;
 import com.playacademy.courseattendance.model.CourseAttendanceRepo;
 import com.playacademy.user.model.Student;
 
+@Service
 public class CourseAttendanceController {
 
 	@Autowired
