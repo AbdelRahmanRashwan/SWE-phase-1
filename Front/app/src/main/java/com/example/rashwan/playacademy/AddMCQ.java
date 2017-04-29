@@ -89,6 +89,9 @@ public class AddMCQ extends Fragment implements View.OnClickListener {
                 }
                 addGame();
                 break;
+            case R.id.back:
+                getActivity().finish();
+                break;
         }
     }
 
