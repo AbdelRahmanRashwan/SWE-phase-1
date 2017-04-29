@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.playacademy.user.model.*;
 
 @Component(value = "SBean")
-public class StudentService extends UserServicesAPI {
+public class StudentService extends UserServicesController {
 
 	@Autowired
 	StudentRepo studentRepo;

@@ -95,39 +95,41 @@ public class Register extends AppCompatActivity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                try {
-                                    // change the confirm from postman
-                                    int id=response.getInt("confirmation");
-                                    if (id!=-1){
-
-                                        if (teacherCheck.isChecked()){
-                                            Login.loggedUser =new Teacher();
-                                            ((Teacher)Login.loggedUser).setEducationalMail(educationalMailString);
-                                        }
-                                        else {
-                                            Login.loggedUser =new Student();
-                                        }
-                                        Login.loggedUser.setFirstName(firstNameString);
-                                        Login.loggedUser.setLastName(lastNameString);
-                                        Login.loggedUser.setEmail(emailString);
-                                        Login.loggedUser.setAge(ageValue);
-                                        Login.loggedUser.setUserId(id);
-
-                                        if (teacherCheck.isChecked()){
-                                            Intent homeTeacher=new Intent(Register.this,TeacherHome.class);
-                                            startActivity(homeTeacher);
-                                        }
-                                        else{
-                                            Intent homeStudent= new Intent(Register.this,StudentHome.class);
-                                            startActivity(homeStudent);
-                                        }
-                                    }
-                                    else{
-                                        Toast.makeText(Register.this, "Email exists", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                            // change the confirm from postman
+                            String error ="";
+                            int id;
+                            try {
+                                id=response.getInt("userId");
+                                if (teacherCheck.isChecked()){
+                                    Login.loggedUser =new Teacher();
+                                    ((Teacher)Login.loggedUser).setEducationalMail(educationalMailString);
                                 }
+                                else {
+                                    Login.loggedUser =new Student();
+                                }
+                                Login.loggedUser.setFirstName(firstNameString);
+                                Login.loggedUser.setLastName(lastNameString);
+                                Login.loggedUser.setEmail(emailString);
+                                Login.loggedUser.setAge(ageValue);
+                                Login.loggedUser.setUserId(id);
+
+                                if (teacherCheck.isChecked()){
+                                    Intent homeTeacher=new Intent(Register.this,TeacherHome.class);
+                                    startActivity(homeTeacher);
+                                }
+                                else{
+                                    Intent homeStudent= new Intent(Register.this,StudentHome.class);
+                                    startActivity(homeStudent);
+                                }
+
+                            }catch (Exception e){
+                                try {
+                                    error = response.getString("Error");
+                                } catch (JSONException e1) {
+                                    e1.printStackTrace();
+                                }
+                                Toast.makeText(Register.this, error, Toast.LENGTH_SHORT).show();
+                            }
                             }
                         },
                         new Response.ErrorListener() {

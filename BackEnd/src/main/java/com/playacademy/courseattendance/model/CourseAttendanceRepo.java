@@ -1,9 +1,10 @@
-package com.playacademy.course.model;
+package com.playacademy.courseattendance.model;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.playacademy.course.model.Course;
 import com.playacademy.user.model.Student;
 
 public interface CourseAttendanceRepo extends CrudRepository<CourseAttendance, Long>{

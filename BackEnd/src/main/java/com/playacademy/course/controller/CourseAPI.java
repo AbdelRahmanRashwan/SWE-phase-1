@@ -1,11 +1,7 @@
 package com.playacademy.course.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,20 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playacademy.course.model.Course;
-import com.playacademy.course.model.CourseAttendance;
-import com.playacademy.user.controller.UserServicesAPI;
+import com.playacademy.user.controller.UserServicesController;
 import com.playacademy.user.model.Student;
 import com.playacademy.user.model.Teacher;
 import com.playacademy.user.model.User;
 
 @RestController
-public class CourseManager {
+public class CourseAPI {
 
 	@Autowired
-	CourseManagerAPI courseManagerAPI;
+	CourseController courseManagerAPI;
 	@Autowired
 	@Qualifier(value = "UBean")
-	private UserServicesAPI userServices;
+	private UserServicesController userServices;
 
 	
 	// Course manipulation
@@ -114,78 +109,7 @@ public class CourseManager {
 
 	
 	// Course and student
-	@RequestMapping(value = "/course/registered/students", method = RequestMethod.GET)
-	public List<CourseAttendance> getRegisteredSrudents(@RequestParam("courseName") String courseName) {
-		long courseId = courseManagerAPI.getCourseId(courseName);
-		if (courseId == -1) {
-			return null;
-		}
-		Course course = courseManagerAPI.getCourse(courseId);
-		return courseManagerAPI.getStudentsInCourse(course);
-	}
 	
-	@RequestMapping(value = "/course/attend", method = RequestMethod.GET)
-	public Map<String,String> attendCourse(@RequestParam("courseName") String courseName,
-			@RequestParam("studentId") long studentId) {
-		long courseId = courseManagerAPI.getCourseId(courseName);
-		User user =  userServices.getUserByID(studentId);
-		String ack = "";
-		Map <String,String> ac=new HashMap<>();
-		if (courseId == -1 || user == null || user instanceof Teacher) {
-			if(courseId == -1){
-				ack = "No course with that name.";
-			}else if(user == null){
-				ack = "No user exist with that ID.";
-			}else{
-				ack = "This ID represents a teacher, teacher can only creat courses";
-			}
-			ac.put("ack", ack);
-			return ac;
-		}
-		if(courseManagerAPI.attend((Student)user, courseId) == true)
-			ack = "Enrolled succssessfully.";
-		else ack = "You are already enrolled in this course";
-		ac.put("ack", ack);
-		return ac;
-	}
-
-	@RequestMapping(value = "/courses/attendeted/student", method = RequestMethod.GET)
-	public Map<String,List<CourseAttendance>> getAttendedCourse(@RequestParam("studentId") long studentId) {
-		User user = userServices.getUserByID(studentId);
-		if (user == null || user instanceof Teacher) {
-			return null;
-		}
-		Map<String,List<CourseAttendance>> courses=new HashMap<>();
-		courses.put("courses", courseManagerAPI.getAttendedCourses(((Student)user)));
-		return courses;
-	}
-	
-	@RequestMapping(value = "/courses/enrollment", method = RequestMethod.GET)
-	public Map<String,Boolean> getEnrollment(@RequestParam("studentId") long studentId,@RequestParam("courseName")String courseName ) {
-		Map <String, Boolean> map=new HashMap<>();
-		Student student=(Student) userServices.getUserByID(studentId);
-		Course course=courseManagerAPI.getCourse(courseManagerAPI.getCourseId(courseName));
-		map.put("ack", courseManagerAPI.isRegistered(student, course));
-		return map;
-	}
-	@RequestMapping("/course/achievement/update/")
-	public Boolean updateAchievement(@RequestParam("newAchievement") long ach,
-								  @RequestParam("studentId") long studentId,
-								  @RequestParam("courseName") String courseName){
-		
-		long courseId = courseManagerAPI.getCourseId(courseName);
-		User user =  userServices.getUserByID(studentId);
-		if (courseId == -1 || user == null || user instanceof Teacher) {
-			return false;
-		}
-		Course course = courseManagerAPI.getCourse(courseId);
-		Student student = (Student) userServices.getUserByID(studentId);
-		if(courseManagerAPI.isRegistered(student, course) != false){
-			return false;
-		}
-		
-		return courseManagerAPI.updateAchievement(course, student, ach);
-	}
 	
 	
 }

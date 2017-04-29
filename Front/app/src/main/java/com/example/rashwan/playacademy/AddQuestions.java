@@ -18,7 +18,7 @@ public class AddQuestions extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_game);
+        setContentView(R.layout.activity_add_questions);
 
         initialize();
         if(gameType.equals("MCQ")){
@@ -29,7 +29,7 @@ public class AddQuestions extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.FragmentContainer, question);
+        fragmentTransaction.add(R.id.FragmentContainerAddQuestion, question);
         fragmentTransaction.commit();
 
     }

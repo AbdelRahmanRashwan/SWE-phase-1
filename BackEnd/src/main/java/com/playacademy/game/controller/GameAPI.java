@@ -7,25 +7,24 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playacademy.course.controller.CourseManagerAPI;
+import com.playacademy.course.controller.CourseController;
 import com.playacademy.course.model.Course;
 import com.playacademy.game.helper.ObjectMapperConfiguration;
 import com.playacademy.game.model.*;
-import com.playacademy.user.controller.UserServicesAPI;
-import com.playacademy.user.model.Student;
+import com.playacademy.user.controller.UserServicesController;
 
 @RestController
-public class GameManger {
+public class GameAPI {
 
 	@Autowired
-	private IGameServices gameServices;
+	private IGameController gameServices;
 
 	@Autowired
-	private CourseManagerAPI courseAPI;
+	private CourseController courseAPI;
 
 	@Autowired
 	@Qualifier(value = "UBean")
-	UserServicesAPI userServices;
+	UserServicesController userServices;
 	
 	@RequestMapping(value = "/game/mcq/create", method = RequestMethod.POST)
 	public Map<String,String> createMCQGame(@RequestBody ItemCollector<MCQ> items) {
@@ -86,19 +85,11 @@ public class GameManger {
 	public Game getGame(@RequestParam("id") long id) {
 
 		Game game = gameServices.getGameByID(id);
+		
 		return game;
 	}
 
-	@RequestMapping(value="/game/score/update", method = RequestMethod.POST)
-	public Map<String,Boolean> updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
-		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
-		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
-
-		Map <String,Boolean> map=new HashMap<>();
-		map.put("updated",gameServices.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate));
-		return map;
-
-	}
+	
 	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public Map<String,List<Game>> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
@@ -143,13 +134,7 @@ public class GameManger {
 		return ack;
 	}
 	
-	public ArrayList<GameSheet> scoreBoard(long studentId){
-		Student student =(Student) userServices.getUserByID(studentId);
-		if(student == null){
-			return null;	
-		}
-		return gameServices.scoreBoard(student);
-	}
+	
 
 	static class ItemCollector<T> {
 
@@ -163,13 +148,5 @@ public class GameManger {
 
 	}
 	
-	static class ParseJsonToGameSheet {
-		public long gameId;
-		public long studentId;
-		public int score;
-		public int rate;
-
-		public ParseJsonToGameSheet(){
-		}
-	}
+	
 }
