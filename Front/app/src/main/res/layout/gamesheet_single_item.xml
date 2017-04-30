@@ -10,26 +10,29 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:id="@+id/gameIcon"
+        android:layout_gravity="center_vertical"
         />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp"
             android:textColor="#fff"
-            android:padding="17dp"
+            android:text="game name"
             android:id="@+id/gameName"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="18dp"
             android:textColor="#fff"
-            android:padding="17dp"
+            android:text="10"
             android:id="@+id/score"
             />
     </LinearLayout>

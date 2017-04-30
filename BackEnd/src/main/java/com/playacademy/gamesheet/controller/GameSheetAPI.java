@@ -45,6 +45,7 @@ public class GameSheetAPI {
 	@RequestMapping(value="/student/scoreBoard", method = RequestMethod.GET)
 	public Map<String,List<GameSheet>> scoreBoard(@RequestParam("studentId")long studentId){
 		Map<String,List<GameSheet>> data=new HashMap<>();
+		System.out.println(studentId);
 		Student student =(Student) userServices.getUserByID(studentId);
 		if(student == null){
 			return null;	

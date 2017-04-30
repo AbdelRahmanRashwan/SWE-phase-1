@@ -82,11 +82,7 @@ public class StudentProfile extends AppCompatActivity {
                 drawer.closeDrawer(Gravity.START);
             }
         });
-        getGameSheetRequest();
 
-    }
-
-    private void getGameSheetRequest() {
         String link=ServicesLinks.GET_SCOREBOARD_URL+"?studentId="+Login.loggedUser.getUserId();
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, link, null,
@@ -101,14 +97,6 @@ public class StudentProfile extends AppCompatActivity {
 
                             ScoreSheetAdapter adapter=new ScoreSheetAdapter(getApplicationContext(),scoreBoard);
                             achievments.setAdapter(adapter);
-
-                            achievments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                                @Override
-                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    startPlayGame(i);
-                                }
-                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -120,6 +108,22 @@ public class StudentProfile extends AppCompatActivity {
                         Toast.makeText(StudentProfile.this, error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
+                queue.add(jsonArrayRequest);
+
+        achievments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startPlayGame(i);
+            }
+        });
+
+        getGameSheetRequest();
+
+    }
+
+    private void getGameSheetRequest() {
+
     }
 
     private void startPlayGame(int i) {
@@ -152,6 +156,7 @@ public class StudentProfile extends AppCompatActivity {
         email=(TextView)findViewById(R.id.email);
         age=(TextView)findViewById(R.id.age);
         achievments = (ListView)findViewById(R.id.achievementList);
+        scoreBoard=new ArrayList<>();
     }
     @Override
     public void onBackPressed() {

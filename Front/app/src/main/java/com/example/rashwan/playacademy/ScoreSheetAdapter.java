@@ -46,7 +46,7 @@ public class ScoreSheetAdapter extends ArrayAdapter<GameSheet> {
         else {
             icon.setImageResource(R.drawable.tf);
         }
-        score.setText(String.valueOf(gameSheet.getScore()));
+        score.setText("Score: "+String.valueOf(gameSheet.getScore()));
 
         return listItem;
     }
