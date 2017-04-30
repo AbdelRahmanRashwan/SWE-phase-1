@@ -128,7 +128,7 @@ public class StudentHome extends AppCompatActivity {
                 if (itemPressed.equals("Courses")){
                     startActivity(new Intent(StudentHome.this,AllCourses.class));
                 }else if(itemPressed.equals("Profile")){
-                    startActivity(new Intent(StudentHome.this,TeacherProfile.class));
+                    startActivity(new Intent(StudentHome.this,StudentProfile.class));
                 }else if(itemPressed.equals("Logout")){
                     Login.loggedUser.setUserId(0);
                     startActivity(new Intent(StudentHome.this,Login.class));

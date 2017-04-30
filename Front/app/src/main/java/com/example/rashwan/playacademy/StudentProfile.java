@@ -94,4 +94,14 @@ public class StudentProfile extends AppCompatActivity {
         email=(TextView)findViewById(R.id.email);
         age=(TextView)findViewById(R.id.age);
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        if(drawerLayout.isDrawerOpen(Gravity.START))
+            drawerLayout.closeDrawer(Gravity.START);
+        else {
+            startActivity(new Intent(this, StudentHome.class));
+            finish();
+        }
+    }
 }

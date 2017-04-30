@@ -96,4 +96,15 @@ public class TeacherProfile extends AppCompatActivity {
         age=(TextView)findViewById(R.id.age);
         educationalMail=(TextView)findViewById(R.id.educationalMail);
     }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        if(drawerLayout.isDrawerOpen(Gravity.START))
+            drawerLayout.closeDrawer(Gravity.START);
+        else {
+            startActivity(new Intent(this, TeacherHome.class));
+            finish();
+        }
+    }
 }
