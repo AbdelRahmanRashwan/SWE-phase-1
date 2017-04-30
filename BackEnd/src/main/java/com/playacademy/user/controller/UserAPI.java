@@ -28,7 +28,7 @@ public class UserAPI {
 
 	@Autowired
 	@Qualifier(value = "SBean")
-	UserServicesController studentService;
+	UserServicesController studentServices;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Map<String,Object> login(@RequestBody Student user) {
@@ -65,7 +65,7 @@ public class UserAPI {
 		if(userId != -1){
 			returnData.put("Error", "This Email already exists"); 
 		}else{
-			userId = teacherServices.addUser(student);
+			userId = studentServices.addUser(student);
 			returnData.put("userId", userId);
 		}
 		return returnData;

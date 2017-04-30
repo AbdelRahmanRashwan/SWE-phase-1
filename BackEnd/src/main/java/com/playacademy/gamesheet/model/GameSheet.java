@@ -34,7 +34,7 @@ public class GameSheet {
 	
 	@JsonIgnore
     private Student student;
-	@JsonIgnore
+	
     private Game game;
 	
 	

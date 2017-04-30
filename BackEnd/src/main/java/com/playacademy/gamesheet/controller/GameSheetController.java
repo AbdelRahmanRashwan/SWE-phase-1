@@ -1,6 +1,6 @@
 package com.playacademy.gamesheet.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class GameSheetController {
 			return false;
 	}
 	
-	public ArrayList<GameSheet> scoreBoard(Student student){
+	public List<GameSheet> scoreBoard(Student student){
 		return gameSheetRepo.findByStudent(student);
 	}
 	
