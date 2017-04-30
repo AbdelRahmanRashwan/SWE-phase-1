@@ -1,7 +1,7 @@
 package com.playacademy.gamesheet.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +43,14 @@ public class GameSheetAPI {
 
 	}
 	@RequestMapping(value="/student/scoreBoard", method = RequestMethod.GET)
-	public ArrayList<GameSheet> scoreBoard(@RequestParam("studentId")long studentId){
+	public Map<String,List<GameSheet>> scoreBoard(@RequestParam("studentId")long studentId){
+		Map<String,List<GameSheet>> data=new HashMap<>();
 		Student student =(Student) userServices.getUserByID(studentId);
 		if(student == null){
 			return null;	
 		}
-		return gameSheetController.scoreBoard(student);
+		data.put("score_board", gameSheetController.scoreBoard(student));
+		return data;
 	}
 	
 	static class ParseJsonToGameSheet {

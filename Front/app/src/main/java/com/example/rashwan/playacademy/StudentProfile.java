@@ -12,11 +12,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rashwan.playacademy.Models.Game;
+import com.example.rashwan.playacademy.Models.GameSheet;
+import com.example.rashwan.playacademy.Models.Student;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,6 +36,8 @@ public class StudentProfile extends AppCompatActivity {
     TextView name;
     TextView email;
     TextView age;
+    ListView achievments;
+    ArrayList<GameSheet> scoreBoard;
     ActionBarDrawerToggle toggle;
 
     @Override
@@ -69,7 +82,52 @@ public class StudentProfile extends AppCompatActivity {
                 drawer.closeDrawer(Gravity.START);
             }
         });
+        getGameSheetRequest();
 
+    }
+
+    private void getGameSheetRequest() {
+        String link=ServicesLinks.GET_SCOREBOARD_URL+"?studentId="+Login.loggedUser.getUserId();
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, link, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray gamesJson=response.getJSONArray("score_board");
+                            for (int i=0;i<gamesJson.length();i++){
+                                scoreBoard.add(Util.parseGameSheet(gamesJson.getJSONObject(i)));
+                            }
+
+                            ScoreSheetAdapter adapter=new ScoreSheetAdapter(getApplicationContext(),scoreBoard);
+                            achievments.setAdapter(adapter);
+
+                            achievments.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    startPlayGame(i);
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(StudentProfile.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void startPlayGame(int i) {
+        Intent playGame = new Intent(StudentProfile.this, PlayGame.class);
+        Gson gson=new Gson();
+        String game=gson.toJson(scoreBoard.get(i).getGame());
+        playGame.putExtra("game",game);
+        startActivity(playGame);
     }
 
     @Override
@@ -93,6 +151,7 @@ public class StudentProfile extends AppCompatActivity {
         name=(TextView)findViewById(R.id.name);
         email=(TextView)findViewById(R.id.email);
         age=(TextView)findViewById(R.id.age);
+        achievments = (ListView)findViewById(R.id.achievementList);
     }
     @Override
     public void onBackPressed() {
