@@ -41,8 +41,8 @@ public class GameSheetAPI {
 		return map;
 
 	}
-	
-	public ArrayList<GameSheet> scoreBoard(long studentId){
+	@RequestMapping(value="/student/scoreBoard", method = RequestMethod.GET)
+	public ArrayList<GameSheet> scoreBoard(@RequestParam("studentId")long studentId){
 		Student student =(Student) userServices.getUserByID(studentId);
 		if(student == null){
 			return null;	
