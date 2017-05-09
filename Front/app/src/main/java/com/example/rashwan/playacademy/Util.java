@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.example.rashwan.playacademy.Models.Choice;
 import com.example.rashwan.playacademy.Models.Course;
 import com.example.rashwan.playacademy.Models.Game;
+import com.example.rashwan.playacademy.Models.GameSheet;
 import com.example.rashwan.playacademy.Models.MCQ;
 import com.example.rashwan.playacademy.Models.Question;
 import com.example.rashwan.playacademy.Models.Student;
@@ -199,4 +200,14 @@ public class Util {
         return  question;
     }
 
+    public static GameSheet parseGameSheet(JSONObject jsonObject) {
+        GameSheet gameSheet =  new GameSheet();
+        try {
+            gameSheet.setGame(parseGame(jsonObject.getJSONObject("game")));
+            gameSheet.setScore(jsonObject.getInt("score"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return gameSheet;
+    }
 }
