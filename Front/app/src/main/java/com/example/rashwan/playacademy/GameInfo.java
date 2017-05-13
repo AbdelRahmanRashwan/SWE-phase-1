@@ -81,6 +81,7 @@ public class GameInfo extends AppCompatActivity {
                             else {
                                 Toast.makeText(GameInfo.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                             }
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

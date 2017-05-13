@@ -56,7 +56,8 @@
         <activity android:name=".AddGame" />
         <activity android:name=".Comments" />
         <activity android:name=".AddComment" />
-        <activity android:name=".GameInfo"></activity>
+        <activity android:name=".GameInfo" />
+        <activity android:name=".DeletedGames"></activity>
     </application>
 
 </manifest>
