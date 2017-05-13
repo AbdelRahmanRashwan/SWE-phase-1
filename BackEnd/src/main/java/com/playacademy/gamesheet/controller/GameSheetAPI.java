@@ -33,7 +33,7 @@ public class GameSheetAPI {
 	
 	@RequestMapping(value="/game/score/update", method = RequestMethod.POST)
 	public Map<String,Boolean> updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
-		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
+		Game game = gameServices.getExistGameByID(parseJsonToGameSheet.gameId);
 		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
 
 		Map <String,Boolean> map=new HashMap<>();
@@ -44,7 +44,7 @@ public class GameSheetAPI {
 	}
 	@RequestMapping(value="/game/rate", method = RequestMethod.POST)
 	public Map<String,Boolean> rate(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
-		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
+		Game game = gameServices.getExistGameByID(parseJsonToGameSheet.gameId);
 		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
 		
 		Map <String,Boolean> map=new HashMap<>();

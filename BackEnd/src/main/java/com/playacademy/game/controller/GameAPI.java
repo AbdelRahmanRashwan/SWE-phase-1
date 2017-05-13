@@ -55,16 +55,24 @@ public class GameAPI {
 			e.printStackTrace();
 		}
 
-		Game game = gameServices.getGameByID(id);
+		Game game = gameServices.getExistGameByID(id);
 		game.addQuestion(question);
 
 		return gameServices.addEditedGame(game);
 	}
 
+	@RequestMapping(value = "/game/get/deleted", method = RequestMethod.GET)
+	public Game getDeletedGame(@RequestParam("id") long id) {
+
+		Game game = gameServices.getDeletedGameByID(id);
+
+		return game;
+	}	
+	
 	@RequestMapping(value = "/game/get", method = RequestMethod.GET)
 	public Game getGame(@RequestParam("id") long id) {
 
-		Game game = gameServices.getGameByID(id);
+		Game game = gameServices.getExistGameByID(id);
 
 		return game;
 	}
@@ -92,7 +100,7 @@ public class GameAPI {
 
 		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
 		try {
-			Game oldGame = gameServices.getGameByID(gameId);
+			Game oldGame = gameServices.getExistGameByID(gameId);
 			oldGame.getQuestions().clear();
 			confirmation.put("confirmation", gameServices.addEditedGame(makeGame(item, oldGame)));
 		} catch (IOException e) {
@@ -101,22 +109,28 @@ public class GameAPI {
 
 		return confirmation;
 	}
-	@RequestMapping(value = "/game/cancel", method = RequestMethod.POST)
-	public Map<String, Boolean> cancelGame(@RequestParam("gameId") long gameId) {
-
+	@RequestMapping(value = "/game/cancel", method = RequestMethod.GET)
+	public Map<String, Boolean> cancelGame(@RequestParam("gameId") long  gameId) {
+		System.out.println("in");
 		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
-		Game game = gameServices.getGameByID(gameId);
+		Game game = gameServices.getExistGameByID(gameId);
+		System.out.println("game"+game);
+		if (game==null){
+			confirmation.put("confirmation", false);
+			return confirmation;
+		}
 		game.setCanceled(true);
 		confirmation.put("confirmation", gameServices.addEditedGame(game));
-
+		System.out.println(confirmation.get("confirmation"));
 		return confirmation;
 	}
 	
-	@RequestMapping(value = "/game/un-cancel", method = RequestMethod.POST)
-	public Map<String, Boolean> uncancelGame(@RequestParam("gameId") long gameId) {
+	@RequestMapping(value = "/game/un-cancel", method = RequestMethod.GET)
+	public Map<String, Boolean> uncancelGame(@RequestParam("gameId") int gameId) {
 
 		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
-		Game game = gameServices.getGameByID(gameId);
+		Game game = gameServices.getDeletedGameByID(gameId);
+		
 		game.setCanceled(false);
 		confirmation.put("confirmation", gameServices.addEditedGame(game));
 
@@ -128,7 +142,6 @@ public class GameAPI {
 		ObjectMapper objectMapper = new ObjectMapperConfiguration().objectMapper();
 		Gson gson = new Gson();
 		game.setName(item.gameName);
-
 		
 		for (int i = 0; i < item.questions.size(); i++) {
 			Question question = objectMapper.readValue(gson.toJson(item.questions.get(i)), Question.class);
@@ -137,19 +150,28 @@ public class GameAPI {
 		return game;
 	}
 
+	@RequestMapping(value = "/gamescourse/get/deleted", method = RequestMethod.GET)
+	public Map<String, List<Game>> getAllDeletedGamesInCourse(@RequestParam("courseName") String courseName) {
+		long courseId = courseAPI.getCourseId(courseName);
+		Course course = courseAPI.getCourse(courseId);
+		Map<String, List<Game>> data = new HashMap<>();
+		data.put("games", gameServices.getAllDeletedGamesInCourse(course));
+		return data;
+	}
+	
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public Map<String, List<Game>> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
 		long courseId = courseAPI.getCourseId(courseName);
 		Course course = courseAPI.getCourse(courseId);
 		Map<String, List<Game>> data = new HashMap<>();
-		data.put("games", gameServices.getAllGamesInCourse(course));
+		data.put("games", gameServices.getAllExistGamesInCourse(course));
 		return data;
 	}
 
 	@RequestMapping(value = "/judgeGame", method = RequestMethod.GET)
 	public Map<String, Boolean> judge(@RequestParam("gameId") long gameId, @RequestParam("questionId") long questionId,
 			@RequestParam("answer") String answer) {
-		Game g = gameServices.getGameByID(gameId);
+		Game g = gameServices.getExistGameByID(gameId);
 		Set<Question> gameQuestions = g.getQuestions();
 		Iterator<Question> i = gameQuestions.iterator();
 		Question question = null;

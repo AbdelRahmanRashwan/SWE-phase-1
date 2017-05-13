@@ -38,7 +38,7 @@ public class CommentAPI {
 	{
 		Map <String,String> map=new HashMap<>();
 		User user=userServicesController.getUserByID(commentorID);
-		Game game = gameController.getGameByID(gameID);
+		Game game = gameController.getExistGameByID(gameID);
 		Comment comment=new Comment(user,game,description);
 		boolean b=commentService.addComment(comment);
 		if (b){
@@ -52,7 +52,7 @@ public class CommentAPI {
 	
 	@RequestMapping (value="/comments/get", method = RequestMethod.GET)
 	public Map<String,ArrayList<Comment>> getComments(@RequestParam("gameID") int gameID){
-		Game game=gameController.getGameByID(gameID);
+		Game game=gameController.getExistGameByID(gameID);
 		ArrayList<Comment> comments=commentService.getComments(game);
 		Map<String,ArrayList<Comment>> map=new HashMap<>();
 		map.put("comments", comments);

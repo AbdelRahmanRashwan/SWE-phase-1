@@ -59,5 +59,14 @@
             />
     </LinearLayout>
 
-
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="delete"
+        android:textColor="#fff"
+        android:background="#80ff0000"
+        android:id="@+id/deleteGame"
+        android:visibility="gone"
+    />
 </LinearLayout>
