@@ -74,6 +74,4 @@ public class Student extends User implements Observer{
 		notifications.add((NewGameNotification) n);
 	}
 	
-	
-	
 }

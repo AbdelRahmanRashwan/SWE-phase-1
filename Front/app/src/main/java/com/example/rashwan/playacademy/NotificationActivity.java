@@ -1,5 +1,6 @@
 package com.example.rashwan.playacademy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -50,5 +51,14 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
+    }
+    @Override
+    public void onBackPressed() {
+        if(Login.loggedUser.getType().equals("Student"))
+            startActivity(new Intent(this,StudentHome.class));
+        else
+            startActivity(new Intent(this,TeacherHome.class));
+        finish();
+
     }
 }

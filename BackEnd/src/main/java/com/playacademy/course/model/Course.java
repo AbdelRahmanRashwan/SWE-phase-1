@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.Notification.NewGameNotification;
 import com.playacademy.Notification.Notification;
 import com.playacademy.courseattendance.model.CourseAttendance;
-import com.playacademy.game.controller.Subject;
 import com.playacademy.game.model.Game;
 import com.playacademy.user.model.*;
 
