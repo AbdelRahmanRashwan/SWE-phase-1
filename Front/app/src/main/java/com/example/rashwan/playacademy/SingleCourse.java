@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,9 @@ public class SingleCourse extends AppCompatActivity {
     ListView gamesList;
     Button addGame;
     Button enroll;
+    Button restoreGames;
     String courseJson;
+    LinearLayout teacherPanel;
     boolean isEnrolled;
 
     @Override
@@ -132,6 +135,17 @@ public class SingleCourse extends AppCompatActivity {
                 queue.add(jsonObjectRequest);
             }
         });
+
+        restoreGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent restoreIntent= new Intent(getApplicationContext(),DeletedGames.class);
+                Bundle b =new Bundle();
+                b.putString("courseName",course.getCourseName());
+                restoreIntent.putExtras(b);
+                startActivity(restoreIntent);
+            }
+        });
     }
 
     public void setText(){
@@ -149,15 +163,17 @@ public class SingleCourse extends AppCompatActivity {
         gamesList=(ListView)findViewById(R.id.gameList);
         addGame=(Button)findViewById(R.id.addGame);
         enroll=(Button)findViewById(R.id.enroll);
+        restoreGames=(Button) findViewById(R.id.restoreGames);
+        teacherPanel=(LinearLayout) findViewById(R.id.teacherPanel);
         games=new ArrayList<>();
         if (Login.loggedUser instanceof Student)
            studentButtonVisibility();
 
         if (course.getCreator().getUserId()== Login.loggedUser.getUserId()){
-            addGame.setVisibility(View.VISIBLE);
+            teacherPanel.setVisibility(View.VISIBLE);
         }
-
     }
+
     private void startPlayGame(int i) {
         Intent playGame = new Intent(SingleCourse.this, GameInfo.class);
         Gson gson=new Gson();
@@ -165,6 +181,7 @@ public class SingleCourse extends AppCompatActivity {
         playGame.putExtra("game",game);
         startActivity(playGame);
     }
+
     public void studentButtonVisibility(){
         String link=ServicesLinks.IS_ENROLLED_URL+"?courseName="+course.getCourseName()+"&studentId="+Login.loggedUser.getUserId();
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
