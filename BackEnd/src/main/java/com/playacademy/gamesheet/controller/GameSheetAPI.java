@@ -1,5 +1,5 @@
 package com.playacademy.gamesheet.controller;
-
+//
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +33,25 @@ public class GameSheetAPI {
 	
 	@RequestMapping(value="/game/score/update", method = RequestMethod.POST)
 	public Map<String,Boolean> updateScore(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
-		Game game = gameServices.getGameByID(parseJsonToGameSheet.gameId);
+		Game game = gameServices.getExistGameByID(parseJsonToGameSheet.gameId);
 		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
 
 		Map <String,Boolean> map=new HashMap<>();
-		Boolean ack = gameSheetController.saveScore(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate);
+		Boolean ack = gameSheetController.updateSheet(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate);
+		map.put("updated",ack);
+		return map;
+
+	}
+	@RequestMapping(value="/game/rate", method = RequestMethod.POST)
+	public Map<String,Boolean> rate(@RequestBody ParseJsonToGameSheet parseJsonToGameSheet){
+		Game game = gameServices.getExistGameByID(parseJsonToGameSheet.gameId);
+		Student student=(Student) userServices.getUserByID(parseJsonToGameSheet.studentId);
+		
+		Map <String,Boolean> map=new HashMap<>();
+		Boolean ack = gameSheetController.updateSheet(game, student, parseJsonToGameSheet.score, parseJsonToGameSheet.rate);
+		if(ack){
+			gameServices.addEditedGame(game);
+		}
 		map.put("updated",ack);
 		return map;
 

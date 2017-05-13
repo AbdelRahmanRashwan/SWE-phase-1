@@ -159,7 +159,7 @@ public class SingleCourse extends AppCompatActivity {
 
     }
     private void startPlayGame(int i) {
-        Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
+        Intent playGame = new Intent(SingleCourse.this, GameInfo.class);
         Gson gson=new Gson();
         String game=gson.toJson(games.get(i));
         playGame.putExtra("game",game);

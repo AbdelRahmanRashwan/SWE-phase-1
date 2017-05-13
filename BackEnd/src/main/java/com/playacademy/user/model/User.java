@@ -1,5 +1,6 @@
 package com.playacademy.user.model;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.playacademy.Notification.Notification;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.comments.Comment;
+
 
 
 @Entity
@@ -52,8 +58,17 @@ public abstract class User {
 
 	protected Set<Notification> notifications;
 	
+	@JsonIgnore
+	protected Set<Comment> comments;
 	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="commentor")
+	public Set<Comment> getComments() {
+		return comments;
+	}
 
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 
 	public String getVerificationCode() {
 		return verificationCode;

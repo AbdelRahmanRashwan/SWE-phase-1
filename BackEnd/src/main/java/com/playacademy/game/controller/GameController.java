@@ -3,12 +3,14 @@ package com.playacademy.game.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.Course;
 import com.playacademy.game.model.*;
 
 @Service
+@Component(value = "GBean")
 public class GameController implements IGameController{
 	
 	@Autowired
@@ -25,13 +27,14 @@ public class GameController implements IGameController{
 	}
 
 	@Override
-	public Game getGameByID(long id) {
-		return repository.findByGameId(id);
+	public Game getExistGameByID(long id) {
+		System.out.println(id);
+		return repository.findByGameIdAndCanceled(id,false);
 	}
 
 	@Override
-	public List<Game> getAllGamesInCourse(Course course) {
-		return repository.findByCourse(course);
+	public List<Game> getAllExistGamesInCourse(Course course) {
+		return repository.findByCourseAndCanceled(course,false);
 	}
 
 	@Override
@@ -48,6 +51,16 @@ public class GameController implements IGameController{
 		}else {
 			return false;
 		}
+	}
+
+	@Override
+	public Game getDeletedGameByID(long id) {
+		return repository.findByGameIdAndCanceled(id,true);
+	}
+	
+	@Override
+	public List<Game> getAllDeletedGamesInCourse(Course course) {
+		return repository.findByCourseAndCanceled(course,true);
 	}
 	
 	

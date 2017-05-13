@@ -58,6 +58,11 @@
             android:noHistory="true" />
         <activity android:name=".AddGame" />
         <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".AddCourse" />
+        <activity android:name=".AddGame" />
+        <activity android:name=".Comments" />
+        <activity android:name=".AddComment" />
+        <activity android:name=".GameInfo"></activity>
     </application>
 
 </manifest>

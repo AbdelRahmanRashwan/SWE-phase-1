@@ -9,8 +9,12 @@ import com.playacademy.game.model.Question;
 public interface IGameController {
 	
 	public boolean addGame(Game game, Course course);
-	public Game getGameByID(long id);
-	public List<Game> getAllGamesInCourse(Course course);
 	public boolean addEditedGame(Game game);
 	public boolean judge(Question question,String answer);
+	
+	public Game getExistGameByID(long id);
+	public Game getDeletedGameByID(long id);
+	
+	public List<Game> getAllDeletedGamesInCourse(Course course);
+	public List<Game> getAllExistGamesInCourse(Course course);
 }
