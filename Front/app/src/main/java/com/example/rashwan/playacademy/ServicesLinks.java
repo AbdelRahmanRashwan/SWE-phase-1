@@ -6,7 +6,7 @@ package com.example.rashwan.playacademy;
 
 public final class ServicesLinks {
 
-    public static final String SERVER="http://192.168.1.91:8080";
+    public static final String SERVER="http://192.168.1.90:8080";
     public static final String LOGIN_URL=SERVER+"/login";
     public static final String REGISTER_STUDENT_URL=SERVER+"/student/register";
     public static final String REGISTER_TEACHER_URL=SERVER+"/teacher/register";
