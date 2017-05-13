@@ -57,12 +57,10 @@
             android:label="Add Courses"
             android:noHistory="true" />
         <activity android:name=".AddGame" />
-        <activity android:name=".NotificationActivity"></activity>
-        <activity android:name=".AddCourse" />
-        <activity android:name=".AddGame" />
+        <activity android:name=".NotificationActivity"/>
         <activity android:name=".Comments" />
         <activity android:name=".AddComment" />
-        <activity android:name=".GameInfo"></activity>
+        <activity android:name=".GameInfo"/>
     </application>
 
 </manifest>
