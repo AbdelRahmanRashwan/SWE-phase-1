@@ -29,6 +29,7 @@ public class GameInfo extends AppCompatActivity {
     TextView numOfQuestions;
     Button comment;
     Button play;
+    Button edit;
     Button deleteGame;
     Game game;
     String gameJson;
@@ -45,25 +46,7 @@ public class GameInfo extends AppCompatActivity {
 
         setTexts();
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent playGameIntent=new Intent(getApplicationContext(),PlayGame.class);
-                playGameIntent.putExtra("game",gameJson);
-                startActivity(playGameIntent);
-            }
-        });
-
-        comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent commentsIntent = new Intent(getApplicationContext(),Comments.class);
-                Bundle b= new Bundle();
-                b.putInt("gameId",(int)game.getGameId());
-                commentsIntent.putExtras(b);
-                startActivity(commentsIntent);
-            }
-        });
+        initializeListeners();
 
         deleteGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +80,38 @@ public class GameInfo extends AppCompatActivity {
         });
     }
 
+    private void initializeListeners() {
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent playGameIntent=new Intent(getApplicationContext(),PlayGame.class);
+                playGameIntent.putExtra("game",gameJson);
+                startActivity(playGameIntent);
+            }
+        });
+
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent commentsIntent = new Intent(getApplicationContext(),Comments.class);
+                Bundle b= new Bundle();
+                b.putInt("gameId",(int)game.getGameId());
+                commentsIntent.putExtras(b);
+                startActivity(commentsIntent);
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editGame = new Intent(getApplicationContext(),EditGame.class);
+                Bundle b= new Bundle();
+                b.putInt("gameId",(int)game.getGameId());
+                editGame.putExtras(b);
+                startActivity(editGame);
+            }
+        });
+    }
+
     public void setTexts(){
         gameName.setText(game.getName());
         numOfQuestions.setText("Number of Questions= "+game.getQuestions().size());
@@ -107,6 +122,7 @@ public class GameInfo extends AppCompatActivity {
         numOfQuestions=(TextView) findViewById(R.id.numberOfQuestions);
         comment=(Button) findViewById(R.id.viewComments);
         play=(Button) findViewById(R.id.play);
+        edit = (Button) findViewById(R.id.edit);
         deleteGame=(Button)findViewById(R.id.deleteGame);
         if (Login.loggedUser instanceof Teacher){
             deleteGame.setVisibility(View.VISIBLE);

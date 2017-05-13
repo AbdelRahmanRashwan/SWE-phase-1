@@ -149,7 +149,7 @@ public class AddTrueAndFalse extends Fragment implements View.OnClickListener{
     }
 
     private void addGameRequest(JSONObject gameInfo) {
-        String link=ServicesLinks.CREATE_TAF_GAME;
+        String link=ServicesLinks.CREATE_GAME;
         Log.i("why u ",gameInfo.toString()+ " "+link);
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, link, gameInfo, new Response.Listener<JSONObject>() {

@@ -147,9 +147,9 @@ public class AddMCQ extends Fragment implements View.OnClickListener {
     }
 
     private void addGameRequest(JSONObject gameInfo) {
-        String link=ServicesLinks.CREATE_MCQ_GAME;
+        String link=ServicesLinks.CREATE_GAME;
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        Log.i("why u ",gameInfo.toString()+ " "+link);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, link, gameInfo, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
