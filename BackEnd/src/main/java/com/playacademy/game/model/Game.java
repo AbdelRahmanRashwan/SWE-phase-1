@@ -8,7 +8,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.course.model.Course;
 import com.playacademy.gamesheet.model.GameSheet;
-
+//
 //import com.playacademy.user.model.ScoreSheet;
 
 @Entity
