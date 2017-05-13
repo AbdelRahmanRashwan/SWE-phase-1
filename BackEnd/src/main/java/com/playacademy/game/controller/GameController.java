@@ -3,12 +3,14 @@ package com.playacademy.game.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.Course;
 import com.playacademy.game.model.*;
 
 @Service
+@Component(value = "GBean")
 public class GameController implements IGameController{
 	
 	@Autowired

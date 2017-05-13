@@ -1,13 +1,24 @@
 package com.playacademy.user.model;
 
+import java.util.ArrayList;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.comments.Comment;
+
 
 
 @Entity
@@ -43,7 +54,18 @@ public abstract class User {
 	@Column(name = "verified")
 	protected boolean verified;
 
+	@JsonIgnore
+	protected Set<Comment> comments;
 	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="commentor")
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
 	public String getVerificationCode() {
 		return verificationCode;
 	}

@@ -47,7 +47,7 @@ public class SingleCourse extends AppCompatActivity {
         initialize();
         setText();
 
-        String link=ServicesLinks.GET_GAMES_IN_COURSE_URL+"?courseName="+course.getCourseName();
+        String link=ServicesLinks.GET_GAMES_IN_COURSE_URL+"?courseName="+course.getCourseName().replaceAll(" ","%20");
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, link, null,
                 new Response.Listener<JSONObject>() {
@@ -159,7 +159,7 @@ public class SingleCourse extends AppCompatActivity {
 
     }
     private void startPlayGame(int i) {
-        Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
+        Intent playGame = new Intent(SingleCourse.this, GameInfo.class);
         Gson gson=new Gson();
         String game=gson.toJson(games.get(i));
         playGame.putExtra("game",game);
