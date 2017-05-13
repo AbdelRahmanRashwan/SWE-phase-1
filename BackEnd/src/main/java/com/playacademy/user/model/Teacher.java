@@ -74,7 +74,13 @@ public class Teacher extends User implements Observer {
 	public void update(Notification n) {
 		// TODO Auto-generated method stub
 		n.setReceiver(this);
-		notifications.add((CommentNotification)n);
+		CommentNotification c = new CommentNotification();
+		c.setNotificationId(n.getNotificationId());
+		c.setNotificationTitle(n.getNotificationTitle());
+		c.setNotificationDescription(n.getNotificationDescription());
+		c.setReceiver(this);
+		
+		notifications.add(c);
 	}
 
 }

@@ -15,6 +15,9 @@ public class CommentService {
 	
 	public boolean addComment(Comment comment) {
 		// TODO Auto-generated method stub
+		comment.notifyObservers("New Comment",comment.getCommentor().getFirstName()+" "
+				+comment.getCommentor().getLastName()+
+				" has commented on yout game ( "+comment.getGame().getName()+" )." );
 		return (commentRepo.save(comment)==null)? false:true;
 	}
 

@@ -43,8 +43,8 @@ public class UserAPI {
 		}else if(!userData.getPassword().equals(user.getPassword())){
 			error = "Incorrect password";
 		}
-		//else if(!userData.isVerified()){
 		//	error = "Not verified";
+		//else if(!userData.isVerified()){
 		//}
 		if(error.length()>1){
 			returnUser.put("Error", error);
@@ -89,7 +89,7 @@ public class UserAPI {
 	public Map<String,Set<Notification>> getStudentNotifications(@RequestParam("id") long id){
 		Set<Notification> notifications = userServices.getUserNotification(id);
 		
-		Map<String,Set<Notification>> returnData=new HashMap<>();		
+		Map<String,Set<Notification>> returnData=new HashMap<>();
 		returnData.put("new_game_notifications", notifications);
 		return returnData;
 	}
@@ -98,7 +98,7 @@ public class UserAPI {
 	public Map<String,Set<Notification>> getTeacherNotifications(@RequestParam("id") long id){
 		Set<Notification> notifications = userServices.getUserNotification(id);
 		
-		Map<String,Set<Notification>> returnData=new HashMap<>();		
+		Map<String,Set<Notification>> returnData=new HashMap<>();
 		returnData.put("comment_notifications", notifications);
 		return returnData;
 	}
