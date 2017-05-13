@@ -16,19 +16,23 @@ public class GameSheetController {
 	@Autowired
 	GameSheetRepo gameSheetRepo;
 	
-	public boolean saveScore(Game game , Student student,int score , int rate){
+	public boolean updateSheet(Game game , Student student,int score , int rate){
 		GameSheet gameSheet = gameSheetRepo.findByStudentAndGame(student, game);
 		if(gameSheet!=null){
 			gameSheet.setScore(Math.max(gameSheet.getScore(), score));
+			game.setRate((game.getRate()+rate-gameSheet.getRate())/game.getNumOfRates());
 		}else{
 			gameSheet = new GameSheet();
 			game.addScore(gameSheet);
 			student.addScore(gameSheet);
 			gameSheet.setScore(score);
+			game.setNumOfRates(game.getNumOfRates()+1);
+			game.setRate((game.getRate()+rate)/game.getNumOfRates());
 		}
 		gameSheet.setRate(rate);
-		if(gameSheetRepo.save(gameSheet) != null)
+		if(gameSheetRepo.save(gameSheet) != null){
 			return true;
+		}
 		else
 			return false;
 	}
