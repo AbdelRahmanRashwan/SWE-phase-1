@@ -1,11 +1,10 @@
 package com.example.rashwan.playacademy;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,12 +22,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rashwan.playacademy.Models.Course;
-import com.example.rashwan.playacademy.Models.Teacher;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 
 public class AllCourses extends AppCompatActivity {
@@ -121,6 +117,7 @@ public class AllCourses extends AppCompatActivity {
         navigationItems.add("Home");
         navigationItems.add("Courses");
         navigationItems.add("Profile");
+        navigationItems.add("NotificationActivity");
         navigationItems.add("Logout");
 
 
@@ -144,7 +141,9 @@ public class AllCourses extends AppCompatActivity {
                 }else if(itemPressed.equals("Logout")){
                     Login.loggedUser.setUserId(0);
                     startActivity(new Intent(AllCourses.this,Login.class));
-                }
+                }else if(itemPressed.equals("NotificationActivity"))
+                    startActivity(new Intent(AllCourses.this,NotificationActivity.class));
+
                 drawer.closeDrawer(Gravity.START);
             }
         });

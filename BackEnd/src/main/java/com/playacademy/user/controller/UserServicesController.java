@@ -1,5 +1,7 @@
 package com.playacademy.user.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.playacademy.user.model.User;
 import com.playacademy.user.model.UserRepository;
+import com.playacademy.Notification.Notification;;
 
 @Service
 @Component(value = "UBean")
@@ -64,4 +67,10 @@ public class UserServicesController {
 		User returns = userBaseRepo.findByEmail(email);
 		return (returns == null ? -1 : returns.getUserId());
 	}
+	
+	public Set<Notification> getUserNotification(long ID){
+		User u = userBaseRepo.findOne(ID);
+		return u.getNotifications();
+	}
+	
 }

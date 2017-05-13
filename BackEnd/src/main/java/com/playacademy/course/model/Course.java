@@ -1,18 +1,22 @@
 package com.playacademy.course.model;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.Notification.NewGameNotification;
+import com.playacademy.Notification.Notification;
 import com.playacademy.courseattendance.model.CourseAttendance;
+import com.playacademy.game.controller.Subject;
 import com.playacademy.game.model.Game;
 import com.playacademy.user.model.*;
 
 @Entity
 @Table(name = "courses")
-public class Course {
+public class Course implements Subject {
 
 	private long courseId;
 
@@ -77,6 +81,7 @@ public class Course {
 	public void addGame(Game game) {
 		game.setCourse(this);
 		games.add(game);
+		notifyObservers("New Game", "Teacher ( "+creator.getFirstName()+" ) added a game ( "+ game.getName()+" ) to course ( "+courseName+" ).");
 	}
 	
 	public void addAttendance(CourseAttendance attendance) {
@@ -113,6 +118,18 @@ public class Course {
     @JoinColumn(name="creatorId", nullable=false)
 	public Teacher getCreator() {
 		return creator;
+	}
+
+	@Override
+	public void notifyObservers(String gameTitle,String gameDescription) {
+		// TODO Auto-generated method stub
+		Iterator<CourseAttendance> it =attendance_sheets.iterator();
+		Notification n = new NewGameNotification();
+		n.setNotificationTitle(gameTitle);
+		n.setNotificationDescription(gameDescription);
+		
+		while(it.hasNext())
+			it.next().getStudent().update(n);
 	}
 
 	

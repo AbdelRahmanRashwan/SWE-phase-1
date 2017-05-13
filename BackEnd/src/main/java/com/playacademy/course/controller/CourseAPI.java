@@ -96,7 +96,7 @@ public class CourseAPI {
 	}
 	
 	// Course and teacher
-	@RequestMapping(value = "/courses/created/teacher/", method = RequestMethod.GET)
+	@RequestMapping(value = "/courses/created/teacher", method = RequestMethod.GET)
 	public Map<String,Set<Course> > getCreatedCourse(@RequestParam("teacherId") long teacherId) {
 		User user = userServices.getUserByID(teacherId);
 		if (user == null || user instanceof Student) {

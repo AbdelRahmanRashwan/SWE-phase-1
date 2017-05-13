@@ -1,6 +1,9 @@
 package com.example.rashwan.playacademy;
 
 import android.util.Log;
+
+import com.example.rashwan.playacademy.Models.*;
+import com.example.rashwan.playacademy.Models.Notification;
 import android.widget.Toast;
 
 import com.example.rashwan.playacademy.Models.Choice;
@@ -213,6 +216,35 @@ public class Util {
         return gameSheet;
     }
 
+
+    public static ArrayList<Notification> parseNotification(JSONObject notificationArray){
+        ArrayList<Notification> n = new ArrayList<>();
+        try {
+            if(notificationArray.has("new_game_notifications")) {
+                JSONArray notificationJson = notificationArray.getJSONArray("new_game_notifications");
+                for (int i = 0; i < notificationJson.length(); i++) {
+                    Notification notification = new Notification();
+                    notification.setNotificationTitle(notificationJson.getJSONObject(i).getString("notificationTitle"));
+                    Log.e("Notification",notification.getNotificationTitle());
+                    notification.setNotificationDescription(notificationJson.getJSONObject(i).getString("notificationDescription"));
+                    notification.setType("new_game_notifications");
+                    n.add(notification);
+                }
+            }else{
+                JSONArray notificationJson = notificationArray.getJSONArray("comment_notifications");
+                for (int i = 0; i < notificationJson.length(); i++) {
+                    Notification notification = new Notification();
+                    notification.setNotificationTitle(notificationJson.getJSONObject(i).getString("notificationTitle"));
+                    notification.setNotificationDescription(notificationJson.getJSONObject(i).getString("notificationDescription"));
+                    notification.setType("comment_notifications");
+                    n.add(notification);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return n;
+	}
     public static ArrayList<Comment> parseComments(JSONArray jsonArray){
         ArrayList<Comment> comments=new ArrayList<>();
 
