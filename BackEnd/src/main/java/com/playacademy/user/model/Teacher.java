@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.course.model.Course;
+import com.playacademy.game.model.Game;
 
 @Entity
 public class Teacher extends User {
@@ -16,7 +17,7 @@ public class Teacher extends User {
 	@JsonIgnore
 	private Set <Course> createdCourses;
 
-	
+	private Set<Game> games;
 
 	
 
@@ -37,6 +38,10 @@ public class Teacher extends User {
 		this.createdCourses = courses;
 	}
 	
+	public void setGames(Set<Game> games) {
+		this.games = games;
+	}
+	
 	
 	// add
 	public void addCourse(Course course) {
@@ -54,6 +59,11 @@ public class Teacher extends User {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creator")
 	public Set<Course> getCreatedCourses() {
 		return createdCourses;
+	}
+	
+	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "collaborators")
+    public Set<Game> getGames() {
+		return games;
 	}
 
 }
