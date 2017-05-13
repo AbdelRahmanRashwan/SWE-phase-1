@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.comments.Comment;
 import com.playacademy.course.model.Course;
 import com.playacademy.gamesheet.model.GameSheet;
-
+//
 //import com.playacademy.user.model.ScoreSheet;
 
 @Entity
@@ -25,6 +25,12 @@ public class Game {
 	@Column(name = "rate")
 	private long rate;
 	
+	@Column(name = "canceled")
+	private boolean canceled;
+	
+	int numOfRates;
+	
+
 	@JsonIgnore
 	private Course course;
 
@@ -73,7 +79,15 @@ public class Game {
 	public void setRate(long rate) {
 		this.rate = rate;
 	}
-
+	
+	public void setCanceled(boolean b) {
+		canceled = b;
+	}
+	
+	public void setNumOfRates(int i) {
+		numOfRates = i;
+		
+	}
 	// add
 	public void addScore(GameSheet score) {
 		score.setGame(this);
@@ -83,6 +97,10 @@ public class Game {
 	public void addQuestion(Question question) {
 		question.setGame(this);
 		questions.add(question);
+	}
+	public void deleteQuestion(Question question) {
+		question.setGame(null);
+		questions.remove(question);
 	}
 
 	// Getters
@@ -100,9 +118,17 @@ public class Game {
 	public long getRate() {
 		return rate;
 	}
+	
+	public boolean isCanceled() {
+		return canceled;
+	}
+	
+	public int getNumOfRates() {	
+		return numOfRates;
+	}
 
 	// Relations
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "game")
 	public Set<Question> getQuestions() {
 		return questions;
 	}
@@ -117,5 +143,5 @@ public class Game {
 	public Course getCourse() {
 		return course;
 	}
-
+	
 }
