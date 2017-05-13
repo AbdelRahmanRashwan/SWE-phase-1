@@ -63,18 +63,22 @@ public class GameAPI {
 		return gameServices.addEditedGame(game);
 	}
 
-	@RequestMapping(value = "/game/collaborator/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/game/collaborator/add", method = RequestMethod.GET)
 	public Map<String, Boolean> addCollaborator(@RequestParam("teacherId") long collaboratorId,
 			@RequestParam("gameId") long gameId) {
 		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
 		Game game = gameServices.getExistGameByID(gameId);
 		Teacher collaborator = (Teacher) userServices.getUserByID(collaboratorId);
-		game.addCollaborator(collaborator);
-		confirmation.put("confirmation", gameServices.addEditedGame(game));
+		try{
+			game.addCollaborator(collaborator);
+			confirmation.put("confirmation", gameServices.addEditedGame(game));
+		}catch(Exception e){
+			confirmation.put("confirmation",false);
+		}
 		return confirmation;
 	}
 
-	@RequestMapping(value = "/game/collaborators/get", method = RequestMethod.POST)
+	@RequestMapping(value = "/game/collaborators/get", method = RequestMethod.GET)
 	public Map<String, Set<Teacher>> getAllCollaborators(@RequestParam("gameId") long gameId) {
 		Map<String, Set<Teacher>> data = new HashMap<>();
 		Game game = gameServices.getExistGameByID(gameId);
@@ -222,7 +226,9 @@ public class GameAPI {
 			ack = "No course with that name.";
 		} else {
 			Course course = courseAPI.getCourse(courseId);
-			
+			Teacher collaborator = course.getCreator();
+			game.addCollaborator(collaborator);
+			collaborator.addGame(game);
 			if (gameServices.addGame(game, course) == true)
 				ack = "Game created succssessfully";
 			else
