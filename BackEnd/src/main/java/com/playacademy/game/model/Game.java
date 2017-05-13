@@ -1,6 +1,5 @@
 package com.playacademy.game.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -122,6 +121,10 @@ public class Game {
 		question.setGame(null);
 		questions.remove(question);
 	}
+	
+	public void addCollaborator(Teacher collaborator) {
+		collaborators.add(collaborator);
+	}
 
 	// Getters
 
@@ -153,7 +156,7 @@ public class Game {
 		return questions;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "game")
 	public Set<GameSheet> getScores() {
 		return scores;
 	}

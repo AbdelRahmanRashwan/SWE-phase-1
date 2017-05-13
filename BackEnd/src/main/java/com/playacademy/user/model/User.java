@@ -1,6 +1,5 @@
 package com.playacademy.user.model;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;

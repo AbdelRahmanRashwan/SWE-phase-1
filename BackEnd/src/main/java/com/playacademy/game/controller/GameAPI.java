@@ -16,6 +16,8 @@ import com.playacademy.game.helper.ObjectMapperConfiguration;
 import com.playacademy.game.model.Game;
 import com.playacademy.game.model.Question;
 import com.playacademy.user.controller.UserServicesController;
+import com.playacademy.user.model.Teacher;
+
 //
 @RestController
 public class GameAPI {
@@ -33,16 +35,16 @@ public class GameAPI {
 	@RequestMapping(value = "/game/create", method = RequestMethod.POST)
 	public Map<String, String> createGame(@RequestBody ItemCollector<String> item) {
 		Map<String, String> confirmation = new HashMap<String, String>();
-		try{
+		try {
 			Game game = new Game();
 			confirmation.put("confirmation", addGame(makeGame(item, game), item.courseName));
-		}catch (IOException e) {
+		} catch (IOException e) {
 			confirmation.put("confirmation", "Something went wrong");
 		}
 		return confirmation;
 
 	}
-	
+
 	@RequestMapping(value = "/game/question/add", method = RequestMethod.POST)
 	public boolean addQuuestion(@RequestParam("gameId") long id, @RequestBody String quest) {
 
@@ -61,14 +63,38 @@ public class GameAPI {
 		return gameServices.addEditedGame(game);
 	}
 
+	@RequestMapping(value = "/game/collaborator/add", method = RequestMethod.POST)
+	public Map<String, Boolean> addCollaborator(@RequestParam("teacherId") long collaboratorId,
+			@RequestParam("gameId") long gameId) {
+		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
+		Game game = gameServices.getExistGameByID(gameId);
+		Teacher collaborator = (Teacher) userServices.getUserByID(collaboratorId);
+		game.addCollaborator(collaborator);
+		confirmation.put("confirmation", gameServices.addEditedGame(game));
+		return confirmation;
+	}
+
+	@RequestMapping(value = "/game/collaborators/get", method = RequestMethod.POST)
+	public Map<String, Set<Teacher>> getAllCollaborators(@RequestParam("gameId") long gameId) {
+		Map<String, Set<Teacher>> data = new HashMap<>();
+		Game game = gameServices.getExistGameByID(gameId);
+		if (game == null) {
+			data.put("Error", null);
+		} else {
+			data.put("collaborators", game.getCollaborators());
+		}
+		return data;
+
+	}
+
 	@RequestMapping(value = "/game/get/deleted", method = RequestMethod.GET)
 	public Game getDeletedGame(@RequestParam("id") long id) {
 
 		Game game = gameServices.getDeletedGameByID(id);
 
 		return game;
-	}	
-	
+	}
+
 	@RequestMapping(value = "/game/get", method = RequestMethod.GET)
 	public Game getGame(@RequestParam("id") long id) {
 
@@ -76,24 +102,25 @@ public class GameAPI {
 
 		return game;
 	}
-//Problem with database
-//	@RequestMapping(value = "/game/copy", method = RequestMethod.GET)
-//	public Map<String, String> copyGame(@RequestParam("courseName") String courseName, @RequestParam("gameId") int gameId) {
-//		Map<String, String> confirmation = new HashMap<String, String>();
-//		
-//		Game game = gameServices.getGameByID(gameId);
-//		Game copyGame = new Game();
-//		Iterator<Question> questions = game.getQuestions().iterator();
-//		
-//		copyGame.setName(game.getName());
-//		//This cuts questions of the other game and that is the problem
-//		while(questions.hasNext()){
-//			Question ques = questions.next();
-//			copyGame.addQuestion();
-//		}
-//		confirmation.put("confirmation", addGame(copyGame, courseName));
-//		return confirmation;
-//	}
+	// Problem with database
+	// @RequestMapping(value = "/game/copy", method = RequestMethod.GET)
+	// public Map<String, String> copyGame(@RequestParam("courseName") String
+	// courseName, @RequestParam("gameId") int gameId) {
+	// Map<String, String> confirmation = new HashMap<String, String>();
+	//
+	// Game game = gameServices.getGameByID(gameId);
+	// Game copyGame = new Game();
+	// Iterator<Question> questions = game.getQuestions().iterator();
+	//
+	// copyGame.setName(game.getName());
+	// //This cuts questions of the other game and that is the problem
+	// while(questions.hasNext()){
+	// Question ques = questions.next();
+	// copyGame.addQuestion();
+	// }
+	// confirmation.put("confirmation", addGame(copyGame, courseName));
+	// return confirmation;
+	// }
 
 	@RequestMapping(value = "/game/edit", method = RequestMethod.POST)
 	public Map<String, Boolean> editGame(@RequestParam("gameId") long gameId, @RequestBody ItemCollector<String> item) {
@@ -109,13 +136,14 @@ public class GameAPI {
 
 		return confirmation;
 	}
+
 	@RequestMapping(value = "/game/cancel", method = RequestMethod.GET)
-	public Map<String, Boolean> cancelGame(@RequestParam("gameId") long  gameId) {
+	public Map<String, Boolean> cancelGame(@RequestParam("gameId") long gameId) {
 		System.out.println("in");
 		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
 		Game game = gameServices.getExistGameByID(gameId);
-		System.out.println("game"+game);
-		if (game==null){
+		System.out.println("game" + game);
+		if (game == null) {
 			confirmation.put("confirmation", false);
 			return confirmation;
 		}
@@ -124,13 +152,13 @@ public class GameAPI {
 		System.out.println(confirmation.get("confirmation"));
 		return confirmation;
 	}
-	
+
 	@RequestMapping(value = "/game/un-cancel", method = RequestMethod.GET)
 	public Map<String, Boolean> uncancelGame(@RequestParam("gameId") int gameId) {
 
 		Map<String, Boolean> confirmation = new HashMap<String, Boolean>();
 		Game game = gameServices.getDeletedGameByID(gameId);
-		
+
 		game.setCanceled(false);
 		confirmation.put("confirmation", gameServices.addEditedGame(game));
 
@@ -142,7 +170,7 @@ public class GameAPI {
 		ObjectMapper objectMapper = new ObjectMapperConfiguration().objectMapper();
 		Gson gson = new Gson();
 		game.setName(item.gameName);
-		
+
 		for (int i = 0; i < item.questions.size(); i++) {
 			Question question = objectMapper.readValue(gson.toJson(item.questions.get(i)), Question.class);
 			game.addQuestion(question);
@@ -158,7 +186,7 @@ public class GameAPI {
 		data.put("games", gameServices.getAllDeletedGamesInCourse(course));
 		return data;
 	}
-	
+
 	@RequestMapping(value = "/gamescourse/get", method = RequestMethod.GET)
 	public Map<String, List<Game>> getAllGamesInCourse(@RequestParam("courseName") String courseName) {
 		long courseId = courseAPI.getCourseId(courseName);
@@ -194,7 +222,7 @@ public class GameAPI {
 			ack = "No course with that name.";
 		} else {
 			Course course = courseAPI.getCourse(courseId);
-
+			
 			if (gameServices.addGame(game, course) == true)
 				ack = "Game created succssessfully";
 			else

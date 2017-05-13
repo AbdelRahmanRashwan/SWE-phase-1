@@ -49,6 +49,10 @@ public class Teacher extends User implements Observer {
 		createdCourses.add(course);
 	}
 	
+	public void addGame(Game game){
+		games.add(game);
+	}
+	
 	// Getters
 	public String getEducationalMail() {
 		return educationalMail;
