@@ -1,5 +1,6 @@
 package com.playacademy.game.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,10 +19,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.comments.Comment;
 import com.playacademy.course.model.Course;
 import com.playacademy.gamesheet.model.GameSheet;
 import com.playacademy.user.model.Teacher;
-//
+
 //import com.playacademy.user.model.ScoreSheet;
 
 @Entity
@@ -50,6 +52,18 @@ public class Game {
 	@JsonIgnore
 	private Set<Teacher> collaborators;
 
+	@JsonIgnore
+	protected Set<Comment> comments;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="game")
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+		
 	public Game() {
 		questions = new HashSet<Question>();
 		scores = new HashSet<GameSheet>();

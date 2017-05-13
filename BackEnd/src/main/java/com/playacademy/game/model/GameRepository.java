@@ -11,7 +11,7 @@ import com.playacademy.course.model.Course;
 public interface GameRepository
 extends CrudRepository<Game, Long>{
 
-	Game findByGameId(long id);
-	List<Game> findByCourse(Course course);
+	Game findByGameIdAndCanceled(long id,Boolean canceled);
+	List<Game> findByCourseAndCanceled(Course course,Boolean canceled);
 
 }

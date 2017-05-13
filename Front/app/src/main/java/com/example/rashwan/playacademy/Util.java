@@ -1,9 +1,13 @@
 package com.example.rashwan.playacademy;
 
 import android.util.Log;
+
+import com.example.rashwan.playacademy.Models.*;
+import com.example.rashwan.playacademy.Models.Notification;
 import android.widget.Toast;
 
 import com.example.rashwan.playacademy.Models.Choice;
+import com.example.rashwan.playacademy.Models.Comment;
 import com.example.rashwan.playacademy.Models.Course;
 import com.example.rashwan.playacademy.Models.Game;
 import com.example.rashwan.playacademy.Models.GameSheet;
@@ -12,6 +16,7 @@ import com.example.rashwan.playacademy.Models.Question;
 import com.example.rashwan.playacademy.Models.Student;
 import com.example.rashwan.playacademy.Models.Teacher;
 import com.example.rashwan.playacademy.Models.TrueAndFalse;
+import com.example.rashwan.playacademy.Models.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -209,5 +214,63 @@ public class Util {
             e.printStackTrace();
         }
         return gameSheet;
+    }
+
+
+    public static ArrayList<Notification> parseNotification(JSONObject notificationArray){
+        ArrayList<Notification> n = new ArrayList<>();
+        try {
+            if(notificationArray.has("new_game_notifications")) {
+                JSONArray notificationJson = notificationArray.getJSONArray("new_game_notifications");
+                for (int i = 0; i < notificationJson.length(); i++) {
+                    Notification notification = new Notification();
+                    notification.setNotificationTitle(notificationJson.getJSONObject(i).getString("notificationTitle"));
+                    Log.e("Notification",notification.getNotificationTitle());
+                    notification.setNotificationDescription(notificationJson.getJSONObject(i).getString("notificationDescription"));
+                    notification.setType("new_game_notifications");
+                    n.add(notification);
+                }
+            }else{
+                JSONArray notificationJson = notificationArray.getJSONArray("comment_notifications");
+                for (int i = 0; i < notificationJson.length(); i++) {
+                    Notification notification = new Notification();
+                    notification.setNotificationTitle(notificationJson.getJSONObject(i).getString("notificationTitle"));
+                    notification.setNotificationDescription(notificationJson.getJSONObject(i).getString("notificationDescription"));
+                    notification.setType("comment_notifications");
+                    n.add(notification);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return n;
+	}
+    public static ArrayList<Comment> parseComments(JSONArray jsonArray){
+        ArrayList<Comment> comments=new ArrayList<>();
+
+            try {
+                for (int i=0;i<jsonArray.length();i++) {
+                    Comment comment = parseComment(jsonArray.getJSONObject(i));
+                    comments.add(comment);
+                }
+            } catch (JSONException e){
+                    e.printStackTrace();
+                }
+        return comments;
+    }
+
+    private static Comment parseComment(JSONObject commentJson){
+        String description="";
+        User commentor=new Student();
+        int commentID=0;
+        try {
+            description=commentJson.getString("description");
+            commentor=parseStudent(commentJson.getJSONObject("commentor"));
+            commentID=commentJson.getInt("commentID");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new Comment(commentID,commentor,description);
     }
 }

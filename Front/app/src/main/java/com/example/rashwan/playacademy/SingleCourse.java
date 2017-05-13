@@ -1,8 +1,8 @@
 package com.example.rashwan.playacademy;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -47,7 +47,7 @@ public class SingleCourse extends AppCompatActivity {
         initialize();
         setText();
 
-        String link=ServicesLinks.GET_GAMES_IN_COURSE_URL+"?courseName="+course.getCourseName();
+        String link=ServicesLinks.GET_GAMES_IN_COURSE_URL+"?courseName="+course.getCourseName().replaceAll(" ","%20");
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, link, null,
                 new Response.Listener<JSONObject>() {
@@ -159,7 +159,7 @@ public class SingleCourse extends AppCompatActivity {
 
     }
     private void startPlayGame(int i) {
-        Intent playGame = new Intent(SingleCourse.this, PlayGame.class);
+        Intent playGame = new Intent(SingleCourse.this, GameInfo.class);
         Gson gson=new Gson();
         String game=gson.toJson(games.get(i));
         playGame.putExtra("game",game);
@@ -189,4 +189,14 @@ public class SingleCourse extends AppCompatActivity {
         );
         queue.add(jsonObjectRequest);
     }
+
+    @Override
+    public void onBackPressed() {
+        if(Login.loggedUser.getType().equals("Student"))
+            startActivity(new Intent(this,StudentHome.class));
+        else
+            startActivity(new Intent(this,TeacherHome.class));
+        finish();
+    }
+
 }

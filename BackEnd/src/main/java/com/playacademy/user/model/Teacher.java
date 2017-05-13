@@ -5,21 +5,21 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.Notification.CommentNotification;
+import com.playacademy.Notification.Notification;
 import com.playacademy.course.model.Course;
 import com.playacademy.game.model.Game;
 
 @Entity
-public class Teacher extends User {
+public class Teacher extends User implements Observer {
 
 	@Column(name = "educationalMail")
 	private String educationalMail;
 	
 	@JsonIgnore
 	private Set <Course> createdCourses;
-
-	private Set<Game> games;
-
 	
+	private Set<Game> games;
 
 	public Teacher() {
 		type = "Teacher";
@@ -64,6 +64,13 @@ public class Teacher extends User {
 	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "collaborators")
     public Set<Game> getGames() {
 		return games;
+	}
+
+	@Override
+	public void update(Notification n) {
+		// TODO Auto-generated method stub
+		n.setReceiver(this);
+		notifications.add((CommentNotification)n);
 	}
 
 }

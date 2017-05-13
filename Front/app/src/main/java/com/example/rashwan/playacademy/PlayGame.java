@@ -1,22 +1,19 @@
 package com.example.rashwan.playacademy;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.rashwan.playacademy.Models.Game;
 import com.example.rashwan.playacademy.Models.MCQ;
-
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -111,6 +108,8 @@ public class PlayGame extends AppCompatActivity implements GameScore.DialogListe
         countDownTimer.cancel();
         Log.i("Choice", String.valueOf(choice));
         if(choice == 1){
+            if(isTaskRoot())
+                startActivity(new Intent(this,StudentProfile.class));
             finish();
         }else{
             getSupportFragmentManager().beginTransaction().remove(question).commit();
@@ -121,5 +120,12 @@ public class PlayGame extends AppCompatActivity implements GameScore.DialogListe
             }
             getSupportFragmentManager().beginTransaction().add(R.id.FragmentContainer, question).commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isTaskRoot())
+            startActivity(new Intent(this,StudentProfile.class));
+        finish();
     }
 }
