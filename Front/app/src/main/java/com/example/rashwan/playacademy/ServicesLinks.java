@@ -1,14 +1,12 @@
 package com.example.rashwan.playacademy;
 
-import com.android.volley.toolbox.StringRequest;
-
 /**
  * Created by Rashwan on 4/16/2017.
  */
 
 public final class ServicesLinks {
 
-    public static final String SERVER="http://192.168.43.17:8080";
+    public static final String SERVER="http://192.168.1.91:8080";
     public static final String LOGIN_URL=SERVER+"/login";
     public static final String REGISTER_STUDENT_URL=SERVER+"/student/register";
     public static final String REGISTER_TEACHER_URL=SERVER+"/teacher/register";
@@ -25,6 +23,8 @@ public final class ServicesLinks {
     public static final String ENROLL_URL=SERVER+"/course/attend";
     public static final String IS_ENROLLED_URL=SERVER+"/courses/enrollment";
     public static final String GET_SCOREBOARD_URL=SERVER+"/student/scoreBoard";
+    public static final String NOTIFICATION_STUDENT_URL=SERVER+"/student/notifications";
+    public static final String NOTIFICATION_TEACHER_URL=SERVER+"/teacher/notifications";
     public static final String GET_COMMENTS_URL=SERVER+"/comments/get";
     public static final String ADD_COMMENT_URL=SERVER+"/comment/add";
     public static final String CANCEL_GAME_URL=SERVER+"/game/cancel";

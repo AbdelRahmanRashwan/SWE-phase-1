@@ -1,10 +1,10 @@
 package com.example.rashwan.playacademy;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.rashwan.playacademy.Models.Game;
 import com.example.rashwan.playacademy.Models.GameSheet;
-import com.example.rashwan.playacademy.Models.Student;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -62,6 +60,7 @@ public class StudentProfile extends AppCompatActivity {
         navigationItems.add("Courses");
         navigationItems.add("Profile");
         navigationItems.add("Logout");
+        navigationItems.add("Logout");
 
 
         ListView listView = (ListView) findViewById(R.id.navList);
@@ -78,7 +77,9 @@ public class StudentProfile extends AppCompatActivity {
                 }else if(itemPressed.equals("Logout")){
                     Login.loggedUser.setUserId(0);
                     startActivity(new Intent(StudentProfile.this,Login.class));
-                }
+                }else if(itemPressed.equals("NotificationActivity"))
+                    startActivity(new Intent(StudentProfile.this,NotificationActivity.class));
+
                 drawer.closeDrawer(Gravity.START);
             }
         });

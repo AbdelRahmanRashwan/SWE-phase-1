@@ -1,7 +1,9 @@
 package com.playacademy.user.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.playacademy.Notification.Notification;
 import com.playacademy.user.model.Student;
 import com.playacademy.user.model.Teacher;
 import com.playacademy.user.model.User;
@@ -83,5 +86,21 @@ public class UserAPI {
 		}
 		return returnData;
 	}
+	@RequestMapping(value = "/student/notifications", method = RequestMethod.GET)
+	public Map<String,Set<Notification>> getStudentNotifications(@RequestParam("id") long id){
+		Set<Notification> notifications = userServices.getUserNotification(id);
+		
+		Map<String,Set<Notification>> returnData=new HashMap<>();		
+		returnData.put("new_game_notifications", notifications);
+		return returnData;
+	}
 
+	@RequestMapping(value = "/teacher/notifications", method = RequestMethod.GET)
+	public Map<String,Set<Notification>> getTeacherNotifications(@RequestParam("id") long id){
+		Set<Notification> notifications = userServices.getUserNotification(id);
+		
+		Map<String,Set<Notification>> returnData=new HashMap<>();		
+		returnData.put("comment_notifications", notifications);
+		return returnData;
+	}
 }

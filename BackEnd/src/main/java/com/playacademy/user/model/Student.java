@@ -9,19 +9,20 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.Notification.NewGameNotification;
+import com.playacademy.Notification.Notification;
 import com.playacademy.courseattendance.model.CourseAttendance;
 import com.playacademy.gamesheet.model.GameSheet;
 
 
 
 @Entity
-public class Student extends User{
+public class Student extends User implements Observer{
 
 	
 	@JsonIgnore
 	private Set<GameSheet> scores;
-	
-	
+		
 	@JsonIgnore
     private Set<CourseAttendance> attendance_sheets;
 	
@@ -59,9 +60,18 @@ public class Student extends User{
 	public Set<CourseAttendance> getAttendance_sheets() {
 		return attendance_sheets;
 	}
+	
 	public void addAttendance(CourseAttendance attendance) {
 		attendance.setStudent(this);
 		attendance_sheets.add(attendance);
+	}
+	
+	
+	@Override
+	public void update(Notification n) {
+		// TODO Auto-generated method stub
+		n.setReceiver(this);
+		notifications.add((NewGameNotification) n);
 	}
 	
 	

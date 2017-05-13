@@ -52,6 +52,12 @@
         <activity android:name=".SingleCourse" />
         <activity android:name=".PlayGame" />
         <activity android:name=".AddQuestions" />
+        <activity
+            android:name=".AddCourse"
+            android:label="Add Courses"
+            android:noHistory="true" />
+        <activity android:name=".AddGame" />
+        <activity android:name=".NotificationActivity"></activity>
         <activity android:name=".AddCourse" />
         <activity android:name=".AddGame" />
         <activity android:name=".Comments" />
