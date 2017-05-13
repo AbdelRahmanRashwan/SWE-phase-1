@@ -1,7 +1,8 @@
 package com.playacademy.game.helper;
 
 import java.io.IOException;
-
+import java.util.Iterator;
+//
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -16,7 +17,12 @@ public class QuestionDeserializer extends JsonDeserializer<Question> {
         JsonNode tree = codec.readTree(p);
 
         if (tree.has("choices")) {
-            return codec.treeToValue(tree, MCQ.class);
+        	MCQ question = codec.treeToValue(tree, MCQ.class);
+        	Iterator<Choice> it = ((MCQ) question).getChoices().iterator();
+			while (it.hasNext()) {
+				it.next().setQuestion((MCQ) question);
+			}
+            return question;
         }else {
         	return codec.treeToValue(tree, TrueAndFalse.class);
         }

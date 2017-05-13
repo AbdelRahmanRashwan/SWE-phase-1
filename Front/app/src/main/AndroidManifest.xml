@@ -14,8 +14,7 @@
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,38 +24,39 @@
         <activity
             android:name=".Login"
             android:label="Register"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".Register"
             android:label="Register"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".TeacherHome"
             android:label="Home"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".StudentHome"
             android:label="Home"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".StudentProfile"
             android:label="Profile"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".TeacherProfile"
             android:label="Profile"
-            android:noHistory="true"
-            />
+            android:noHistory="true" />
         <activity
             android:name=".AllCourses"
             android:label="Courses"
-            android:noHistory="true"
-            />
+            android:noHistory="true" />
         <activity android:name=".SingleCourse" />
         <activity android:name=".PlayGame" />
         <activity android:name=".AddQuestions" />
         <activity android:name=".AddCourse" />
-        <activity android:name=".AddGame"/>
+        <activity android:name=".AddGame" />
+        <activity android:name=".Comments" />
+        <activity android:name=".AddComment" />
+        <activity android:name=".GameInfo"></activity>
     </application>
 
 </manifest>
