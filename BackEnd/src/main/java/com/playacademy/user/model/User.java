@@ -1,13 +1,20 @@
 package com.playacademy.user.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.playacademy.Notification.Notification;
 
 
 @Entity
@@ -43,7 +50,11 @@ public abstract class User {
 	@Column(name = "verified")
 	protected boolean verified;
 
+	protected Set<Notification> notifications;
 	
+	
+
+
 	public String getVerificationCode() {
 		return verificationCode;
 	}
@@ -119,5 +130,14 @@ public abstract class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "receiver")
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+	
+	public void setNotifications(Set<Notification> notifications) {
+		this.notifications = notifications;
 	}
 }

@@ -1,11 +1,13 @@
 package com.playacademy.course.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.playacademy.course.model.*;
+import com.playacademy.user.model.Observer;
 
 @Service
 public class CourseController {
@@ -13,7 +15,7 @@ public class CourseController {
 	@Autowired
 	CourseRepo courseRepo;
 	
-	
+	ArrayList<Observer> newGameObservers;
 	
 	public boolean saveCourse(Course c){
 		if(courseRepo.save(c)==null)

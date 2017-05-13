@@ -5,19 +5,18 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.Notification.CommentNotification;
+import com.playacademy.Notification.Notification;
 import com.playacademy.course.model.Course;
 
 @Entity
-public class Teacher extends User {
+public class Teacher extends User implements Observer {
 
 	@Column(name = "educationalMail")
 	private String educationalMail;
 	
 	@JsonIgnore
 	private Set <Course> createdCourses;
-
-	
-
 	
 
 	public Teacher() {
@@ -54,6 +53,13 @@ public class Teacher extends User {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creator")
 	public Set<Course> getCreatedCourses() {
 		return createdCourses;
+	}
+
+	@Override
+	public void update(Notification n) {
+		// TODO Auto-generated method stub
+		n.setReceiver(this);
+		notifications.add((CommentNotification)n);
 	}
 
 }
