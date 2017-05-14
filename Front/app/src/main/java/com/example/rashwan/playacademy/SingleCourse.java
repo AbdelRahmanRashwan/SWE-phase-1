@@ -76,6 +76,19 @@ public class SingleCourse extends AppCompatActivity {
                                     startPlayGame(i);
                                 }
                             });
+
+                            gamesList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Intent copyGameIntent=new Intent(getApplicationContext(),CopyGame.class);
+                                    Bundle b =new Bundle();
+                                    b.putInt("gameId",(int)games.get(i).getGameId());
+                                    b.putString("courseName",course.getCourseName());
+                                    copyGameIntent.putExtras(b);
+                                    startActivity(copyGameIntent);
+                                    return true;
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -120,6 +133,8 @@ public class SingleCourse extends AppCompatActivity {
                                 Toast.makeText(SingleCourse.this, "Enrolled Successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(getApplicationContext(),SingleCourse.class);
                                 intent.putExtra("course",courseJson);
+                                Bundle b=new Bundle();
+                                b.putString("courseName",course.getCourseName());
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {

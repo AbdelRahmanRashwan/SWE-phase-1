@@ -52,6 +52,7 @@ public class Game {
 		
 	public Game() {
 		questions = new HashSet<Question>();
+		gameId=0;
 	}
 
 	// Setters
