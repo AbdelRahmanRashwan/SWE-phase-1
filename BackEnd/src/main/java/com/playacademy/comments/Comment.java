@@ -1,14 +1,19 @@
 package com.playacademy.comments;
 
+import java.util.Iterator;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.playacademy.Notification.Notification;
+import com.playacademy.course.model.Subject;
 import com.playacademy.game.model.Game;
+import com.playacademy.user.model.Teacher;
 import com.playacademy.user.model.User;
 
 @Entity
 @Table(name="comments")
-public class Comment {
+public class Comment implements Subject {
 	
 	
 	private int commentID;
@@ -60,6 +65,18 @@ public class Comment {
 	}
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	@Override
+	public void notifyObservers(String title, String description) {
+		Notification n = new Notification();
+		n.setNotificationTitle(title);
+		n.setNotificationDescription(description);
+		Iterator<Teacher> it =(getGame().getCollaborators()).iterator();
+		while(it.hasNext()){
+			it.next().update(n);
+		}
+		getGame().getCourse().getCreator().update(n);
 	}
 	
 }

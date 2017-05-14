@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.playacademy.Notification.CommentNotification;
 import com.playacademy.Notification.Notification;
 import com.playacademy.course.model.Course;
+import com.playacademy.game.model.Game;
 
 @Entity
 public class Teacher extends User implements Observer {
@@ -18,6 +19,7 @@ public class Teacher extends User implements Observer {
 	@JsonIgnore
 	private Set <Course> createdCourses;
 	
+	private Set<Game> games;
 
 	public Teacher() {
 		type = "Teacher";
@@ -36,11 +38,19 @@ public class Teacher extends User implements Observer {
 		this.createdCourses = courses;
 	}
 	
+	public void setGames(Set<Game> games) {
+		this.games = games;
+	}
+	
 	
 	// add
 	public void addCourse(Course course) {
 		course.setCreator(this);
 		createdCourses.add(course);
+	}
+	
+	public void addGame(Game game){
+		games.add(game);
 	}
 	
 	// Getters
@@ -54,12 +64,23 @@ public class Teacher extends User implements Observer {
 	public Set<Course> getCreatedCourses() {
 		return createdCourses;
 	}
+	
+	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "collaborators")
+    public Set<Game> getGames() {
+		return games;
+	}
 
 	@Override
 	public void update(Notification n) {
 		// TODO Auto-generated method stub
 		n.setReceiver(this);
-		notifications.add((CommentNotification)n);
+		CommentNotification c = new CommentNotification();
+		c.setNotificationId(n.getNotificationId());
+		c.setNotificationTitle(n.getNotificationTitle());
+		c.setNotificationDescription(n.getNotificationDescription());
+		c.setReceiver(this);
+		
+		notifications.add(c);
 	}
 
 }
