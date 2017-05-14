@@ -13,8 +13,11 @@ import com.google.gson.Gson;
 import com.playacademy.course.controller.CourseController;
 import com.playacademy.course.model.Course;
 import com.playacademy.game.helper.ObjectMapperConfiguration;
+import com.playacademy.game.model.Choice;
 import com.playacademy.game.model.Game;
+import com.playacademy.game.model.MCQ;
 import com.playacademy.game.model.Question;
+import com.playacademy.game.model.TrueAndFalse;
 import com.playacademy.user.controller.UserServicesController;
 import com.playacademy.user.model.Teacher;
 
@@ -102,25 +105,44 @@ public class GameAPI {
 
 		return game;
 	}
-	// Problem with database
-	// @RequestMapping(value = "/game/copy", method = RequestMethod.GET)
-	// public Map<String, String> copyGame(@RequestParam("courseName") String
-	// courseName, @RequestParam("gameId") int gameId) {
-	// Map<String, String> confirmation = new HashMap<String, String>();
-	//
-	// Game game = gameServices.getGameByID(gameId);
-	// Game copyGame = new Game();
-	// Iterator<Question> questions = game.getQuestions().iterator();
-	//
-	// copyGame.setName(game.getName());
-	// //This cuts questions of the other game and that is the problem
-	// while(questions.hasNext()){
-	// Question ques = questions.next();
-	// copyGame.addQuestion();
-	// }
-	// confirmation.put("confirmation", addGame(copyGame, courseName));
-	// return confirmation;
-	// }
+
+	@RequestMapping(value = "/game/copy", method = RequestMethod.GET)
+	public Map<String, String> copyGame(@RequestParam("gameId") int gameId,
+										@RequestParam("courseName") String  courseName){
+			
+		Game game=gameServices.getExistGameByID(gameId);
+		Game game2=copyGameInfo(game);
+		Map<String, String> confirmation = new HashMap<>();
+		confirmation.put("confirmation",addGame(game2, courseName));
+		return confirmation;
+	}
+	
+	private Game copyGameInfo(Game data){
+		Game game= new Game();
+		game.setName(data.getName());
+		for(Question question : data.getQuestions()){
+			Question ques;
+			if (question instanceof MCQ){
+				ques=new MCQ();
+				Set<Choice> choices=new HashSet<>();
+				for (Choice choice:((MCQ)ques).getChoices()){
+					Choice temp=new Choice();
+					temp.setChoice(choice.getChoice());
+					choices.add(temp);
+				}
+				((MCQ)ques).setChoices(choices);
+			}
+			else {
+				ques=new TrueAndFalse();
+			}
+			
+			ques.setQuestion(question.getQuestion());
+			ques.setAnswer(question.getAnswer());
+			game.addQuestion(ques);
+		}
+		return game;
+	}
+
 
 	@RequestMapping(value = "/game/edit", method = RequestMethod.POST)
 	public Map<String, Boolean> editGame(@RequestParam("gameId") long gameId, @RequestBody ItemCollector<String> item) {
